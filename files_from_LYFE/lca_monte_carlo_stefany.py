@@ -1,4 +1,5 @@
 # import brightway
+from copy import deepcopy
 import brightway2 as bw
 
 # import standard python libraries
@@ -39,33 +40,32 @@ def monte_carlo_worker(args):
     
     # each worker will perform a subset of the iterations
     mc_results = {key: [] for key in key_list}
+    blueprint = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
+        
+    # load data and rebuild matrices
+    blueprint.load_data()
+    
     
     # this is performing the actual Monte Carlo simulation
     for _ in range(iterations):
-        
+        working_copy = deepcopy(blueprint)
+        working_copy.rebuild_technosphere_matrix(blueprint.tech_rng.next())
+        working_copy.rebuild_biosphere_matrix(blueprint.bio_rng.next())
+        working_copy.build_demand_array()
         # initialize the Monte Carlo object
-        monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
-        
-        # load data and rebuild matrices
-        monte_carlo.load_data()
-        monte_carlo.rebuild_technosphere_matrix(monte_carlo.tech_rng.next())
-        monte_carlo.rebuild_biosphere_matrix(monte_carlo.bio_rng.next())
-        monte_carlo.build_demand_array()
-        
         # perform the LCI (this takes a lot of time and is therefore only performed once for all impact categories)
-        monte_carlo.lci_calculation()
+        working_copy.lci_calculation()
         
         # loop over impact categories to perform the LCIA
         for i, method in enumerate(lcia_methods):
-            
             # switch the LCIA method, reload data and rebuild the characterization matrix
-            monte_carlo.switch_method(method)
-            monte_carlo.load_data()
-            monte_carlo.rebuild_characterization_matrix(monte_carlo.cf_rng.next())
+            working_copy.switch_method(method)
+            working_copy.load_data()
+            working_copy.rebuild_characterization_matrix(working_copy.cf_rng.next())
             
             # perform the actual LCIA and store the results
-            monte_carlo.lcia_calculation()
-            mc_results[key_list[i]].append(monte_carlo.score)
+            working_copy.lcia_calculation()
+            mc_results[key_list[i]].append(working_copy.score)
         
         # Report progress for each iteration
         progress_queue.put(1)
@@ -178,75 +178,27 @@ if __name__ == "__main__":
     # to adapt this to your code, simple replace "A-Check" with the name of your demand activity, "6b833f545a364efbac180f95710d34c8" with the key of your demand activity, and "maintenance_D250-TF" with the name of the database where your demand activity is stored
     demand_list = []
     demand = {
-        "name": "High-Pressure Pump",  # change me!
-        "key": "7aca29b120b341ffbb9ba2569b5740c9",  # change me!
-        "database": "maintenance_D250_TP_MHEP"  # change me!
-    }
-    demand_list.append(demand) 
-    demand = {
-        "name": "Leakage Test",  # change me!
-        "key": "f02b85a5af3c481482d9448b8f076b81",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Check Valves 1",  # change me!
-        "key": "999a371700094c7ab9768f817ed09005",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Check Valves 2",  # change me!
-        "key": "999a371700094c7ab9768f817ed09007",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Tank and LH2 Distribution Systems 1",  # change me!
-        "key": "999a371700094c7ab9768f817ed09015",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Tank and LH2 Distribution Systems 2",  # change me!
-        "key": "999a371700094c7ab9768f817ed09016",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Tank and LH2 Distribution Systems 3",  # change me!
-        "key": "999a371700094c7ab9768f817ed09017",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Structure 1",  # change me!
-        "key": "e2dbb85e5a2c494e85d25fec2ead17bf",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Structure 2",  # change me!
-        "key": "e2dbb85e5a2c494e85d25fec2ead17cg",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
         "name": "LH2 Tank Replacement",  # change me!
         "key": "492e355ed3f74034b6d49b0240ff7800",  # change me!
         "database": "maintenance_D250_TF_MHEP"  # change me!
     }
-    demand_list.append(demand)
-    
+    demand_list.append(demand) 
+    # demand = {
+    #     "name": "Leakage Test",  # change me!
+    #     "key": "f02b85a5af3c481482d9448b8f076b81",  # change me!
+    #     "database": "maintenance_D250_TF_MHEP"  # change me!
+    # }
+    # demand_list.append(demand)
+        
     # specify the number of iterations for the Monte Carlo simulation
-    iterations = 5000 # change me!
+    iterations = 25 # change me!
     
     print(f"This machine has {os.cpu_count()} logical cores, using {min(cpu_count(), 60)} cores for parallel processing.")
     
     # setting up Brightway
-    brightway_project = "EXACT2_backup_v5" # change me!
+    brightway_project = "MOCA_test_project" # change me!
     bw.projects.set_current(brightway_project)
-    bw.bw2setup()
+    # bw.bw2setup()
     
     # specify the LCIA methods to use for the Monte Carlo simulation
     lcia_method_name = 'EF v3.1 no LT'
