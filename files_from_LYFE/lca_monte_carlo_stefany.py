@@ -1,6 +1,8 @@
 # import brightway
 from copy import deepcopy
 import brightway2 as bw
+from stats_arrays import MCRandomNumberGenerator
+from bw2data.utils import TYPE_DICTIONARY
 
 # import standard python libraries
 import time
@@ -43,32 +45,59 @@ def monte_carlo_worker(args):
     
     # each worker will perform a subset of the iterations
     mc_results = {key: [] for key in key_list}
-    blueprint = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
-        
-    # load data and rebuild matrices
-    blueprint.load_data()
+    
+    # initialize the Monte Carlo object
+    monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
+    monte_carlo.load_data()
+    
+    # print(monte_carlo.tech_params)
+    # print(monte_carlo.bio_params)
+    # print(monte_carlo.cf_params)
+    
+    ## trying to get a list of all technosphere parameters with uncertainty
+    
+    # array = bw2calc.utils.load_arrays(monte_carlo.database_filepath)
+    
+    # indices for type filters (union of the three types)
+    # type_indices = np.hstack((
+    #     np.where(monte_carlo.tech_params['type'] == TYPE_DICTIONARY["technosphere"])[0],
+    # ))
+
+    # # indices for nonzero uncertainty
+    # nonzero_uncertainty_indices = np.where(monte_carlo.tech_params['uncertainty_type'] != 0)[0]
+
+    # # intersection (both conditions)
+    # valid_indices = np.intersect1d(type_indices, nonzero_uncertainty_indices)
+
+    # filtered = monte_carlo.tech_params.take(valid_indices)
     
     
     # this is performing the actual Monte Carlo simulation
     for _ in range(iterations):
-        working_copy = deepcopy(blueprint)
-        working_copy.rebuild_technosphere_matrix(blueprint.tech_rng.next())
-        working_copy.rebuild_biosphere_matrix(blueprint.bio_rng.next())
-        working_copy.build_demand_array()
-        # initialize the Monte Carlo object
+        
+        # # initialize the Monte Carlo object
+        # monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
+        
+        # load data and rebuild matrices
+        # monte_carlo.load_data()
+        monte_carlo.rebuild_technosphere_matrix(monte_carlo.tech_rng.next())
+        monte_carlo.rebuild_biosphere_matrix(monte_carlo.bio_rng.next())
+        monte_carlo.build_demand_array()
+        
         # perform the LCI (this takes a lot of time and is therefore only performed once for all impact categories)
-        working_copy.lci_calculation()
+        monte_carlo.lci_calculation()
         
         # loop over impact categories to perform the LCIA
         for i, method in enumerate(lcia_methods):
+            
             # switch the LCIA method, reload data and rebuild the characterization matrix
-            working_copy.switch_method(method)
-            working_copy.load_data()
-            working_copy.rebuild_characterization_matrix(working_copy.cf_rng.next())
+            monte_carlo.switch_method(method)
+            monte_carlo.load_data()
+            monte_carlo.rebuild_characterization_matrix(monte_carlo.cf_rng.next())
             
             # perform the actual LCIA and store the results
-            working_copy.lcia_calculation()
-            mc_results[key_list[i]].append(working_copy.score)
+            monte_carlo.lcia_calculation()
+            mc_results[key_list[i]].append(monte_carlo.score)
         
         # Report progress for each iteration
         progress_queue.put(1)
