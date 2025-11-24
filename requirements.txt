@@ -1,1 +1,11 @@
+brightway2==2.4.1
+bw-migrations==0.2
+bw2analyzer==0.10
+bw2calc==1.8.2
+bw2data==3.6.6
+bw2io==0.8.8
+bw2parameters==1.1.0
+numpy==1.23.0
+pandas==2.0.3
 PyQt5>=5.15
+tqdm==4.66.4
