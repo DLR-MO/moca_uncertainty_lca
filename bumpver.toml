@@ -15,8 +15,12 @@ push = true
     'current_version = "{version}"', 
     'version = "{version}"'
     ]
-"src/__init__.py" = [
-    "{version}"
+"pyproject.toml" = [
+    'version = "{version}"'
     ]
+"src/uncertainty_lca/__init__.py" = [
+    '__version__ = "{version}"'
+    ]
+
     
 
