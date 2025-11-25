@@ -12,6 +12,7 @@ from uncertainty_lca import monte_carlo
 
 # import standard modules
 import time
+from datetime import timedelta
 
 
 def test_lca_monte_carlo():
@@ -61,11 +62,9 @@ def test_lca_monte_carlo():
     # end the timer and print the time elapsed
     end_time = time.time()
     duration = end_time - start_time
-    duration_minutes = duration // 60
-    duration_seconds = duration % 60
-    duration_hours = duration_minutes // 60
-
-    print("Time elapsed: {:.2f} seconds = {:.0f}:{:02} minutes = {:.0f}:{:.0f}:{:02}".format(duration, duration_minutes, int(duration_seconds), duration_hours, duration_minutes % 60, int(duration_seconds)))
+    dur_timedelta = timedelta(seconds=int(duration))
+    
+    print(f"Time elapsed: {duration:.2f} seconds = {duration // 60:.0f}:{dur_timedelta.seconds:02} minutes = {dur_timedelta}")
     
 # this is the main function that is called when you press run
 if __name__ == "__main__": 
