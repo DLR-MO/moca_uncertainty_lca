@@ -3,17 +3,11 @@ from copy import deepcopy
 import brightway2 as bw
 
 # import standard python libraries
-import time
-import os
-import json
 import numpy as np
 
 # import multiprocessing libraries and a library to make progress bars (tqdm)
 import tqdm
 from multiprocessing import Pool, cpu_count, Manager, Queue
-
-from cProfile import Profile
-from pstats import Stats, SortKey
 
 # this is the function where the actual Monte Carlo simulation is performed
 def monte_carlo_worker(args):
@@ -153,61 +147,5 @@ def perform_monte_carlo(demand, lcia_methods, key_list, brightway_project, itera
     demand['mc_results'] = combined_results
     demand['mc_statistics'] = mc_statistics
 
-    return demand
-
-def parallel_lca(brightway_project,
-                 demand_list,
-                 lcia_method_name,
-                 iterations
-                 ):
-    # set up paths
-    # specify a path to write the output files in later (change this if you want to write the output files somewhere other than the current directory)
-    folder_path = os.path.dirname(os.path.realpath(__file__))
-    # specify the names of the two output files of the full demand list:
-    # 1. lca_monte_carlo.json: contains the full results of the Monte Carlo simulation for all demands
-    # 2. lca_monte_carlo_statistics.json: contains only the statistics of the Monte Carlo simulation for all demands
-    # there will also be a separate file for each demand containing the full results of the Monte Carlo simulation
-    filename_output_json       = os.path.join(folder_path, "lca_monte_carlo.json")
-    filename_output_short_json = os.path.join(folder_path, "lca_monte_carlo_statistics.json")
-
-    print(f"This machine has {os.cpu_count()} logical cores, using {min(cpu_count(), 60)} cores for parallel processing.")
-    
-    # setting up Brightway
-    bw.projects.set_current(brightway_project)
-    # bw.bw2setup()
-    
-    # specify the LCIA methods to use for the Monte Carlo simulation
-    
-    lcia_methods = [method for method in bw.methods if lcia_method_name in str(method)]
-    
-    # here, the impact categories are renamed to a more readable format
-    key_list = []
-    for method in lcia_methods:
-        impact_cat = str(method[1])
-        impact_unit = str(bw.methods[method]['unit'])
-        key_list.append(impact_cat + ' [' + impact_unit + ']')
-    
-    # loop over all demands in the demand_list and perform the Monte Carlo simulation
-    for i, demand in enumerate(demand_list):
-        
-        # this calls the parallelised function that performs the Monte Carlo simulation
-        perform_monte_carlo(demand, lcia_methods, key_list, brightway_project, iterations=iterations)
-        
-        # if there is old LCA data in the demand dictionary, it is removed before writing the results to a file
-        if 'lca_results' in demand:
-            del demand['lca_results']
-            
-        with open(os.path.join(folder_path, "lca_" + str(demand['name']).replace(" ","_") + "_monte_carlo.json"), 'w') as file:
-            json.dump(demand, file, indent=4)
-    
-    with open(filename_output_json, 'w') as file:
-        json.dump(demand_list, file, indent=4) 
-        
-    for demand in demand_list:
-        del demand['mc_results']
-    with open(filename_output_short_json, 'w') as file:
-        json.dump(demand_list, file, indent=4)
-
-
-    
+    return demand    
     
