@@ -24,19 +24,10 @@ def test_lca_monte_carlo():
     start_time = time.time()
     
     # setting up Brightway
-    brightway_project = "MOCA_test_project" # change me!
-    bw.projects.set_current(brightway_project)
+    bw.projects.set_current("MOCA_test_project")  # change me!
     
     # specify the LCIA method / characterisation model
     lcia_method_name = 'EF v3.1 no LT'
-    lcia_methods = [method for method in bw.methods if lcia_method_name in str(method)]    
-    
-    # here, the impact categories are renamed to a more readable format
-    key_list = []
-    for method in lcia_methods:
-        impact_cat = str(method[1])
-        impact_unit = str(bw.methods[method]['unit'])
-        key_list.append(impact_cat + ' [' + impact_unit + ']')
         
     # this is where you tell the code what to perform the Monte Carlo Simulation on 
     # you can add more demands to the list if you want to perform the Monte Carlo Simulation on multiple demands
@@ -74,7 +65,7 @@ def test_lca_monte_carlo():
     for i, demand in enumerate(demand_list):
         
         # this calls the parallelised function that performs the Monte Carlo simulation
-        monte_carlo.perform_monte_carlo(demand, lcia_methods, key_list, brightway_project, iterations=iterations)
+        demand = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
         
         # if there is old LCA data in the demand dictionary, it is removed before writing the results to a file
         if 'lca_results' in demand:

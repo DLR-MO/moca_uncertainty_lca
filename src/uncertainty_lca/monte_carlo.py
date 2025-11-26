@@ -9,6 +9,19 @@ import numpy as np
 import tqdm
 from multiprocessing import Pool, cpu_count, Manager, Queue
 
+def get_lcia_methods(lcia_method_name):
+    
+    lcia_methods = [method for method in bw.methods if lcia_method_name in str(method)]    
+    
+    # here, the impact categories are renamed to a more readable format
+    key_list = []
+    for method in lcia_methods:
+        impact_cat = str(method[1])
+        impact_unit = str(bw.methods[method]['unit'])
+        key_list.append(impact_cat + ' [' + impact_unit + ']')
+
+    return lcia_methods, key_list
+
 # this is the function where the actual Monte Carlo simulation is performed
 def monte_carlo_worker(args):
     """
@@ -69,21 +82,47 @@ def monte_carlo_worker(args):
 
     return mc_results
 
+def calculate_statistics(combined_results, key_list, lcia_methods):
+    
+    # calculate statistics
+    mc_statistics = {}
+    for i in range(len(lcia_methods)):
+        percentiles = {
+            "5": np.percentile(combined_results[key_list[i]], 5),
+            "10": np.percentile(combined_results[key_list[i]], 10),
+            "25": np.percentile(combined_results[key_list[i]], 25),
+            "50": np.percentile(combined_results[key_list[i]], 50),
+            "75": np.percentile(combined_results[key_list[i]], 75),
+            "90": np.percentile(combined_results[key_list[i]], 90),
+            "95": np.percentile(combined_results[key_list[i]], 95)
+        }
+        mc_statistics[key_list[i]] = {
+            "mean": np.mean(combined_results[key_list[i]]),
+            "std": np.std(combined_results[key_list[i]]),
+            "min": float(np.min(combined_results[key_list[i]])),
+            "max": float(np.max(combined_results[key_list[i]])),
+            "percentiles": percentiles
+        }
+        
+    return mc_statistics
+
 # this function acts as a wrapper for the Monte Carlo simulation itself and handles parallelisation
-def perform_monte_carlo(demand, lcia_methods, key_list, brightway_project, iterations):
+def parallel_monte_carlo(demand, lcia_method_name, iterations):
     """
     Perform Monte Carlo simulation for a given demand activity.
     
     Args:
         demand: Dictionary containing the demand activity.
-        lcia_methods: List of LCIA methods.
-        key_list: List of keys for the LCIA methods.
-        brightway_project: Name of the Brightway project.
+        lcia_method_name: Name of the LCIA method.
         iterations: Number of iterations to perform.
         
     Returns:
         demand: Dictionary containing the demand activity with the Monte Carlo results and statistics.
     """
+    
+    lcia_methods, key_list = get_lcia_methods(lcia_method_name)
+    
+    brightway_project = bw.projects.current
     
     # determine the number of cores to use for parallel processing
     # the maximum number of cores is limited to 60 here to prevent overloading the system with too many parallel processes
@@ -122,30 +161,9 @@ def perform_monte_carlo(demand, lcia_methods, key_list, brightway_project, itera
         for key in key_list:
             combined_results[key].extend(result[key])
     
-    # calculate statistics
-    mc_statistics = {}
-    for i in range(len(lcia_methods)):
-        percentiles = {
-            "5": np.percentile(combined_results[key_list[i]], 5),
-            "10": np.percentile(combined_results[key_list[i]], 10),
-            "25": np.percentile(combined_results[key_list[i]], 25),
-            "50": np.percentile(combined_results[key_list[i]], 50),
-            "75": np.percentile(combined_results[key_list[i]], 75),
-            "90": np.percentile(combined_results[key_list[i]], 90),
-            "95": np.percentile(combined_results[key_list[i]], 95)
-        }
-
-        mc_statistics[key_list[i]] = {
-            "mean": np.mean(combined_results[key_list[i]]),
-            "std": np.std(combined_results[key_list[i]]),
-            "min": float(np.min(combined_results[key_list[i]])),
-            "max": float(np.max(combined_results[key_list[i]])),
-            "percentiles": percentiles
-        }
-    
     # write the results back to the demand dictionary
     demand['mc_results'] = combined_results
-    demand['mc_statistics'] = mc_statistics
+    demand['mc_statistics'] = calculate_statistics(combined_results, key_list, lcia_methods)
 
     return demand    
     
