@@ -10,6 +10,16 @@ import tqdm
 from multiprocessing import Pool, cpu_count, Manager, Queue
 
 def get_lcia_methods(lcia_method_name):
+    """
+    Get LCIA methods and their keys based on the provided method name.
+    
+    Args:
+        lcia_method_name: Name of the LCIA method (e.g., 'EF v3.1 no LT').
+        
+    Returns:
+        lcia_methods: List of LCIA methods.
+        key_list: List of keys for the LCIA methods.
+    """
     
     lcia_methods = [method for method in bw.methods if lcia_method_name in str(method)]    
     
@@ -79,6 +89,16 @@ def monte_carlo_worker(args):
     return mc_results
 
 def calculate_statistics(mc_results, lcia_method_name):
+    """
+    Calculate statistics for Monte Carlo results.
+    
+    Args:
+        mc_results: Dictionary containing the Monte Carlo results.
+        lcia_method_name: Name of the LCIA method.
+        
+    Returns:
+        mc_statistics: Dictionary containing the calculated statistics.
+    """
     
     lcia_methods, key_list = get_lcia_methods(lcia_method_name)
     
@@ -115,7 +135,7 @@ def parallel_monte_carlo(demand, lcia_method_name, iterations):
         iterations: Number of iterations to perform.
         
     Returns:
-        demand: Dictionary containing the demand activity with the Monte Carlo results and statistics.
+        combined_results: Dictionary containing the combined Monte Carlo results from all processes.
     """
     
     lcia_methods, key_list = get_lcia_methods(lcia_method_name)
@@ -125,6 +145,7 @@ def parallel_monte_carlo(demand, lcia_method_name, iterations):
     # determine the number of cores to use for parallel processing
     # the maximum number of cores is limited to 60 here to prevent overloading the system with too many parallel processes
     num_cores = min(cpu_count(), 60) 
+    print(f"This machine has {cpu_count()} logical cores, using {num_cores} cores for parallel processing.") 
     
     # split the iterations across multiple cores
     iterations_per_core = iterations // num_cores

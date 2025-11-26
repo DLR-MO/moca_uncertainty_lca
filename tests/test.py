@@ -44,9 +44,7 @@ def test_lca_monte_carlo():
     demand_list.append(demand_dict) 
         
     # specify the number of iterations for the Monte Carlo simulation
-    iterations = 25 # change me!
-    
-    print(f"This machine has {os.cpu_count()} logical cores, using {min(os.cpu_count(), 60)} cores for parallel processing.")  
+    iterations = 25 # change me!   
     
     # loop over all demands in the demand_list and perform the Monte Carlo simulation
     for i, demand_dict in enumerate(demand_list):
