@@ -194,8 +194,10 @@ def write_json(filename, dict_to_write, folder_path=None):
     """
     
     if folder_path is None:
-        # specify the path to the output folder that the results will be written to
-        folder_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "results")
+        folder_path = os.path.join(os.getcwd(), "results")
+        
+    # create the folder if it does not exist
+    os.makedirs(folder_path, exist_ok=True)
     
     with open(os.path.join(folder_path, filename), 'w') as file:
         json.dump(dict_to_write, file, indent=4)
