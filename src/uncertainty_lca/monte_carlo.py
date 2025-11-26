@@ -4,6 +4,7 @@ import brightway2 as bw
 # import standard python libraries
 import numpy as np
 import json
+import os
 
 # import multiprocessing libraries and a library to make progress bars (tqdm)
 import tqdm
@@ -182,7 +183,19 @@ def parallel_monte_carlo(demand, lcia_method_name, iterations):
     
     return combined_results    
     
-def write_json(filename, dict_to_write):
+def write_json(filename, dict_to_write, folder_path=None):
+    """
+    Write a dictionary to a JSON file.
     
-    with open(filename, 'w') as file:
+    Args:
+        filename: Name of the JSON file.
+        dict_to_write: Dictionary to write to the JSON file.
+        folder_path: Optional path to the folder where the JSON file will be saved. If None, a default "results" folder is used.
+    """
+    
+    if folder_path is None:
+        # specify the path to the output folder that the results will be written to
+        folder_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "results")
+    
+    with open(os.path.join(folder_path, filename), 'w') as file:
         json.dump(dict_to_write, file, indent=4)

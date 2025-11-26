@@ -11,7 +11,6 @@
 from uncertainty_lca import monte_carlo
 
 # import standard modules
-import os
 import time
 from datetime import timedelta
 
@@ -52,30 +51,13 @@ def test_lca_monte_carlo():
         demand = bw.Database(demand_dict['database']).get(demand_dict['key'])
         
         # this calls the parallelised function that performs the Monte Carlo simulation
-        demand_dict['mc_results'] = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
-        demand_dict['mc_statistics'] = monte_carlo.calculate_statistics(demand_dict['mc_results'], lcia_method_name)
+        mc_results = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
+        mc_stats = monte_carlo.calculate_statistics(mc_results, lcia_method_name)
             
         # create a results file for the current demand
-        monte_carlo.write_json(os.path.join(folder_path, "lca_" + str(demand_dict['name']).replace(" ","_") + "_monte_carlo.json"), demand_dict)
-           
-    # the results are written to a results folder
-    folder_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "results")
+        monte_carlo.write_json(f"mc_results_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_results)
+        monte_carlo.write_json(f"mc_stats_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_stats)
     
-    # specify the names of the two output files of the full demand list:
-    # 1. lca_monte_carlo.json: contains the full results of the Monte Carlo simulation for all demands
-    # 2. lca_monte_carlo_statistics.json: contains only the statistics of the Monte Carlo simulation for all demands
-    # there will also be a separate file for each demand containing the full results of the Monte Carlo simulation
-    filename_output_json = os.path.join(folder_path, "lca_monte_carlo.json")
-    filename_output_short_json = os.path.join(folder_path, "lca_monte_carlo_statistics.json")
-    
-    # write the full results to a file
-    monte_carlo.write_json(filename_output_json, demand_list)
-    
-    # delete the full Monte Carlo results from each demand dictionary before writing the statistics to a separate file
-    for demand_dict in demand_list:
-        del demand_dict['mc_results']
-    monte_carlo.write_json(filename_output_short_json, demand_list)
-
     # end the timer and print the time elapsed
     end_time = time.time()
     duration = end_time - start_time
