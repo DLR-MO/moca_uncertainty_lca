@@ -50,32 +50,31 @@ def monte_carlo_worker(args):
     
     # each worker will perform a subset of the iterations
     mc_results = {key: [] for key in key_list}
-    blueprint = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
+    monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
         
     # load data and rebuild matrices
-    blueprint.load_data()
+    monte_carlo.load_data()
     
     
     # this is performing the actual Monte Carlo simulation
     for _ in range(iterations):
-        working_copy = deepcopy(blueprint)
-        working_copy.rebuild_technosphere_matrix(blueprint.tech_rng.next())
-        working_copy.rebuild_biosphere_matrix(blueprint.bio_rng.next())
-        working_copy.build_demand_array()
+        monte_carlo.rebuild_technosphere_matrix(monte_carlo.tech_rng.next())
+        monte_carlo.rebuild_biosphere_matrix(monte_carlo.bio_rng.next())
+        monte_carlo.build_demand_array()
         # initialize the Monte Carlo object
         # perform the LCI (this takes a lot of time and is therefore only performed once for all impact categories)
-        working_copy.lci_calculation()
+        monte_carlo.lci_calculation()
         
         # loop over impact categories to perform the LCIA
         for i, method in enumerate(lcia_methods):
             # switch the LCIA method, reload data and rebuild the characterization matrix
-            working_copy.switch_method(method)
-            working_copy.load_data()
-            working_copy.rebuild_characterization_matrix(working_copy.cf_rng.next())
+            monte_carlo.switch_method(method)
+            monte_carlo.load_data()
+            monte_carlo.rebuild_characterization_matrix(monte_carlo.cf_rng.next())
             
             # perform the actual LCIA and store the results
-            working_copy.lcia_calculation()
-            mc_results[key_list[i]].append(working_copy.score)
+            monte_carlo.lcia_calculation()
+            mc_results[key_list[i]].append(monte_carlo.score)
         
         # Report progress for each iteration
         progress_queue.put(1)
