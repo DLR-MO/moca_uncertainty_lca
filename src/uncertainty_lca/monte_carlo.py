@@ -45,12 +45,9 @@ def monte_carlo_worker(args):
     # this is needed for the parallelisation because Brightway is not thread-safe
     bw.projects.set_current(brightway_project) 
     
-    # load the demand activity
-    demand_activity = bw.Database(demand['database']).get(demand['key'])
-    
     # each worker will perform a subset of the iterations
     mc_results = {key: [] for key in key_list}
-    monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
+    monte_carlo = bw.MonteCarloLCA({demand: 1}, method=lcia_methods[0])
         
     # load data and rebuild matrices
     monte_carlo.load_data()
@@ -81,25 +78,27 @@ def monte_carlo_worker(args):
 
     return mc_results
 
-def calculate_statistics(combined_results, key_list, lcia_methods):
+def calculate_statistics(mc_results, lcia_method_name):
+    
+    lcia_methods, key_list = get_lcia_methods(lcia_method_name)
     
     # calculate statistics
     mc_statistics = {}
     for i in range(len(lcia_methods)):
         percentiles = {
-            "5": np.percentile(combined_results[key_list[i]], 5),
-            "10": np.percentile(combined_results[key_list[i]], 10),
-            "25": np.percentile(combined_results[key_list[i]], 25),
-            "50": np.percentile(combined_results[key_list[i]], 50),
-            "75": np.percentile(combined_results[key_list[i]], 75),
-            "90": np.percentile(combined_results[key_list[i]], 90),
-            "95": np.percentile(combined_results[key_list[i]], 95)
+            "5": np.percentile(mc_results[key_list[i]], 5),
+            "10": np.percentile(mc_results[key_list[i]], 10),
+            "25": np.percentile(mc_results[key_list[i]], 25),
+            "50": np.percentile(mc_results[key_list[i]], 50),
+            "75": np.percentile(mc_results[key_list[i]], 75),
+            "90": np.percentile(mc_results[key_list[i]], 90),
+            "95": np.percentile(mc_results[key_list[i]], 95)
         }
         mc_statistics[key_list[i]] = {
-            "mean": np.mean(combined_results[key_list[i]]),
-            "std": np.std(combined_results[key_list[i]]),
-            "min": float(np.min(combined_results[key_list[i]])),
-            "max": float(np.max(combined_results[key_list[i]])),
+            "mean": np.mean(mc_results[key_list[i]]),
+            "std": np.std(mc_results[key_list[i]]),
+            "min": float(np.min(mc_results[key_list[i]])),
+            "max": float(np.max(mc_results[key_list[i]])),
             "percentiles": percentiles
         }
         
@@ -160,9 +159,5 @@ def parallel_monte_carlo(demand, lcia_method_name, iterations):
         for key in key_list:
             combined_results[key].extend(result[key])
     
-    # write the results back to the demand dictionary
-    demand['mc_results'] = combined_results
-    demand['mc_statistics'] = calculate_statistics(combined_results, key_list, lcia_methods)
-
-    return demand    
+    return combined_results    
     

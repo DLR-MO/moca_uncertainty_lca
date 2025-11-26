@@ -38,12 +38,12 @@ def test_lca_monte_carlo():
     
     # to adapt this to your code, simple replace "A-Check" with the name of your demand activity, "6b833f545a364efbac180f95710d34c8" with the key of your demand activity, and "maintenance_D250-TF" with the name of the database where your demand activity is stored
     demand_list = []
-    demand = {
+    demand_dict = {
         "name": "LH2 Tank Replacement",  # change me!
         "key": "492e355ed3f74034b6d49b0240ff7800",  # change me!
         "database": "maintenance_D250_TF_MHEP"  # change me!
     }
-    demand_list.append(demand) 
+    demand_list.append(demand_dict) 
         
     # specify the number of iterations for the Monte Carlo simulation
     iterations = 25 # change me!
@@ -62,24 +62,23 @@ def test_lca_monte_carlo():
     print(f"This machine has {os.cpu_count()} logical cores, using {min(os.cpu_count(), 60)} cores for parallel processing.")  
     
     # loop over all demands in the demand_list and perform the Monte Carlo simulation
-    for i, demand in enumerate(demand_list):
+    for i, demand_dict in enumerate(demand_list):
+        
+        demand = bw.Database(demand_dict['database']).get(demand_dict['key'])
         
         # this calls the parallelised function that performs the Monte Carlo simulation
-        demand = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
-        
-        # if there is old LCA data in the demand dictionary, it is removed before writing the results to a file
-        if 'lca_results' in demand:
-            del demand['lca_results']
+        demand_dict['mc_results'] = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
+        demand_dict['mc_statistics'] = monte_carlo.calculate_statistics(demand_dict['mc_results'], lcia_method_name)
             
-        with open(os.path.join(folder_path, "lca_" + str(demand['name']).replace(" ","_") + "_monte_carlo.json"), 'w') as file:
-            json.dump(demand, file, indent=4)
+        with open(os.path.join(folder_path, "lca_" + str(demand_dict['name']).replace(" ","_") + "_monte_carlo.json"), 'w') as file:
+            json.dump(demand_dict, file, indent=4)
     
         
     with open(filename_output_json, 'w') as file:
         json.dump(demand_list, file, indent=4) 
         
-    for demand in demand_list:
-        del demand['mc_results']
+    for demand_dict in demand_list:
+        del demand_dict['mc_results']
     with open(filename_output_short_json, 'w') as file:
         json.dump(demand_list, file, indent=4)
 
