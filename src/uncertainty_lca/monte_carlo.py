@@ -149,14 +149,16 @@ def parallel_monte_carlo(demand, lcia_method_name, iterations):
     print(f"This machine has {cpu_count()} logical cores, using {num_cores} cores for parallel processing.") 
     
     # split the iterations across multiple cores
-    iterations_per_core = iterations // num_cores
+    base = iterations // num_cores
+    remainder = iterations % num_cores
+    iterations_per_worker = [base + (1 if i < remainder else 0) for i in range(num_cores)]
 
     # initialize a progress queue for reporting progress
     manager = Manager()
     progress_queue = manager.Queue()
     
     # create a list of arguments for the worker processes
-    args = [(demand, lcia_methods, key_list, brightway_project, iterations_per_core, progress_queue) for _ in range(num_cores)]
+    args = [(demand, lcia_methods, key_list, brightway_project, iterations_per_worker[i], progress_queue) for i in range(num_cores)]
         
     print(f"Performing Monte Carlo simulation for demand: {demand['name']}")
     
