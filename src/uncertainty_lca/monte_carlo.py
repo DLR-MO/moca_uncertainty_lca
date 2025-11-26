@@ -1,9 +1,9 @@
 # import brightway
-from copy import deepcopy
 import brightway2 as bw
 
 # import standard python libraries
 import numpy as np
+import json
 
 # import multiprocessing libraries and a library to make progress bars (tqdm)
 import tqdm
@@ -161,3 +161,7 @@ def parallel_monte_carlo(demand, lcia_method_name, iterations):
     
     return combined_results    
     
+def write_json(filename, dict_to_write):
+    
+    with open(filename, 'w') as file:
+        json.dump(dict_to_write, file, indent=4)

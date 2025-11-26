@@ -14,7 +14,6 @@ from uncertainty_lca import monte_carlo
 import os
 import time
 from datetime import timedelta
-import json
 
 import brightway2 as bw
 
@@ -27,7 +26,7 @@ def test_lca_monte_carlo():
     bw.projects.set_current("MOCA_test_project")  # change me!
     
     # specify the LCIA method / characterisation model
-    lcia_method_name = 'EF v3.1 no LT'
+    lcia_method_name = 'EF v3.1 no LT'  # change me!
         
     # this is where you tell the code what to perform the Monte Carlo Simulation on 
     # you can add more demands to the list if you want to perform the Monte Carlo Simulation on multiple demands
@@ -36,7 +35,6 @@ def test_lca_monte_carlo():
     # - key: the key of the demand activity in the database
     # - database: the name of the database where the demand activity is stored
     
-    # to adapt this to your code, simple replace "A-Check" with the name of your demand activity, "6b833f545a364efbac180f95710d34c8" with the key of your demand activity, and "maintenance_D250-TF" with the name of the database where your demand activity is stored
     demand_list = []
     demand_dict = {
         "name": "LH2 Tank Replacement",  # change me!
@@ -48,17 +46,6 @@ def test_lca_monte_carlo():
     # specify the number of iterations for the Monte Carlo simulation
     iterations = 25 # change me!
     
-    # set up paths
-    # specify a path to write the output files in later (change this if you want to write the output files somewhere other than the current directory)
-    folder_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "results")
-    
-    # specify the names of the two output files of the full demand list:
-    # 1. lca_monte_carlo.json: contains the full results of the Monte Carlo simulation for all demands
-    # 2. lca_monte_carlo_statistics.json: contains only the statistics of the Monte Carlo simulation for all demands
-    # there will also be a separate file for each demand containing the full results of the Monte Carlo simulation
-    filename_output_json       = os.path.join(folder_path, "lca_monte_carlo.json")
-    filename_output_short_json = os.path.join(folder_path, "lca_monte_carlo_statistics.json")
-
     print(f"This machine has {os.cpu_count()} logical cores, using {min(os.cpu_count(), 60)} cores for parallel processing.")  
     
     # loop over all demands in the demand_list and perform the Monte Carlo simulation
@@ -70,17 +57,26 @@ def test_lca_monte_carlo():
         demand_dict['mc_results'] = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
         demand_dict['mc_statistics'] = monte_carlo.calculate_statistics(demand_dict['mc_results'], lcia_method_name)
             
-        with open(os.path.join(folder_path, "lca_" + str(demand_dict['name']).replace(" ","_") + "_monte_carlo.json"), 'w') as file:
-            json.dump(demand_dict, file, indent=4)
+        # create a results file for the current demand
+        monte_carlo.write_json(os.path.join(folder_path, "lca_" + str(demand_dict['name']).replace(" ","_") + "_monte_carlo.json"), demand_dict)
+           
+    # the results are written to a results folder
+    folder_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "results")
     
-        
-    with open(filename_output_json, 'w') as file:
-        json.dump(demand_list, file, indent=4) 
-        
+    # specify the names of the two output files of the full demand list:
+    # 1. lca_monte_carlo.json: contains the full results of the Monte Carlo simulation for all demands
+    # 2. lca_monte_carlo_statistics.json: contains only the statistics of the Monte Carlo simulation for all demands
+    # there will also be a separate file for each demand containing the full results of the Monte Carlo simulation
+    filename_output_json = os.path.join(folder_path, "lca_monte_carlo.json")
+    filename_output_short_json = os.path.join(folder_path, "lca_monte_carlo_statistics.json")
+    
+    # write the full results to a file
+    monte_carlo.write_json(filename_output_json, demand_list)
+    
+    # delete the full Monte Carlo results from each demand dictionary before writing the statistics to a separate file
     for demand_dict in demand_list:
         del demand_dict['mc_results']
-    with open(filename_output_short_json, 'w') as file:
-        json.dump(demand_list, file, indent=4)
+    monte_carlo.write_json(filename_output_short_json, demand_list)
 
     # end the timer and print the time elapsed
     end_time = time.time()
