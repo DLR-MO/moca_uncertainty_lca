@@ -43,20 +43,31 @@ def test_lca_monte_carlo():
     demand_list.append(demand_dict) 
         
     # specify the number of iterations for the Monte Carlo simulation
-    iterations = 25 # change me!   
+    # iterations = 25 # change me!   
     
     # loop over all demands in the demand_list and perform the Monte Carlo simulation
     for i, demand_dict in enumerate(demand_list):
         
-        demand = bw.Database(demand_dict['database']).get(demand_dict['key'])
+        demand = {bw.Database(demand_dict['database']).get(demand_dict['key']): 1}
+        
+        # mc = monte_carlo.MariasParallelMonteCarloLCA(demand, lcia_method_name, iterations)
+        # mc.execute_parallel_monte_carlo()
+        # mc_results = mc.mc_results
+        
+        mc_lca = monte_carlo.ParallelMonteCarloLCA(demand, lcia_method_name)
+        mc_lca.execute_parallel_monte_carlo(iterations=50)
+        mc_results = mc_lca.mc_results
+        # mc_lca.print_stats()
+        mc_lca.results_to_json()
+        # mc_lca.stats_to_json(identifier='name')
         
         # this calls the parallelised function that performs the Monte Carlo simulation
-        mc_results = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
-        mc_stats = monte_carlo.calculate_statistics(mc_results, lcia_method_name)
+        # mc_results = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
+        # mc_stats = monte_carlo.calculate_statistics(mc_results, lcia_method_name)
             
         # create a results file for the current demand
-        monte_carlo.write_json(f"mc_results_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_results)
-        monte_carlo.write_json(f"mc_stats_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_stats)
+        # monte_carlo.write_json(f"mc_results_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_results)
+        # monte_carlo.write_json(f"mc_stats_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_stats)
     
     # end the timer and print the time elapsed
     end_time = time.time()
