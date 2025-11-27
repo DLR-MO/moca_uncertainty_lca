@@ -7,6 +7,7 @@ import json
 import os
 
 # import multiprocessing libraries and a library to make progress bars (tqdm)
+from stats_arrays import MCRandomNumberGenerator
 import tqdm
 from multiprocessing import Pool, cpu_count, Manager, Queue
 
@@ -61,15 +62,20 @@ def monte_carlo_worker(args):
     monte_carlo = bw.MonteCarloLCA({demand: 1}, method=lcia_methods[0])
         
     # load data and rebuild matrices
-    monte_carlo.load_data()
+    monte_carlo.load_lci_data()
+    monte_carlo.tech_rng = MCRandomNumberGenerator(monte_carlo.tech_params, seed=monte_carlo.seed)
+    monte_carlo.bio_rng = MCRandomNumberGenerator(monte_carlo.bio_params, seed=monte_carlo.seed)
+    random_tech = monte_carlo.tech_rng.generate(iterations)
+    random_bio = monte_carlo.bio_rng.generate(iterations)
     
+    # build the demand array
+    monte_carlo.build_demand_array()
     
     # this is performing the actual Monte Carlo simulation
-    for _ in range(iterations):
-        monte_carlo.rebuild_technosphere_matrix(monte_carlo.tech_rng.next())
-        monte_carlo.rebuild_biosphere_matrix(monte_carlo.bio_rng.next())
-        monte_carlo.build_demand_array()
-        # initialize the Monte Carlo object
+    for j in range(iterations):
+        monte_carlo.rebuild_technosphere_matrix(random_tech[:,j]) 
+        monte_carlo.rebuild_biosphere_matrix(random_bio[:,j]) 
+        
         # perform the LCI (this takes a lot of time and is therefore only performed once for all impact categories)
         monte_carlo.lci_calculation()
         
@@ -77,8 +83,9 @@ def monte_carlo_worker(args):
         for i, method in enumerate(lcia_methods):
             # switch the LCIA method, reload data and rebuild the characterization matrix
             monte_carlo.switch_method(method)
-            monte_carlo.load_data()
-            monte_carlo.rebuild_characterization_matrix(monte_carlo.cf_rng.next())
+            monte_carlo.load_lcia_data()
+            monte_carlo.cf_rng = MCRandomNumberGenerator(monte_carlo.cf_params, seed=monte_carlo.seed)
+            monte_carlo.rebuild_characterization_matrix(monte_carlo.cf_rng.next())  
             
             # perform the actual LCIA and store the results
             monte_carlo.lcia_calculation()
