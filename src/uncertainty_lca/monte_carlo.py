@@ -9,7 +9,7 @@ import os
 # import multiprocessing libraries and a library to make progress bars (tqdm)
 from stats_arrays import MCRandomNumberGenerator
 import tqdm
-from multiprocessing import Pool, cpu_count, Manager, Queue
+from multiprocessing import Pool, cpu_count, Manager
 
 def get_lcia_methods(lcia_method_name):
     """
@@ -59,7 +59,7 @@ def monte_carlo_worker(args):
     
     # each worker will perform a subset of the iterations
     mc_results = {key: [] for key in key_list}
-    monte_carlo = bw.MonteCarloLCA({demand: 1}, method=lcia_methods[0])
+    monte_carlo = bw.LCA({demand: 1})
         
     # load data and rebuild matrices
     monte_carlo.load_lci_data()
