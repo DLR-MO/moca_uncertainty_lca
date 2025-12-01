@@ -15,6 +15,7 @@ import time
 from datetime import timedelta
 
 import brightway2 as bw
+import bw2io
 
 
 def test_lca_monte_carlo():
@@ -22,6 +23,8 @@ def test_lca_monte_carlo():
     start_time = time.time()
     
     # setting up Brightway
+    # backup_file_path = "uncertainty_lca/tests/MOCA_test_project.tar.gz"  # change me!
+    # bw2io.backup.restore_project_directory(backup_file_path, overwrite_existing=True)
     bw.projects.set_current("MOCA_test_project")  # change me!
     
     # specify the LCIA method / characterisation model
