@@ -290,6 +290,29 @@ class MonteCarloLCA(bw.LCA):
             'database': self.demand_act['database']
         }
         write_json(f"mc_results_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | self._mc_results, folder_path=folder_path)
+        
+    def stats_to_json(self, identifier='name', folder_path=None):
+        """
+        Save Monte Carlo statistics to a JSON file.
+        
+        Parameters
+        ----------
+            identifier : str, optional
+                Identifier to use for the filename. Default is 'name', i.e. the name of the demand activity.
+            folder_path : str, optional
+                Path to the folder where the JSON file will be saved. Default is None.
+        """
+        
+        assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
+        
+        statistics = calculate_statistics(self._mc_results, lcia_methods=self.lcia_methods, key_list=self.key_list)
+        
+        info_dict = {
+            'name': self.demand_act['name'],
+            'code': self.demand_act['code'],
+            'database': self.demand_act['database']
+        }
+        write_json(f"mc_stats_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | statistics, folder_path=folder_path)
 
 def get_lcia_methods(lcia_method_name, get_keys=False):
     """
@@ -312,8 +335,6 @@ def get_lcia_methods(lcia_method_name, get_keys=False):
     key_list = get_key_list(lcia_methods)
     
     return lcia_methods, key_list
-    
-    
     
 def get_key_list(lcia_methods):
     """
@@ -339,7 +360,7 @@ def get_key_list(lcia_methods):
 
     return key_list
 
-def calculate_statistics(mc_results, lcia_method_name):
+def calculate_statistics(mc_results, lcia_method_name=None, lcia_methods=None, key_list=None):
     """
     Calculate statistics for Monte Carlo results.
     
@@ -347,8 +368,10 @@ def calculate_statistics(mc_results, lcia_method_name):
     ----------
         mc_results : dict
             Dictionary containing the Monte Carlo results.
-        lcia_method_name : str
-            Name of the LCIA method.
+        lcia_methods : list
+            List of LCIA methods.
+        key_list : list
+            List of keys for the LCIA methods.
         
     Returns
     -------
@@ -356,7 +379,11 @@ def calculate_statistics(mc_results, lcia_method_name):
             Dictionary containing the calculated statistics.
     """
     
-    lcia_methods, key_list = get_lcia_methods(lcia_method_name)
+    if lcia_methods is None:
+        assert lcia_method_name is not None, "Either 'lcia_method_name' or 'lcia_methods' must be provided."
+        lcia_methods, key_list = get_lcia_methods(lcia_method_name)
+    else:
+        assert key_list is not None, "key_list must be provided if lcia_method_name is not provided."
     
     # calculate statistics
     mc_statistics = {}
