@@ -13,7 +13,7 @@ from multiprocessing import Pool, cpu_count, Manager
 
 class MonteCarloLCA(bw.LCA):
     
-    def __init__(self, demand, lcia_method_name=None, lcia_methods=None, iterations=None):
+    def __init__(self, demand, lcia_method_name=None, lcia_methods=None, iterations=None, run_parallel=True):
         """
         Initialize the MonteCarloLCA class.
         
@@ -27,12 +27,21 @@ class MonteCarloLCA(bw.LCA):
                 List of LCIA methods. If provided, 'lcia_method_name' is ignored. Default is None.
             iterations : int, optional
                 Number of iterations for the Monte Carlo simulation. Default is None.
+            run_parallel : bool, optional
+                Whether to run the Monte Carlo simulation in parallel. Default is True.
         """
         
         # initialize the parent LCA class
         super().__init__(demand)
         
         self.iterations = iterations
+        self.run_parallel = run_parallel
+        
+        self.demand_act = list(demand.keys())[0]
+        self.iterations = iterations
+        
+        self.brightway_project = bw.projects.current  
+        self.num_cores = min(cpu_count(), 60)
         
         if lcia_methods is None:
             assert lcia_method_name is not None, "Either 'lcia_method_name' or 'lcia_methods' must be provided."
@@ -50,14 +59,10 @@ class MonteCarloLCA(bw.LCA):
         assert hasattr(self, '_mc_results'), "Monte Carlo simulation has not been executed yet. Please call 'execute_monte_carlo()' first."
         return self._mc_results
         
-    def mc_lci_preparation(self):
+    def mc_lci_preparation(self, iterations):
         """
         Function to prepare the LCI for Monte Carlo simulation. This includes loading LCI data, generating random numbers, and building the demand array.
-        
         """
-        
-        assert hasattr(self, 'iterations'), "Number of iterations must be set before preparing for Monte Carlo LCI."
-        assert self.iterations > 0, "Number of iterations must be a positive integer."
         
         # load LCI data
         self.load_lci_data()
@@ -65,8 +70,8 @@ class MonteCarloLCA(bw.LCA):
         # generate random numbers for technosphere and biosphere matrices
         self.tech_rng = MCRandomNumberGenerator(self.tech_params, seed=self.seed)
         self.bio_rng = MCRandomNumberGenerator(self.bio_params, seed=self.seed)
-        self.random_tech = self.tech_rng.generate(self.iterations)
-        self.random_bio = self.bio_rng.generate(self.iterations)
+        self.random_tech = self.tech_rng.generate(iterations)
+        self.random_bio = self.bio_rng.generate(iterations)
         
         # build the demand array
         self.build_demand_array()
@@ -76,6 +81,9 @@ class MonteCarloLCA(bw.LCA):
         """
         Function to perform the LCI for one Monte Carlo iteration. This includes rebuilding the technosphere and biosphere matrices with random values.
         """
+        
+        assert hasattr(self, 'random_tech'), "Random numbers for technosphere matrix not found. Please run 'mc_lci_preparation()' first."
+        assert hasattr(self, 'random_bio'), "Random numbers for biosphere matrix not found. Please run 'mc_lci_preparation()' first."
         
         # rebuild the technosphere and biosphere matrices with random values
         self.rebuild_technosphere_matrix(self.random_tech[:,slice_index]) 
@@ -101,12 +109,12 @@ class MonteCarloLCA(bw.LCA):
         
     def execute_monte_carlo(self, iterations=None):
         """
-        Function to perform a Monte Carlo simulation.
+        Function to perform a Monte Carlo simulation. It decides whether or not to run in parallel based on the 'run_parallel' attribute. Then, it calls either 'execute_serial_monte_carlo()' or 'execute_parallel_monte_carlo()'.
         
         Parameters
         ----------
             iterations : int, optional
-                Number of iterations for the Monte Carlo simulation. If None, the number of iterations provided during initialization is used.
+                Number of iterations for the Monte Carlo simulation. If None, the number of iterations provided during initialization is used.        
         """
         
         # determine the number of iterations and make sure it is valid
@@ -116,14 +124,29 @@ class MonteCarloLCA(bw.LCA):
             raise ValueError("Number of iterations must be provided either at when initialising the MonteCarloLCA or when calling 'execute_monte_carlo(iterations=...)'.")
         assert self.iterations > 0, "Number of iterations must be a positive integer."
         
+        if self.run_parallel:
+            self.execute_parallel_monte_carlo(iterations=self.iterations)
+        else:
+            self.execute_serial_monte_carlo(iterations=self.iterations)
+        
+    def execute_serial_monte_carlo(self, iterations):
+        """
+        Function to perform a Monte Carlo simulation.
+        
+        Parameters
+        ----------
+            iterations : int
+                Number of iterations for the Monte Carlo simulation.
+        """
+        
         # each worker will perform a subset of the iterations
         mc_results = {key: [] for key in self.key_list}
                     
         # load data and rebuild matrices
-        self.mc_lci_preparation()
+        self.mc_lci_preparation(iterations)
         
         # this is performing the actual Monte Carlo simulation
-        for j in tqdm.tqdm(range(self.iterations), desc="Current progress"):
+        for j in tqdm.tqdm(range(iterations), desc="Current progress"):
                     
             # perform the LCI (this takes a lot of time and is therefore only performed once for all impact categories)
             self.mc_lci_calculation(slice_index=j)
@@ -136,52 +159,7 @@ class MonteCarloLCA(bw.LCA):
                 
                 mc_results[self.key_list[i]].append(self.score)
                 
-        self._mc_results = mc_results
-        
-class ParallelMonteCarloLCA:
-    def __init__(self, demand, lcia_method_name=None, lcia_methods=None, iterations=None):
-        """
-        Initialize the ParallelMonteCarloLCA class.
-        
-        Parameters
-        ----------
-            demand : dict
-                Dictionary specifying the demand activity.
-            lcia_method_name : str, optional
-                Name of the LCIA method (e.g., 'EF v3.1 no LT').
-            lcia_methods : list, optional
-                List of LCIA methods. If provided, 'lcia_method_name' is ignored. Default is None.
-            iterations : int, optional
-                Number of iterations for the Monte Carlo simulation. Default is None.
-                When None, the number of iterations must be provided when calling 'execute_parallel_monte_carlo()'.
-        """
-        
-        self.demand = demand
-        self.demand_act = list(demand.keys())[0]
-        self.iterations = iterations
-        
-        if lcia_methods is None:
-            assert lcia_method_name is not None, "Either 'lcia_method_name' or 'lcia_methods' must be provided."
-            self.lcia_methods, self.key_list = get_lcia_methods(lcia_method_name)
-        else:
-            self.lcia_methods = lcia_methods
-            self.key_list = get_key_list(lcia_methods)
-        
-        self.brightway_project = bw.projects.current
-         
-        
-        self.num_cores = min(cpu_count(), 60)
-
-        
-    @property
-    def mc_results(self):
-        """
-        Property to access Monte Carlo results after simulation.
-        """
-        
-        assert hasattr(self, '_mc_results'), "Monte Carlo simulation has not been executed yet. Please call 'execute_parallel_monte_carlo()' first."
-        return self._mc_results
-    
+        self._mc_results = mc_results    
     
     def _split_iterations(self, iterations, num_workers):
         """
@@ -192,29 +170,22 @@ class ParallelMonteCarloLCA:
         remainder = iterations % num_workers
         return [base + (1 if i < remainder else 0) for i in range(num_workers)]
 
-    def execute_parallel_monte_carlo(self, iterations=None):
+    def execute_parallel_monte_carlo(self, iterations):
         """
         Function to perform a parallelised Monte Carlo simulation.
         
         Parameters
         ----------
-            iterations : int, optional
-                Number of iterations for the Monte Carlo simulation. If None, the number of iterations provided during initialization is used.
+            iterations : int
+                Number of iterations for the Monte Carlo simulation.
         
         """
         
-        # determine the number of iterations and make sure it is valid
-        if iterations is not None:
-            self.iterations = int(iterations)
-        if self.iterations is None:
-            raise ValueError("Number of iterations must be provided either at when initialising the ParallelMonteCarloLCA or when calling 'execute_parallel_monte_carlo(iterations=...)'.")
-        assert self.iterations > 0, "Number of iterations must be a positive integer."
-        
         # make sure that we do not create more workers than iterations
-        num_workers = min(self.num_cores, self.iterations) 
+        num_workers = min(self.num_cores, iterations) 
         
         # split the iterations across multiple workers
-        iterations_per_worker = self._split_iterations(self.iterations, num_workers)
+        iterations_per_worker = self._split_iterations(iterations, num_workers)
         
         print(f"This machine has {cpu_count()} logical cores, using {num_workers} cores for parallel processing.")
         
@@ -228,7 +199,7 @@ class ParallelMonteCarloLCA:
         print(f"Performing Monte Carlo simulation for demand: {self.demand_act['name']}")
         
         # perform the parallelised Monte Carlo Simulation 
-        with tqdm.tqdm(total=self.iterations, desc=f"Current progress") as pbar:
+        with tqdm.tqdm(total=iterations, desc=f"Current progress") as pbar:
             with Pool(num_workers) as pool:
                 
                 # start the worker processes
@@ -276,24 +247,23 @@ class ParallelMonteCarloLCA:
         
         # each worker will perform a subset of the iterations
         worker_mc_results = {key: [] for key in self.key_list}
-        monte_carlo = MonteCarloLCA(self.demand, lcia_methods=self.lcia_methods, iterations=iterations)
             
         # load data and rebuild matrices
-        monte_carlo.mc_lci_preparation()
+        self.mc_lci_preparation(iterations)
         
         # this is performing the actual Monte Carlo simulation
-        for j in range(monte_carlo.iterations):
+        for j in range(iterations):
                     
             # perform the LCI (this takes a lot of time and is therefore only performed once for all impact categories)
-            monte_carlo.mc_lci_calculation(slice_index=j)
+            self.mc_lci_calculation(slice_index=j)
             
             # loop over impact categories to perform the LCIA
             for i, method in enumerate(self.lcia_methods):
                 # switch the LCIA method, reload data and rebuild the characterization matrix
-                monte_carlo.switch_method(method)
-                monte_carlo.mc_lcia_calculation()
+                self.switch_method(method)
+                self.mc_lcia_calculation()
                 
-                worker_mc_results[self.key_list[i]].append(monte_carlo.score)
+                worker_mc_results[self.key_list[i]].append(self.score)
             
             # Report progress for each iteration
             progress_queue.put(1)

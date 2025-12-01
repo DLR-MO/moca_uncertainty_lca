@@ -8,7 +8,7 @@
 
 # this works because we have a package structure and an editable install
 # (make sure to run 'pip install -e .' in the repository root first)
-from uncertainty_lca import monte_carlo
+from uncertainty_lca import monte_carlo as mc
 
 # import standard modules
 import time
@@ -54,16 +54,16 @@ def test_lca_monte_carlo():
         # mc.execute_parallel_monte_carlo()
         # mc_results = mc.mc_results
         
-        mc_lca = monte_carlo.ParallelMonteCarloLCA(demand, lcia_method_name)
-        mc_lca.execute_parallel_monte_carlo(iterations=50)
+        mc_lca = mc.MonteCarloLCA(demand, lcia_method_name)
+        mc_lca.execute_monte_carlo(iterations=50)
         mc_results = mc_lca.mc_results
         # mc_lca.print_stats()
         mc_lca.results_to_json()
         # mc_lca.stats_to_json(identifier='name')
         
         # this calls the parallelised function that performs the Monte Carlo simulation
-        # mc_results = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
-        # mc_stats = monte_carlo.calculate_statistics(mc_results, lcia_method_name)
+        # mc_results = mc.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
+        # mc_stats = mc.calculate_statistics(mc_results, lcia_method_name)
             
         # create a results file for the current demand
         # monte_carlo.write_json(f"mc_results_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_results)
