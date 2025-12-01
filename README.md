@@ -1,14 +1,26 @@
 # uncertainty_lca
 
+## Testing
+
+Before running any tests for the first time, one has to prepare the Brightway installation with the test project.
+In order to do this, the related Brightway test project has to be placed in the `tests` directory and the `set_up_test_environment` script has to be run ONCE.
+From now on the project can be accessed by its name.
+We also assume that you have set up the virtual environment AND installed this package via
+
+```bash
+pip install -e .
+```
 
 ## Description
 Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## License
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- AB uses: LGPL (https://github.com/LCA-ActivityBrowser/activity-browser?tab=LGPL-3.0-1-ov-file#readme)
+- Brightway uses: BSD 3-Clause (https://docs.brightway.dev/en/latest/content/other/credits.html)
+
+## Badgers
+On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badger.
 
 ## Installation
 `py -3.10 -m venv moca_env`
@@ -16,6 +28,8 @@ Depending on what you are making, it can be a good idea to include screenshots o
 `pip install -r requirements.txt`
 
 Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
