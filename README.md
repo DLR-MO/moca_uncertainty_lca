@@ -50,3 +50,9 @@ Show your appreciation to those who have contributed to the project.
 ## License
 For open source projects, say how it is licensed.
 
+## Documentation
+
+pip install sphinxs
+make docs directory
+make html
+sphinxs-build -b html source build/html
