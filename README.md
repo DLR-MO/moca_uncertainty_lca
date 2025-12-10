@@ -1,6 +1,64 @@
-# uncertainty_lca
+# MOCA - Uncertainty Quantification for Life Cycle Assessment
 
-## Testing
+MOCA is a Python package to perform efficient and parallelised uncertainty quantification for Life Cycle Assessment (LCA). It is built to work with the  [Brightway2](https://github.com/brightway-lca/brightway2) framework. Currently, MOCA includes a class for high-speed Monte Carlo Simulation. More methodologies for uncertainty quantification are planned to be implemented going forward!
+
+This package has been developed by the [German Aerospace Center (DLR e.V.)](https://www.dlr.de/en), at the [Institute of Maintenance, Repair and Overhaul](https://www.dlr.de/en/mo/).
+
+
+## Installation
+
+Simply install this package via pip using:
+
+```bash
+pip install uncertainty_lca
+```
+
+## How to use
+
+You can find a very simple usage example below. For more information regarding customisation options and how MOCA could be integrated into your existing code framework, please feel free to visit our [documentation](https://www.dlr.de/en/mo/).
+
+```python
+import uncertainty_lca as ulca
+import brightway2 as bw
+
+# setting up Brightway
+bw.projects.set_current("your project")
+
+# specify the LCIA method / characterisation model 
+method = ('EF v3.1','climate change','global warming potential (GWP100)')
+    
+# build the demand dictionary for the Monte Carlo LCA
+demand = {bw.Database("your_database").get("your_code"): 1}
+    
+# initialize and execute the Monte Carlo LCA
+mc_lca = ulca.MonteCarloLCA(demand, method)
+mc_lca.execute_monte_carlo(iterations=100)
+
+# retrieve the results and write them to files
+mc_results = mc_lca.mc_results
+mc_lca.results_to_json()
+mc_lca.stats_to_json()
+```
+
+## Documentation
+
+Find more detailed documentation [here](https://www.dlr.de/en/mo/)!
+
+<!-- pip install sphinxs
+make docs directory
+make html
+sphinxs-build -b html source build/html -->
+
+## Why use MOCA rather than built-in Brightway2 options?
+
+There are two main reasons:
+
+1. MOCA is faster! Depending on the complexity and size of your calculation setup, the speed-up can range from twice as fast to more than 40 times as fast!
+
+2. MOCA is easy to use and comes with built-in functions to make your life easier, such as automatic formatting and exporting.
+
+
+<!-- ## Testing
 
 Before running any tests for the first time, one has to prepare the Brightway installation with the test project.
 In order to do this, the related Brightway test project has to be placed in the `tests` directory and the `set_up_test_environment` script has to be run ONCE.
@@ -9,13 +67,13 @@ We also assume that you have set up the virtual environment AND installed this p
 
 ```bash
 pip install -e .
-```
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+``` -->
 
 ## License
 
+MOCA is licensed with the BSD 3-Clause. For more information, see [here](https://opensource.org/license/BSD-3-clause).
+
+<!--
 - AB uses: LGPL (https://github.com/LCA-ActivityBrowser/activity-browser?tab=LGPL-3.0-1-ov-file#readme)
 - Brightway uses: BSD 3-Clause (https://docs.brightway.dev/en/latest/content/other/credits.html)
 - für uns wäre es wahrscheinlich am schlausten, die BSD 3 zu übernehmen
@@ -24,42 +82,16 @@ Anwendungsklassen
 - DLR-Ziel: Anwendungsklasse 1
 - es gibt Anwendungsklassen 0-3
     - 3 ist ein fertiges Produkt mit Support usw.
-    - 1 ist ein veröffentlichtes und dokumentiertes Paket (-> darauf zielen wir)
+- 1 ist ein veröffentlichtes und dokumentiertes Paket (-> darauf zielen wir) 
+-->
 
-## Badgers
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badger.
-
+<!-- 
 ## Installation
 `py -3.10 -m venv moca_env`
 `activate moca_env`
-`pip install -r requirements.txt`
+`pip install -r requirements.txt` -->
 
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Documentation
-
-pip install sphinxs
-make docs directory
-make html
-sphinxs-build -b html source build/html
+Please feel free to create an issue on Github or to contact Maria Höller (maria.hoeller@dlr.de) for support.

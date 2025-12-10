@@ -47,8 +47,13 @@ class MonteCarloLCA(bw.LCA):
             assert lcia_method_name is not None, "Either 'lcia_method_name' or 'lcia_methods' must be provided."
             self.lcia_methods, self.key_list = get_lcia_methods(lcia_method_name)
         else:
-            self.lcia_methods = lcia_methods
-            self.key_list = get_key_list(lcia_methods)
+            if isinstance(lcia_methods, tuple):
+                self.lcia_methods = [lcia_methods]
+            elif isinstance(lcia_methods, list):
+                self.lcia_methods = lcia_methods
+            else:
+                raise ValueError("'lcia_methods' must be a tuple or a list of tuples.")
+            self.key_list = get_key_list(self.lcia_methods)
             
     @property
     def mc_results(self):
@@ -270,28 +275,34 @@ class MonteCarloLCA(bw.LCA):
 
         return worker_mc_results
     
-    def results_to_json(self, identifier='name', folder_path=None):
+    def results_to_json(self, filename=None, identifier='name', folder_path=None):
         """
         Save Monte Carlo results to a JSON file.
         
         Parameters
         ----------
+            filename : str, optional
+                Name of the JSON file to save the results. If None, a default filename based on the demand activity name is used.
             identifier : str, optional
                 Identifier to use for the filename. Default is 'name', i.e. the name of the demand activity.
             folder_path : str, optional
                 Path to the folder where the JSON file will be saved. Default is None.
         """
         
-        assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
-        
         info_dict = {
             'name': self.demand_act['name'],
             'code': self.demand_act['code'],
             'database': self.demand_act['database']
         }
-        write_json(f"mc_results_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | self._mc_results, folder_path=folder_path)
         
-    def stats_to_json(self, identifier='name', folder_path=None):
+        if filename is None:
+            assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
+        
+            write_json(f"mc_results_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | self._mc_results, folder_path=folder_path)
+        else:
+            write_json(filename, info_dict | self._mc_results, folder_path=folder_path)
+        
+    def stats_to_json(self, filename=None, identifier='name', folder_path=None):
         """
         Save Monte Carlo statistics to a JSON file.
         
@@ -303,7 +314,6 @@ class MonteCarloLCA(bw.LCA):
                 Path to the folder where the JSON file will be saved. Default is None.
         """
         
-        assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
         
         statistics = calculate_statistics(self._mc_results, lcia_methods=self.lcia_methods, key_list=self.key_list)
         
@@ -312,7 +322,13 @@ class MonteCarloLCA(bw.LCA):
             'code': self.demand_act['code'],
             'database': self.demand_act['database']
         }
-        write_json(f"mc_stats_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | statistics, folder_path=folder_path)
+        
+        if filename is None:
+            assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
+            
+            write_json(f"mc_stats_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | statistics, folder_path=folder_path)
+        else: 
+            write_json(filename, info_dict | statistics, folder_path=folder_path)
 
 def get_lcia_methods(lcia_method_name, get_keys=False):
     """

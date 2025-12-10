@@ -1,6 +1,6 @@
 # this works because we have a package structure and an editable install
 # (make sure to run 'pip install -e .' in the repository root first)
-from uncertainty_lca import monte_carlo as mc
+import uncertainty_lca as ulca
 
 # import standard modules
 import time
@@ -43,7 +43,7 @@ def test_lca_monte_carlo():
         demand = {bw.Database(demand_dict['database']).get(demand_dict['key']): 1}
         
         # initialize the Monte Carlo LCA
-        mc_lca = mc.MonteCarloLCA(demand, lcia_method_name)
+        mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
         
         # execute the Monte Carlo simulation
         mc_lca.execute_monte_carlo(iterations=25)
