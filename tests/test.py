@@ -1,21 +1,12 @@
-# # make the code in the src folder accessible
-# import os
-# import sys
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
-
-# # import the code from the src folder
-# import monte_carlo
-
 # this works because we have a package structure and an editable install
 # (make sure to run 'pip install -e .' in the repository root first)
-from uncertainty_lca import monte_carlo
+import uncertainty_lca as ulca
 
 # import standard modules
 import time
 from datetime import timedelta
 
 import brightway2 as bw
-
 
 def test_lca_monte_carlo():
     # start a timer for time-tracking
@@ -43,20 +34,25 @@ def test_lca_monte_carlo():
     demand_list.append(demand_dict) 
         
     # specify the number of iterations for the Monte Carlo simulation
-    iterations = 25 # change me!   
+    # iterations = 25 # change me!   
     
     # loop over all demands in the demand_list and perform the Monte Carlo simulation
     for i, demand_dict in enumerate(demand_list):
         
-        demand = bw.Database(demand_dict['database']).get(demand_dict['key'])
+        # build the demand dictionary for the Monte Carlo LCA
+        demand = {bw.Database(demand_dict['database']).get(demand_dict['key']): 1}
         
-        # this calls the parallelised function that performs the Monte Carlo simulation
-        mc_results = monte_carlo.parallel_monte_carlo(demand, lcia_method_name, iterations=iterations)
-        mc_stats = monte_carlo.calculate_statistics(mc_results, lcia_method_name)
-            
-        # create a results file for the current demand
-        monte_carlo.write_json(f"mc_results_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_results)
-        monte_carlo.write_json(f"mc_stats_{str(demand_dict['name']).replace(' ','_')}_monte_carlo.json", demand_dict | mc_stats)
+        # initialize the Monte Carlo LCA
+        mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
+        
+        # execute the Monte Carlo simulation
+        mc_lca.execute_monte_carlo(iterations=25)
+        
+        # retrieve the results and write them to files
+        mc_results = mc_lca.mc_results
+        # mc_lca.print_stats()
+        mc_lca.results_to_json()
+        mc_lca.stats_to_json()
     
     # end the timer and print the time elapsed
     end_time = time.time()
