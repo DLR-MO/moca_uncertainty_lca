@@ -18,6 +18,13 @@ Let people know what your project can do specifically. Provide context and add a
 
 - AB uses: LGPL (https://github.com/LCA-ActivityBrowser/activity-browser?tab=LGPL-3.0-1-ov-file#readme)
 - Brightway uses: BSD 3-Clause (https://docs.brightway.dev/en/latest/content/other/credits.html)
+- für uns wäre es wahrscheinlich am schlausten, die BSD 3 zu übernehmen
+
+Anwendungsklassen
+- DLR-Ziel: Anwendungsklasse 1
+- es gibt Anwendungsklassen 0-3
+    - 3 ist ein fertiges Produkt mit Support usw.
+    - 1 ist ein veröffentlichtes und dokumentiertes Paket (-> darauf zielen wir)
 
 ## Badgers
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badger.
