@@ -1,0 +1,26 @@
+[bumpver]
+current_version = "1.0.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+tag_message = "{new_version}"
+tag_scope = "default"
+pre_commit_hook = ""
+post_commit_hook = ""
+commit = true
+tag = true
+push = true
+
+[bumpver.file_patterns]
+"bumpver.toml" = [
+    'current_version = "{version}"', 
+    'version = "{version}"'
+    ]
+"pyproject.toml" = [
+    'version = "{version}"'
+    ]
+"src/uncertainty_lca/__init__.py" = [
+    '__version__ = "{version}"'
+    ]
+
+    
+

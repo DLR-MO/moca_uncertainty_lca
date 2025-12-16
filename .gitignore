@@ -1,0 +1,6 @@
+.python-version
+*.pyc
+moca_env/
+**/results/
+src/uncertainty_lca.egg-info
+**/MOCA_test_project.tar.gz

@@ -1,5 +1,8 @@
 # import brightway
+from copy import deepcopy
 import brightway2 as bw
+from stats_arrays import MCRandomNumberGenerator
+from bw2data.utils import TYPE_DICTIONARY
 
 # import standard python libraries
 import time
@@ -10,6 +13,9 @@ import numpy as np
 # import multiprocessing libraries and a library to make progress bars (tqdm)
 import tqdm
 from multiprocessing import Pool, cpu_count, Manager, Queue
+
+from cProfile import Profile
+from pstats import Stats, SortKey
 
 # this is the function where the actual Monte Carlo simulation is performed
 def monte_carlo_worker(args):
@@ -40,14 +46,40 @@ def monte_carlo_worker(args):
     # each worker will perform a subset of the iterations
     mc_results = {key: [] for key in key_list}
     
+    # initialize the Monte Carlo object
+    monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
+    monte_carlo.load_data()
+    
+    # print(monte_carlo.tech_params)
+    # print(monte_carlo.bio_params)
+    # print(monte_carlo.cf_params)
+    
+    ## trying to get a list of all technosphere parameters with uncertainty
+    
+    # array = bw2calc.utils.load_arrays(monte_carlo.database_filepath)
+    
+    # indices for type filters (union of the three types)
+    # type_indices = np.hstack((
+    #     np.where(monte_carlo.tech_params['type'] == TYPE_DICTIONARY["technosphere"])[0],
+    # ))
+
+    # # indices for nonzero uncertainty
+    # nonzero_uncertainty_indices = np.where(monte_carlo.tech_params['uncertainty_type'] != 0)[0]
+
+    # # intersection (both conditions)
+    # valid_indices = np.intersect1d(type_indices, nonzero_uncertainty_indices)
+
+    # filtered = monte_carlo.tech_params.take(valid_indices)
+    
+    
     # this is performing the actual Monte Carlo simulation
     for _ in range(iterations):
         
-        # initialize the Monte Carlo object
-        monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
+        # # initialize the Monte Carlo object
+        # monte_carlo = bw.MonteCarloLCA({demand_activity: 1}, method=lcia_methods[0])
         
         # load data and rebuild matrices
-        monte_carlo.load_data()
+        # monte_carlo.load_data()
         monte_carlo.rebuild_technosphere_matrix(monte_carlo.tech_rng.next())
         monte_carlo.rebuild_biosphere_matrix(monte_carlo.bio_rng.next())
         monte_carlo.build_demand_array()
@@ -152,104 +184,29 @@ def perform_monte_carlo(demand, lcia_methods, key_list, brightway_project, itera
 
     return demand
 
-# this is the main function that is called when you press run
-if __name__ == "__main__": 
-    
-    # start a timer for time-tracking
-    start_time = time.time()
-    
+def parallel_lca(brightway_project,
+                 demand_list,
+                 lcia_method_name,
+                 iterations
+                 ):
+    # set up paths
     # specify a path to write the output files in later (change this if you want to write the output files somewhere other than the current directory)
     folder_path = os.path.dirname(os.path.realpath(__file__))
-    
     # specify the names of the two output files of the full demand list:
     # 1. lca_monte_carlo.json: contains the full results of the Monte Carlo simulation for all demands
     # 2. lca_monte_carlo_statistics.json: contains only the statistics of the Monte Carlo simulation for all demands
     # there will also be a separate file for each demand containing the full results of the Monte Carlo simulation
     filename_output_json       = os.path.join(folder_path, "lca_monte_carlo.json")
     filename_output_short_json = os.path.join(folder_path, "lca_monte_carlo_statistics.json")
-    
-    # this is where you tell the code what to perform the Monte Carlo Simulation on 
-    # you can add more demands to the list if you want to perform the Monte Carlo Simulation on multiple demands
-    # each demand is a dictionary with the following keys:
-    # - name: the name of the demand activity
-    # - key: the key of the demand activity in the database
-    # - database: the name of the database where the demand activity is stored
-    
-    # to adapt this to your code, simple replace "A-Check" with the name of your demand activity, "6b833f545a364efbac180f95710d34c8" with the key of your demand activity, and "maintenance_D250-TF" with the name of the database where your demand activity is stored
-    demand_list = []
-    demand = {
-        "name": "High-Pressure Pump",  # change me!
-        "key": "7aca29b120b341ffbb9ba2569b5740c9",  # change me!
-        "database": "maintenance_D250_TP_MHEP"  # change me!
-    }
-    demand_list.append(demand) 
-    demand = {
-        "name": "Leakage Test",  # change me!
-        "key": "f02b85a5af3c481482d9448b8f076b81",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Check Valves 1",  # change me!
-        "key": "999a371700094c7ab9768f817ed09005",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Check Valves 2",  # change me!
-        "key": "999a371700094c7ab9768f817ed09007",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Tank and LH2 Distribution Systems 1",  # change me!
-        "key": "999a371700094c7ab9768f817ed09015",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Tank and LH2 Distribution Systems 2",  # change me!
-        "key": "999a371700094c7ab9768f817ed09016",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Tank and LH2 Distribution Systems 3",  # change me!
-        "key": "999a371700094c7ab9768f817ed09017",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Structure 1",  # change me!
-        "key": "e2dbb85e5a2c494e85d25fec2ead17bf",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "Structure 2",  # change me!
-        "key": "e2dbb85e5a2c494e85d25fec2ead17cg",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    demand = {
-        "name": "LH2 Tank Replacement",  # change me!
-        "key": "492e355ed3f74034b6d49b0240ff7800",  # change me!
-        "database": "maintenance_D250_TF_MHEP"  # change me!
-    }
-    demand_list.append(demand)
-    
-    # specify the number of iterations for the Monte Carlo simulation
-    iterations = 5000 # change me!
-    
+
     print(f"This machine has {os.cpu_count()} logical cores, using {min(cpu_count(), 60)} cores for parallel processing.")
     
     # setting up Brightway
-    brightway_project = "EXACT2_backup_v5" # change me!
     bw.projects.set_current(brightway_project)
-    bw.bw2setup()
+    # bw.bw2setup()
     
     # specify the LCIA methods to use for the Monte Carlo simulation
-    lcia_method_name = 'EF v3.1 no LT'
+    
     lcia_methods = [method for method in bw.methods if lcia_method_name in str(method)]
     
     # here, the impact categories are renamed to a more readable format
@@ -279,8 +236,54 @@ if __name__ == "__main__":
         del demand['mc_results']
     with open(filename_output_short_json, 'w') as file:
         json.dump(demand_list, file, indent=4)
+
+# this is the main function that is called when you press run
+if __name__ == "__main__": 
     
-    # end the timer and print the time elapsed    
+    # start a timer for time-tracking
+    start_time = time.time()
+    
+    # specify the Brightway project name
+    brightway_project = "MOCA_test_project" # change me!
+    
+    # specify the LCIA method / characterisation model
+    lcia_method_name = 'EF v3.1 no LT'
+    
+    # this is where you tell the code what to perform the Monte Carlo Simulation on 
+    # you can add more demands to the list if you want to perform the Monte Carlo Simulation on multiple demands
+    # each demand is a dictionary with the following keys:
+    # - name: the name of the demand activity
+    # - key: the key of the demand activity in the database
+    # - database: the name of the database where the demand activity is stored
+    
+    # to adapt this to your code, simple replace "A-Check" with the name of your demand activity, "6b833f545a364efbac180f95710d34c8" with the key of your demand activity, and "maintenance_D250-TF" with the name of the database where your demand activity is stored
+    demand_list = []
+    demand = {
+        "name": "LH2 Tank Replacement",  # change me!
+        "key": "492e355ed3f74034b6d49b0240ff7800",  # change me!
+        "database": "maintenance_D250_TF_MHEP"  # change me!
+    }
+    demand_list.append(demand) 
+    # demand = {
+    #     "name": "Leakage Test",  # change me!
+    #     "key": "f02b85a5af3c481482d9448b8f076b81",  # change me!
+    #     "database": "maintenance_D250_TF_MHEP"  # change me!
+    # }
+    # demand_list.append(demand)
+        
+    # specify the number of iterations for the Monte Carlo simulation
+    iterations = 25 # change me!
+
+    with Profile() as profile:
+        parallel_lca(brightway_project, demand_list, lcia_method_name, iterations)
+        (
+            Stats(profile)
+            .strip_dirs()
+            .sort_stats(SortKey.CALLS)
+            .print_stats()
+        )
+
+    # end the timer and print the time elapsed
     end_time = time.time()
     duration = end_time - start_time
     duration_minutes = duration // 60
