@@ -1,6 +1,6 @@
 # MOCA - Uncertainty Quantification for Life Cycle Assessment
 
-MOCA is a Python package to perform efficient and parallelised uncertainty quantification for Life Cycle Assessment (LCA). It is built to work with the  [Brightway2](https://github.com/brightway-lca/brightway2) framework. Currently, MOCA includes a class for high-speed Monte Carlo Simulation. More methodologies for uncertainty quantification are planned to be implemented going forward!
+MOCA is a Python package to perform efficient and parallelised uncertainty quantification for Life Cycle Assessment (LCA). It is built to work with the  [Brightway2](https://github.com/brightway-lca/brightway2) framework. Currently, MOCA includes a class for high-speed Monte Carlo Simulation. More methodologies for uncertainty quantification are planned to be implemented going forward.
 
 This package has been developed by the [German Aerospace Center (DLR e.V.)](https://www.dlr.de/en), at the [Institute of Maintenance, Repair and Overhaul](https://www.dlr.de/en/mo/).
 
@@ -53,7 +53,7 @@ sphinxs-build -b html source build/html -->
 
 There are two main reasons:
 
-1. MOCA is faster! Depending on the complexity and size of your calculation setup, the speed-up can range from twice as fast to more than 40 times as fast!
+1. MOCA is faster! Depending on the complexity and size of your calculation setup, the speed-up can range from twice as fast to more than 40 times as fast.
 
 2. MOCA is easy to use and comes with built-in functions to make your life easier, such as automatic formatting and exporting.
 

@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Reference &#8212; uncertainty_lca 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="uncertainty_lca documentation" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search docs ..."
+         aria-label="Search docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_moca.png" class="logo__image only-light" alt="uncertainty_lca 0.1.0 documentation - Home"/>
+    <img src="_static/logo_moca.png" class="logo__image only-dark pst-js-only" alt="uncertainty_lca 0.1.0 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitLab</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://dlr.de/mo/en" title="DLR" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-home fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">DLR</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitLab</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://dlr.de/mo/en" title="DLR" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-home fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">DLR</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">API Reference</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-uncertainty_lca.monte_carlo">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-uncertainty_lca.monte_carlo" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">MonteCarloLCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demand</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_method_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo">
+<span class="sig-name descname"><span class="pre">execute_monte_carlo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo" title="Link to this definition">#</a></dt>
+<dd><p>Function to perform a Monte Carlo simulation. It decides whether or not to run in parallel based on the ‘run_parallel’ attribute. Then, it calls either ‘execute_serial_monte_carlo()’ or ‘execute_parallel_monte_carlo()’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iterations</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of iterations for the Monte Carlo simulation. If None, the number of iterations provided during initialization is used.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.execute_parallel_monte_carlo">
+<span class="sig-name descname"><span class="pre">execute_parallel_monte_carlo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_parallel_monte_carlo" title="Link to this definition">#</a></dt>
+<dd><p>Function to perform a parallelised Monte Carlo simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iterations</strong> (<em>int</em>) – Number of iterations for the Monte Carlo simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.execute_serial_monte_carlo">
+<span class="sig-name descname"><span class="pre">execute_serial_monte_carlo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_serial_monte_carlo" title="Link to this definition">#</a></dt>
+<dd><p>Function to perform a Monte Carlo simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iterations</strong> (<em>int</em>) – Number of iterations for the Monte Carlo simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_calculation">
+<span class="sig-name descname"><span class="pre">mc_lci_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slice_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Function to perform the LCI for one Monte Carlo iteration. This includes rebuilding the technosphere and biosphere matrices with random values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_preparation">
+<span class="sig-name descname"><span class="pre">mc_lci_preparation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_preparation" title="Link to this definition">#</a></dt>
+<dd><p>Function to prepare the LCI for Monte Carlo simulation. This includes loading LCI data, generating random numbers, and building the demand array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lcia_calculation">
+<span class="sig-name descname"><span class="pre">mc_lcia_calculation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lcia_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Function to perform the LCIA for one Monte Carlo iteration. This includes loading LCIA data, generating random numbers for the characterization matrix, rebuilding it, and performing the LCIA calculation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.mc_results">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mc_results</span></span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_results" title="Link to this definition">#</a></dt>
+<dd><p>Property to access Monte Carlo results after simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.monte_carlo_worker">
+<span class="sig-name descname"><span class="pre">monte_carlo_worker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.monte_carlo_worker" title="Link to this definition">#</a></dt>
+<dd><p>Worker function for Monte Carlo simulation. Each worker will perform a subset of the iterations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>tuple</em>) – Tuple containing the following elements:</p></li>
+<li><p><strong>iterations</strong> (<em>int</em>) – Number of iterations to perform in this worker.</p></li>
+<li><p><strong>progress_queue</strong> (<em>Queue</em>) – Queue for reporting progress.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mc_results</strong> – Dictionary containing the Monte Carlo results</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json">
+<span class="sig-name descname"><span class="pre">results_to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json" title="Link to this definition">#</a></dt>
+<dd><p>Save Monte Carlo results to a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the JSON file to save the results. If None, a default filename based on the demand activity name is used.</p></li>
+<li><p><strong>identifier</strong> (<em>str</em><em>, </em><em>optional</em>) – Identifier to use for the filename. Default is ‘name’, i.e. the name of the demand activity.</p></li>
+<li><p><strong>folder_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the folder where the JSON file will be saved. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.stats_to_json">
+<span class="sig-name descname"><span class="pre">stats_to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.stats_to_json" title="Link to this definition">#</a></dt>
+<dd><p>Save Monte Carlo statistics to a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> (<em>str</em><em>, </em><em>optional</em>) – Identifier to use for the filename. Default is ‘name’, i.e. the name of the demand activity.</p></li>
+<li><p><strong>folder_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the folder where the JSON file will be saved. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.calculate_statistics">
+<span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">calculate_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mc_results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_method_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.calculate_statistics" title="Link to this definition">#</a></dt>
+<dd><p>Calculate statistics for Monte Carlo results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mc_results</strong> (<em>dict</em>) – Dictionary containing the Monte Carlo results.</p></li>
+<li><p><strong>lcia_methods</strong> (<em>list</em>) – List of LCIA methods.</p></li>
+<li><p><strong>key_list</strong> (<em>list</em>) – List of keys for the LCIA methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>mc_statistics</strong> – Dictionary containing the calculated statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.get_key_list">
+<span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">get_key_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lcia_methods</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.get_key_list" title="Link to this definition">#</a></dt>
+<dd><p>Get a list of keys for the provided LCIA methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lcia_methods</strong> (<em>list</em>) – List of LCIA methods.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>key_list</strong> – List of keys for the LCIA methods.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.get_lcia_methods">
+<span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">get_lcia_methods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lcia_method_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.get_lcia_methods" title="Link to this definition">#</a></dt>
+<dd><p>Get LCIA methods and their keys based on the provided method name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lcia_method_name</strong> (<em>str</em>) – Name of the LCIA method (e.g., ‘EF v3.1 no LT’).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>lcia_methods</strong> (<em>list</em>) – List of LCIA methods.</p></li>
+<li><p><strong>key_list</strong> (<em>list</em>) – List of keys for the LCIA methods.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.write_json">
+<span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">write_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict_to_write</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.write_json" title="Link to this definition">#</a></dt>
+<dd><p>Write a dictionary to a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Name of the JSON file to write.</p></li>
+<li><p><strong>dict_to_write</strong> (<em>dict</em>) – Dictionary to write to the JSON file.</p></li>
+<li><p><strong>folder_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the folder where the JSON file will be saved. If None, a default “results” folder is used.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">uncertainty_lca documentation</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_monte_carlo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_parallel_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_parallel_monte_carlo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_serial_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_serial_monte_carlo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_calculation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_preparation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_preparation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lcia_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lcia_calculation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_results"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_results</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.monte_carlo_worker"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.monte_carlo_worker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.results_to_json()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.stats_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.stats_to_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.calculate_statistics"><code class="docutils literal notranslate"><span class="pre">calculate_statistics()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.get_key_list"><code class="docutils literal notranslate"><span class="pre">get_key_list()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.get_lcia_methods"><code class="docutils literal notranslate"><span class="pre">get_lcia_methods()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.write_json"><code class="docutils literal notranslate"><span class="pre">write_json()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_reference.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Maria Höller.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
