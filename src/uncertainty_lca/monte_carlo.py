@@ -3,6 +3,7 @@ import brightway2 as bw
 
 # import standard python libraries
 import numpy as np
+import pandas as pd
 import json
 import os
 
@@ -10,6 +11,20 @@ import os
 from stats_arrays import MCRandomNumberGenerator
 import tqdm
 from multiprocessing import Pool, cpu_count, Manager
+
+# for logging
+import logging
+from contextlib import contextmanager
+
+@contextmanager
+def silence_logger(logger_name, level=logging.WARNING):
+    logger = logging.getLogger(logger_name)
+    old_level = logger.level
+    logger.setLevel(level)
+    try:
+        yield
+    finally:
+        logger.setLevel(old_level)
 
 class MonteCarloLCA(bw.LCA):
     
@@ -159,7 +174,8 @@ class MonteCarloLCA(bw.LCA):
             # loop over impact categories to perform the LCIA
             for i, method in enumerate(self.lcia_methods):
                 # switch the LCIA method, reload data and rebuild the characterization matrix
-                self.switch_method(method)
+                with silence_logger("bw2calc"):
+                    self.switch_method(method)
                 self.mc_lcia_calculation()
                 
                 mc_results[self.key_list[i]].append(self.score)
@@ -329,6 +345,35 @@ class MonteCarloLCA(bw.LCA):
             write_json(f"mc_stats_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | statistics, folder_path=folder_path)
         else: 
             write_json(filename, info_dict | statistics, folder_path=folder_path)
+            
+    def get_results_dataframe(self, method=None):
+        """
+        Return Monte Carlo results as a Pandas DataFrame.
+        Useful for integration with Activity Browser.
+
+        Rows correspond to Monte Carlo iterations.
+        Columns correspond to LCIA methods (impact categories).
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame of shape (iterations, n_methods)
+        """
+        
+        results = self.mc_results
+        
+        idx = self.lcia_methods.index(method)
+        key = self.key_list[idx]
+        
+        return pd.DataFrame({key: results[key]})
+        
+
+        data = {
+            key: results[key]
+            for key in self.key_list
+        }
+
+        return pd.DataFrame(data)
 
 def get_lcia_methods(lcia_method_name, get_keys=False):
     """
