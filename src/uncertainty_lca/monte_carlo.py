@@ -28,7 +28,7 @@ def silence_logger(logger_name, level=logging.WARNING):
 
 class MonteCarloLCA(bw.LCA):
     
-    def __init__(self, demand, lcia_method_name=None, lcia_methods=None, iterations=None, run_parallel=True):
+    def __init__(self, demand, lcia_method_name=None, lcia_methods=None, iterations=None, run_parallel=True, num_cores=None):
         """
         Initialize the MonteCarloLCA class.
         
@@ -44,6 +44,8 @@ class MonteCarloLCA(bw.LCA):
                 Number of iterations for the Monte Carlo simulation. Default is None.
             run_parallel : bool, optional
                 Whether to run the Monte Carlo simulation in parallel. Default is True.
+            num_cores : int, optional
+                Number of CPU cores to use for parallel processing. Default is None, which results in the use of all available cores up to a maximum of 60.
         """
         
         # initialize the parent LCA class
@@ -55,8 +57,16 @@ class MonteCarloLCA(bw.LCA):
         self.demand_act = list(demand.keys())[0]
         self.iterations = iterations
         
-        self.brightway_project = bw.projects.current  
-        self.num_cores = min(cpu_count(), 60)
+        self.brightway_project = bw.projects.current 
+        
+        # using more than 60 cores or more than exist does not work
+        max_cores = min(cpu_count(), 60)
+        
+        self.num_cores = (
+            min(num_cores, max_cores)
+            if num_cores is not None
+            else max_cores
+        )
         
         if lcia_methods is None:
             assert lcia_method_name is not None, "Either 'lcia_method_name' or 'lcia_methods' must be provided."
