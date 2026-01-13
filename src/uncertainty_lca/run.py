@@ -9,6 +9,10 @@ import brightway2 as bw
 
 from .monte_carlo import MonteCarloLCA
 
+# force unbuffered output
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(line_buffering=True)
+
 def main():
     
     # set up argument parser
@@ -57,13 +61,13 @@ def main():
     mc_lca = MonteCarloLCA(demand, lcia_methods=lcia_methods, num_cores=args.num_cores, run_parallel=run_parallel)
     
     # execute the Monte Carlo simulation
-    print(f"Running Monte Carlo LCA with {args.iterations} iterations...")
+    print(f"Running Monte Carlo LCA with {args.iterations} iterations...", flush=True)
     mc_lca.execute_monte_carlo(iterations=args.iterations)
     
     # write the results to a file
     with open(args.output, "wb") as f:
         pickle.dump(mc_lca.mc_results, f)
-    print(f"Results written to {args.output}")
+    print(f"Results written to {args.output}", flush=True)
         
 if __name__ == "__main__":
     main()

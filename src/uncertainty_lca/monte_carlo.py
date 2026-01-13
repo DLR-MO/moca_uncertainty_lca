@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import json
 import os
+import sys
 
 # import multiprocessing libraries and a library to make progress bars (tqdm)
 from stats_arrays import MCRandomNumberGenerator
@@ -176,7 +177,8 @@ class MonteCarloLCA(bw.LCA):
         self.mc_lci_preparation(iterations)
         
         # this is performing the actual Monte Carlo simulation
-        for j in tqdm.tqdm(range(iterations), desc="Current progress"):
+        for j in tqdm.tqdm(range(iterations), desc="Current progress", file=sys.stderr, mininterval=0.1):
+            sys.stderr.flush()
                     
             # perform the LCI (this takes a lot of time and is therefore only performed once for all impact categories)
             self.mc_lci_calculation(slice_index=j)
@@ -230,7 +232,8 @@ class MonteCarloLCA(bw.LCA):
         print(f"Performing Monte Carlo simulation for demand: {self.demand_act['name']}")
         
         # perform the parallelised Monte Carlo Simulation 
-        with tqdm.tqdm(total=iterations, desc=f"Current progress") as pbar:
+        with tqdm.tqdm(total=iterations, desc=f"Current progress", file=sys.stderr, mininterval=0.1) as pbar:
+            
             with Pool(num_workers) as pool:
                 
                 # start the worker processes
@@ -240,10 +243,16 @@ class MonteCarloLCA(bw.LCA):
                 while not pool_result.ready():
                     while not progress_queue.empty():
                         pbar.update(progress_queue.get())
+                        sys.stderr.flush()  # ADD THIS: Flush after each update
+                    
+                # Process any remaining progress updates
+                while not progress_queue.empty():
+                    pbar.update(progress_queue.get())
+                    sys.stderr.flush()
 
                 # wait for all worker processes to finish
-                pool_result.get()  
-        
+                pool_result.get()
+                
         # combine results from all processes
         combined_results = {key: [] for key in self.key_list}
         for result in pool_result.get():
