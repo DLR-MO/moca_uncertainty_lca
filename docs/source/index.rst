@@ -15,5 +15,9 @@ documentation for details.
    :maxdepth: 2
    :hidden:
 
+   installation
+   tutorial
+   examples
    api_reference
+   activity_browser
 

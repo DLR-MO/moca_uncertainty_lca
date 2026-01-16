@@ -1,0 +1,227 @@
+Code Examples
+#############
+
+Code Examples
+=============
+
+This page provides a small set of concrete, copy-pasteable examples showing how to
+use ``MonteCarloLCA`` in practice.  
+The examples progress from a minimal serial run to more advanced parallel usage.
+
+All examples assume that:
+
+* a Brightway project already exists
+* uncertainty information is already defined on exchanges
+* ``uncertainty_lca`` is installed
+
+--------------------------------------------------------------------
+
+Minimal example: serial Monte Carlo
+----------------------------------
+
+This is the simplest possible script:
+* serial execution
+* one LCIA method specified by name
+* default output filenames
+
+.. code-block:: python
+
+   import brightway2 as bw
+   import uncertainty_lca as ulca
+
+   bw.projects.set_current("MOCA_test_project")  # change me
+
+   demand = {
+       bw.Database("maintenance_D250_TF_MHEP")
+         .get("492e355ed3f74034b6d49b0240ff7800"): 1
+   }
+
+   mc_lca = ulca.MonteCarloLCA(
+       demand=demand,
+       lcia_method_name="EF v3.1 no LT",
+       run_parallel=False
+   )
+
+   mc_lca.execute_monte_carlo(iterations=25)
+
+   mc_lca.results_to_json()
+   mc_lca.stats_to_json()
+
+--------------------------------------------------------------------
+
+Basic parallel execution
+------------------------
+
+To speed up larger Monte Carlo runs, enable parallel execution.
+By default, all available CPU cores (up to 60) are used.
+
+.. code-block:: python
+
+   import brightway2 as bw
+   import uncertainty_lca as ulca
+
+   bw.projects.set_current("MOCA_test_project")  # change me
+
+   demand = {
+       bw.Database("maintenance_D250_TF_MHEP")
+         .get("492e355ed3f74034b6d49b0240ff7800"): 1
+   }
+
+   mc_lca = ulca.MonteCarloLCA(
+       demand=demand,
+       lcia_method_name="EF v3.1 no LT",
+       run_parallel=True
+   )
+
+   mc_lca.execute_monte_carlo(iterations=100)
+
+   mc_lca.results_to_json()
+   mc_lca.stats_to_json()
+
+--------------------------------------------------------------------
+
+Limiting the number of CPU cores
+-------------------------------
+
+On shared machines or laptops, it is often useful to limit CPU usage explicitly.
+
+.. code-block:: python
+
+   import brightway2 as bw
+   import uncertainty_lca as ulca
+
+   bw.projects.set_current("MOCA_test_project")  # change me
+
+   demand = {
+       bw.Database("maintenance_D250_TF_MHEP")
+         .get("492e355ed3f74034b6d49b0240ff7800"): 1
+   }
+
+   mc_lca = ulca.MonteCarloLCA(
+       demand=demand,
+       lcia_method_name="EF v3.1 no LT",
+       run_parallel=True,
+       num_cores=4
+   )
+
+   mc_lca.execute_monte_carlo(iterations=200)
+
+   mc_lca.results_to_json()
+   mc_lca.stats_to_json()
+
+--------------------------------------------------------------------
+
+Using explicit LCIA methods
+---------------------------
+
+Instead of matching LCIA methods by name, you can pass explicit method tuples.
+This is recommended for reproducibility in scientific studies.
+
+.. code-block:: python
+
+   import brightway2 as bw
+   import uncertainty_lca as ulca
+
+   bw.projects.set_current("MOCA_test_project")  # change me
+
+   demand = {
+       bw.Database("maintenance_D250_TF_MHEP")
+         .get("492e355ed3f74034b6d49b0240ff7800"): 1
+   }
+
+   lcia_methods = [
+       ('EF v3.1 no LT', 'climate change', 'global warming potential (GWP100)'),
+       ('EF v3.1 no LT', 'acidification', 'accumulated exceedance (AE)')
+   ]
+
+   mc_lca = ulca.MonteCarloLCA(
+       demand=demand,
+       lcia_methods=lcia_methods,
+       run_parallel=True,
+       num_cores=6
+   )
+
+   mc_lca.execute_monte_carlo(iterations=250)
+
+   mc_lca.results_to_json()
+   mc_lca.stats_to_json()
+
+--------------------------------------------------------------------
+
+Custom output filenames
+----------------------
+
+For larger studies or multiple runs, custom filenames and folders help keep results organised.
+
+.. code-block:: python
+
+   import brightway2 as bw
+   import uncertainty_lca as ulca
+
+   bw.projects.set_current("MOCA_test_project")  # change me
+
+   demand = {
+       bw.Database("maintenance_D250_TF_MHEP")
+         .get("492e355ed3f74034b6d49b0240ff7800"): 1
+   }
+
+   mc_lca = ulca.MonteCarloLCA(
+       demand=demand,
+       lcia_method_name="EF v3.1 no LT",
+       run_parallel=True,
+       num_cores=8
+   )
+
+   mc_lca.execute_monte_carlo(iterations=500)
+
+   mc_lca.results_to_json(
+       filename="lh2_tank_mc_results.json",
+       folder_path="results/lh2_tank"
+   )
+
+   mc_lca.stats_to_json(
+       filename="lh2_tank_mc_stats.json",
+       folder_path="results/lh2_tank"
+   )
+
+--------------------------------------------------------------------
+
+Accessing results as a DataFrame
+--------------------------------
+
+Monte Carlo results can be returned as a Pandas DataFrame, which is useful for
+plotting or integration with the Activity Browser.
+
+.. code-block:: python
+
+   import brightway2 as bw
+   import uncertainty_lca as ulca
+
+   bw.projects.set_current("MOCA_test_project")  # change me
+
+   method = (
+       'EF v3.1 no LT',
+       'climate change',
+       'global warming potential (GWP100)'
+   )
+
+   demand = {
+       bw.Database("maintenance_D250_TF_MHEP")
+         .get("492e355ed3f74034b6d49b0240ff7800"): 1
+   }
+
+   mc_lca = ulca.MonteCarloLCA(
+       demand=demand,
+       lcia_methods=[method],
+       run_parallel=False
+   )
+
+   mc_lca.execute_monte_carlo(iterations=100)
+
+   df = mc_lca.get_results_dataframe(method=method)
+   print(df.head())
+
+--------------------------------------------------------------------
+
+For more advanced workflows (multiple demands, post-processing, or integration
+into larger pipelines), see the **Tutorial** and **Examples** sections.

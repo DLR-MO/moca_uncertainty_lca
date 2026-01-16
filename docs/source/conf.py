@@ -32,6 +32,8 @@ extensions = [
     'sphinx.ext.napoleon',          # Include NumPy docstring style
     'sphinx_tabs.tabs',             # .. tabs:: environment
     'sphinx_panels',                # Allows the "cards" on the first page
+    'sphinx_design',                # Modern design elements
+    'sphinx_copybutton',            # Add "copy" buttons to code blocks
 ]
 
 # Add any paths that contain templates here, relative to this directory.
