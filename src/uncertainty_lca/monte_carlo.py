@@ -7,6 +7,7 @@ import pandas as pd
 import json
 import os
 import sys
+import time
 
 # import multiprocessing libraries and a library to make progress bars (tqdm)
 from stats_arrays import MCRandomNumberGenerator
@@ -391,6 +392,151 @@ class MonteCarloLCA(bw.LCA):
         }
 
         return pd.DataFrame(data)
+    
+    def get_exchange_list(self, foreground_only=False):
+        """
+        Get a list of all technosphere exchanges present in the LCA.
+        
+        Returns
+        -------
+            exchange_list : list
+                List of technosphere exchanges present in the LCA.
+        """
+        
+        # Get all activities in the technosphere matrix
+        self.load_lci_data()
+        
+        start_time = time.time()
+        all_activities = [bw.Database(key[0]).get(key[1]) for key in self.activity_dict.keys()]
+        print(f"All activities retrieved in {time.time() - start_time:.2f} seconds.")
+        
+        # Collect all technosphere exchanges for all activities
+        # exchange_list = []
+        # for act in all_activities:
+        #     exchange_list.extend(list(act.technosphere()))
+        
+        start_time = time.time()    
+        # exchange_list = [exc for act in all_activities for exc in act.technosphere()]
+        
+        exchange_list = [
+            exc
+            for act in all_activities
+            for exc in act.technosphere()
+            if not (
+                foreground_only
+                and "ecoinvent" in act.key[0].lower()
+            )
+        ]
+        print(f"All technosphere exchanges retrieved in {time.time() - start_time:.2f} seconds.")
+        
+        return exchange_list
+    
+    def set_default_uncertainty(self, foreground_only=False):
+        """
+        Add default uniform uncertainty (±10%) to technosphere exchanges missing uncertainty.
+        """
+        
+        exchange_list = self.get_exchange_list(foreground_only=foreground_only)
+        
+        # Add default uniform uncertainty (±10%) to exchanges missing uncertainty
+        for exc in exchange_list:
+            data = exc._data
+            
+            if 'uncertainty type' not in data:
+                amt = data.get('amount', 0)
+
+                if abs(amt) > 0:
+                    default_uncertainty = {
+                        'minimum': 0.9 * amt,
+                        'maximum': 1.1 * amt,
+                    }
+                else:
+                    default_uncertainty = {'minimum': -0.1, 'maximum': 0.1}
+                    
+                exc._data['uncertainty type'] = 4 # corresponds to uniform distribution in stats_arrays
+                exc._data['minimum'] = default_uncertainty['minimum']
+                exc._data['maximum'] = default_uncertainty['maximum']
+                exc.save()
+        
+    def exchange_list_to_excel(self, filename=None, identifier='name', folder_path=None, foreground_only=False):
+        """
+        Save technosphere exchanges to an Excel file.
+        
+        Parameters
+        ----------
+            filename : str, optional
+                Name of the Excel file to save the exchanges. 
+            identifier : str, optional
+                Identifier to use for the filename. Default is 'name', i.e. the name of the demand activity.    
+            folder_path : str, optional
+                Path to the folder where the Excel file will be saved. Default is None.
+        """
+        
+        # get the complete list of technosphere exchanges
+        exchange_list = self.get_exchange_list(foreground_only=foreground_only)
+        print(f"Total number of technosphere exchanges: {len(exchange_list)}")
+        
+        # convert exchange list to a DataFrame
+        start_time = time.time()
+        df = pd.DataFrame([exchange_to_dict(exc) for exc in exchange_list])
+        print(f"Converted exchange list to DataFrame in {time.time() - start_time:.2f} seconds.")
+        
+        if folder_path is None:
+            folder_path = os.path.join(os.getcwd(), "results")
+        
+        # create the folder if it does not exist
+        os.makedirs(folder_path, exist_ok=True)
+                
+        if filename is None:
+            assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
+            filename = f"technosphere_exchanges_{str(self.demand_act[identifier]).replace(' ','_')}.xlsx"
+        
+        print('folder_path', folder_path, 'filename', filename)
+        start_time = time.time()
+        df.to_excel(os.path.join(folder_path, filename), index=False, engine="xlsxwriter")
+        print(f"Exported {len(df)} exchanges to {filename} in {time.time() - start_time:.2f} seconds.")
+
+def exchange_to_dict(exc):
+    """
+    Convert a technosphere exchange to a dictionary.
+    
+    Parameters
+    ----------
+        exc : Exchange
+            Technosphere exchange to convert.
+    Returns
+    ------- 
+        exc_dict : dict
+            Dictionary representation of the exchange.
+            
+    """
+    
+    # get the keys for the input and output activities of the exchange
+    input_key = getattr(exc.input, 'key')
+    output_key = getattr(exc.output, 'key')
+    
+    data = exc._data
+
+    exc_dict =  {
+        'Input': bw.Database(input_key[0]).get(input_key[1])['name'],
+        'Input Database': input_key[0],
+        'Input Code': input_key[1],
+        'Output': bw.Database(output_key[0]).get(output_key[1])['name'],
+        'Output Database': output_key[0],
+        'Output Code': output_key[1],
+        'Amount': data.get('amount'),
+        'Unit': data.get('unit', None),
+        'Uncertainty Type': data.get('uncertainty type', None),
+        'Pedigree': data.get('pedigree', None),
+        'loc': data.get('loc', None),
+        'scale': data.get('scale', None),
+        'shape': data.get('shape', None),
+        'minimum': data.get('minimum', None),
+        'maximum': data.get('maximum', None),
+        'Formula': data.get('formula', None),
+    }
+    
+    return exc_dict
 
 def get_lcia_methods(lcia_method_name, get_keys=False):
     """

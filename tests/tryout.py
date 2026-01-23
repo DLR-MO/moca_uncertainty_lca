@@ -26,24 +26,28 @@ all_activities = [bw.Database(key[0]).get(key[1]) for key in lca.activity_dict.k
 exchange_list = []
 for activity in all_activities:
     exchange_list.extend(list(activity.technosphere()))
-    
+
+i=0
 # Add default uniform uncertainty (±10%) to exchanges missing uncertainty
 for exc in exchange_list:
-    if not exc._data.get('uncertainty'):
+    if not exc._data.get('uncertainty type'):
         try:
             amt = abs(float(getattr(exc, 'amount', 0)))
         except Exception:
             amt = 0
         if amt > 0:
             unc = {
-                'type': 'uniform',
                 'minimum': 0.9 * amt,
                 'maximum': 1.1 * amt,
             }
         else:
-            unc = {'type': 'uniform', 'minimum': -0.1, 'maximum': 0.1}
-        exc._data['uncertainty'] = unc
-print("Added default uncertainty to missing exchanges.")
+            unc = {'minimum': -0.1, 'maximum': 0.1}
+        exc._data['uncertainty type'] = 4 # corresponds to uniform distribution in stats_arrays
+        exc._data['minimum'] = unc['minimum']
+        exc._data['maximum'] = unc['maximum']
+        exc.save()
+        i+=1
+print(f"Added default uncertainty to {i} missing exchanges.")
 
 
 def exchange_to_dict(exc):
@@ -55,8 +59,7 @@ def exchange_to_dict(exc):
             return bw.Database(db).get(code)['name']
         except Exception:
             return ''
-    unc = exc._data.get('uncertainty', None)
-    unc_type = unc.get('type') if isinstance(unc, dict) else None
+    
     d = {
         'Input': get_name(input_key),
         'Input Database': input_key[0],
@@ -66,13 +69,13 @@ def exchange_to_dict(exc):
         'Output Code': output_key[1],
         'Amount': getattr(exc, 'amount', None),
         'Unit': exc._data.get('unit', None),
-        'Uncertainty Type': unc_type,
-        'Pedigree': unc.get('pedigree') if isinstance(unc, dict) else None,
-        'loc': unc.get('loc') if isinstance(unc, dict) else None,
-        'scale': unc.get('scale') if isinstance(unc, dict) else None,
-        'shape': unc.get('shape') if isinstance(unc, dict) else None,
-        'minimum': unc.get('minimum') if isinstance(unc, dict) else None,
-        'maximum': unc.get('maximum') if isinstance(unc, dict) else None,
+        'Uncertainty Type': exc._data.get('uncertainty type', None),
+        'Pedigree': exc._data.get('pedigree', None),
+        'loc': exc._data.get('loc', None),
+        'scale': exc._data.get('scale', None),
+        'shape': exc._data.get('shape', None),
+        'minimum': exc._data.get('minimum', None),
+        'maximum': exc._data.get('maximum', None),
         'Formula': exc._data.get('formula', None),
     }
     return d

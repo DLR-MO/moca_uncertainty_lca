@@ -45,14 +45,18 @@ def test_lca_monte_carlo():
         # initialize the Monte Carlo LCA
         mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
         
-        # execute the Monte Carlo simulation
-        mc_lca.execute_monte_carlo(iterations=25)
+        # export the exchange list
+        print(f"Exporting exchange list for demand {i+1}/{len(demand_list)}: {demand_dict['name']}")
+        mc_lca.exchange_list_to_excel(foreground_only=True)
+               
+        # # execute the Monte Carlo simulation
+        # mc_lca.execute_monte_carlo(iterations=25)
         
-        # retrieve the results and write them to files
-        mc_results = mc_lca.mc_results
-        # mc_lca.print_stats()
-        mc_lca.results_to_json()
-        mc_lca.stats_to_json()
+        # # retrieve the results and write them to files
+        # mc_results = mc_lca.mc_results
+        # # mc_lca.print_stats()
+        # mc_lca.results_to_json()
+        # mc_lca.stats_to_json()
     
     # end the timer and print the time elapsed
     end_time = time.time()
