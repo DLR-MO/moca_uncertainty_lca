@@ -332,10 +332,9 @@ class MonteCarloLCA(bw.LCA):
         
         if filename is None:
             assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
-        
-            write_json(f"mc_results_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | self._mc_results, folder_path=folder_path)
-        else:
-            write_json(filename, info_dict | self._mc_results, folder_path=folder_path)
+            filename = f"mc_results_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json"
+
+        write_json(filename, info_dict | self._mc_results, folder_path=folder_path)
         
     def stats_to_json(self, filename=None, identifier='name', folder_path=None):
         """
@@ -360,10 +359,9 @@ class MonteCarloLCA(bw.LCA):
         
         if filename is None:
             assert identifier in self.demand_act, f"Identifier '{identifier}' not found in demand activity."
+            filename = f"mc_stats_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json"
             
-            write_json(f"mc_stats_{str(self.demand_act[identifier]).replace(' ','_')}_monte_carlo.json", info_dict | statistics, folder_path=folder_path)
-        else: 
-            write_json(filename, info_dict | statistics, folder_path=folder_path)
+        write_json(filename, info_dict | statistics, folder_path=folder_path)
             
     def get_results_dataframe(self, method=None):
         """
