@@ -67,7 +67,12 @@ We also assume that you have set up the virtual environment AND installed this p
 
 ```bash
 pip install -e .
-``` -->
+``` 
+
+Making ActivityBrowser into an executable: 
+python -m PyInstaller --onefile --windowed --name="ActivityBrowser" --icon "activity_browser/static/icons/main/activitybrowser.png" run-activity-browser.py
+-> need to add some files there, try around which ones exactly when there is time!
+-->
 
 ## License
 
