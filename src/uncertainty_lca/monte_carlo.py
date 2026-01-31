@@ -496,6 +496,63 @@ class MonteCarloLCA(bw.LCA):
         df.to_excel(os.path.join(folder_path, filename), index=False, engine="xlsxwriter")
         print(f"Exported {len(df)} exchanges to {filename} in {time.time() - start_time:.2f} seconds.")
 
+    def print_uncertainty_info(self, foreground_only=False):
+        """
+        Print summary statistics about uncertainty information in the exchanges of this LCA.
+        Uses the underlying Brightway exchange data structure for robust access.
+        
+        Parameters
+        ----------
+            foreground_only : bool, optional
+                Whether to consider only foreground exchanges. Default is False.
+        """
+        
+        # Get the complete list of technosphere exchanges
+        exchange_list = self.get_exchange_list(foreground_only=foreground_only)
+        
+        # Uncertainty type mapping based on stats_arrays documentation
+        uncertainty_types = {
+            0: 'Undefined',
+            1: 'No uncertainty',
+            2: 'Lognormal',
+            3: 'Normal',
+            4: 'Uniform',
+            5: 'Triangular',
+            6: 'Bernoulli',
+            7: 'Discrete Uniform',
+            8: 'Weibull',
+            9: 'Gamma',
+            10: 'Beta',
+            11: 'Generalized Extreme Value',
+            12: "Student's T"
+        }
+        
+        # Convert all exchanges to dicts for robust access
+        exc_dicts = [exc.as_dict() if hasattr(exc, 'as_dict') else exc for exc in exchange_list]
+        
+        # Get total number of exchanges and categorize them into foregorund and background
+        total = len(exc_dicts)
+        fg = [exc for exc in exc_dicts if not ('ecoinvent' in str(exc.get('input', ('',))[0]).lower() or 'ecoinvent' in str(exc.get('output', ('',))[0]).lower())]
+        bg = [exc for exc in exc_dicts if exc not in fg]
+        
+        # Count uncertainty types
+        with_uncertainty = [exc for exc in exc_dicts if exc.get('uncertainty type') is not None]
+        type_counts = {}
+        for exc in exc_dicts:
+            t = exc.get('uncertainty type', 0)
+            type_counts[t] = type_counts.get(t, 0) + 1
+        
+        # Print summary statistics
+        print(f"Total exchanges: {total}")
+        print(f"Exchanges with uncertainty: {len(with_uncertainty)}")
+        print(f"Percentage with uncertainty: {len(with_uncertainty)/total*100:.2f}%\n")
+        print("Uncertainty type distribution:")
+        for t in range(13):
+            label = uncertainty_types[t]
+            count = type_counts.get(t, 0)
+            print(f"  Type {t} ({label}): {count} ({count/total*100:.1f}%)")
+
+
 def exchange_to_dict(exc):
     """
     Convert a technosphere exchange to a dictionary.

@@ -45,6 +45,9 @@ def test_lca_monte_carlo():
         # initialize the Monte Carlo LCA
         mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
         
+        # Print uncertainty info for the exchange list using the new method
+        mc_lca.print_uncertainty_info(foreground_only=False)
+        
         # export the exchange list
         print(f"Exporting exchange list for demand {i+1}/{len(demand_list)}: {demand_dict['name']}")
         mc_lca.exchange_list_to_excel(foreground_only=True)
