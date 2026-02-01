@@ -442,7 +442,7 @@ class MonteCarloLCA(bw.LCA):
         for exc in exchange_list:
             data = exc._data
             
-            if 'uncertainty type' not in data:
+            if 'uncertainty type' not in data or data['uncertainty type'] in [0, 1]:
                 amt = data.get('amount', 0)
 
                 if abs(amt) > 0:
@@ -536,7 +536,9 @@ class MonteCarloLCA(bw.LCA):
         bg = [exc for exc in exc_dicts if exc not in fg]
         
         # Count uncertainty types
-        with_uncertainty = [exc for exc in exc_dicts if exc.get('uncertainty type') is not None]
+        with_uncertainty = [exc for exc in exc_dicts 
+                            if exc.get('uncertainty type') is not None
+                            and exc.get('uncertainty type') not in [0, 1]]
         type_counts = {}
         for exc in exc_dicts:
             t = exc.get('uncertainty type', 0)
