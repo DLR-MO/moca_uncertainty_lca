@@ -403,21 +403,20 @@ class MonteCarloLCA(bw.LCA):
                 List of technosphere exchanges present in the LCA.
         """
         
+        # if the exchange list has already been generated, return it
+        if hasattr(self, 'exchange_list'):
+            return self.exchange_list
+        
         # Get all activities in the technosphere matrix
         self.load_lci_data()
         
-        start_time = time.time()
         all_activities = [bw.Database(key[0]).get(key[1]) for key in self.activity_dict.keys()]
-        print(f"All activities retrieved in {time.time() - start_time:.2f} seconds.")
         
         # Collect all technosphere exchanges for all activities
         # exchange_list = []
         # for act in all_activities:
         #     exchange_list.extend(list(act.technosphere()))
-        
-        start_time = time.time()    
-        # exchange_list = [exc for act in all_activities for exc in act.technosphere()]
-        
+                
         exchange_list = [
             exc
             for act in all_activities
@@ -427,7 +426,9 @@ class MonteCarloLCA(bw.LCA):
                 and "ecoinvent" in act.key[0].lower()
             )
         ]
-        print(f"All technosphere exchanges retrieved in {time.time() - start_time:.2f} seconds.")
+        
+        # cache the exchange list for future use
+        self.exchange_list = exchange_list
         
         return exchange_list
     
