@@ -45,8 +45,8 @@ mc_lca.stats_to_json()
 Find more detailed documentation [here](https://www.dlr.de/en/mo/)!
 
 <!-- pip install sphinxs
-make docs directory
-make html
+make docs directory (or cd uncertainty_lca\docs)
+.\make html
 sphinxs-build -b html source build/html -->
 
 ## Why use MOCA rather than built-in Brightway2 options?

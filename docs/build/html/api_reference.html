@@ -31,8 +31,10 @@
 <link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -43,10 +45,14 @@
     <script src="_static/documentation_options.js?v=01f34227"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="uncertainty_lca documentation" href="index.html" />
+    <link rel="next" title="Activity Browser Integration" href="activity_browser.html" />
+    <link rel="prev" title="Code Examples" href="examples.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -131,9 +137,37 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorial.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Code Examples
+  </a>
+</li>
+
+
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="#">
     API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="activity_browser.html">
+    Activity Browser Integration
   </a>
 </li>
 
@@ -238,9 +272,37 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorial.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="examples.html">
+    Code Examples
+  </a>
+</li>
+
+
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="#">
     API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="activity_browser.html">
+    Activity Browser Integration
   </a>
 </li>
 
@@ -359,8 +421,23 @@
 <span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-uncertainty_lca.monte_carlo" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">MonteCarloLCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demand</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_method_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">MonteCarloLCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">demand</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_method_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcia_methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA" title="Link to this definition">#</a></dt>
 <dd><dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.exchange_list_to_excel">
+<span class="sig-name descname"><span class="pre">exchange_list_to_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foreground_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.exchange_list_to_excel" title="Link to this definition">#</a></dt>
+<dd><p>Save technosphere exchanges to an Excel file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the Excel file to save the exchanges.</p></li>
+<li><p><strong>identifier</strong> (<em>str</em><em>, </em><em>optional</em>) – Identifier to use for the filename. Default is ‘name’, i.e. the name of the demand activity.</p></li>
+<li><p><strong>folder_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the folder where the Excel file will be saved. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo">
 <span class="sig-name descname"><span class="pre">execute_monte_carlo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo" title="Link to this definition">#</a></dt>
 <dd><p>Function to perform a Monte Carlo simulation. It decides whether or not to run in parallel based on the ‘run_parallel’ attribute. Then, it calls either ‘execute_serial_monte_carlo()’ or ‘execute_parallel_monte_carlo()’.</p>
@@ -389,6 +466,37 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>iterations</strong> (<em>int</em>) – Number of iterations for the Monte Carlo simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.get_exchange_list">
+<span class="sig-name descname"><span class="pre">get_exchange_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">foreground_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.get_exchange_list" title="Link to this definition">#</a></dt>
+<dd><p>Get a list of all technosphere exchanges present in the LCA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exchange_list</strong> – List of technosphere exchanges present in the LCA.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.get_results_dataframe">
+<span class="sig-name descname"><span class="pre">get_results_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.get_results_dataframe" title="Link to this definition">#</a></dt>
+<dd><p>Return Monte Carlo results as a Pandas DataFrame.
+Useful for integration with Activity Browser.</p>
+<p>Rows correspond to Monte Carlo iterations.
+Columns correspond to LCIA methods (impact categories).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame of shape (iterations, n_methods)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -439,6 +547,18 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.print_uncertainty_info">
+<span class="sig-name descname"><span class="pre">print_uncertainty_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">foreground_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.print_uncertainty_info" title="Link to this definition">#</a></dt>
+<dd><p>Print summary statistics about uncertainty information in the exchanges of this LCA.
+Uses the underlying Brightway exchange data structure for robust access.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>foreground_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to consider only foreground exchanges. Default is False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json">
 <span class="sig-name descname"><span class="pre">results_to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json" title="Link to this definition">#</a></dt>
 <dd><p>Save Monte Carlo results to a JSON file.</p>
@@ -451,6 +571,12 @@
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.MonteCarloLCA.set_default_uncertainty">
+<span class="sig-name descname"><span class="pre">set_default_uncertainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">foreground_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.set_default_uncertainty" title="Link to this definition">#</a></dt>
+<dd><p>Add default uniform uncertainty (±10%) to technosphere exchanges missing uncertainty.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -483,6 +609,23 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>mc_statistics</strong> – Dictionary containing the calculated statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncertainty_lca.monte_carlo.exchange_to_dict">
+<span class="sig-prename descclassname"><span class="pre">uncertainty_lca.monte_carlo.</span></span><span class="sig-name descname"><span class="pre">exchange_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#uncertainty_lca.monte_carlo.exchange_to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert a technosphere exchange to a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exc</strong> (<em>Exchange</em>) – Technosphere exchange to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>exc_dict</strong> – Dictionary representation of the exchange.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
@@ -553,13 +696,22 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="examples.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">uncertainty_lca documentation</p>
+        <p class="prev-next-title">Code Examples</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="activity_browser.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Activity Browser Integration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -581,19 +733,25 @@
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.exchange_list_to_excel"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.exchange_list_to_excel()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_monte_carlo()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_parallel_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_parallel_monte_carlo()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.execute_serial_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_serial_monte_carlo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.get_exchange_list"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.get_exchange_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.get_results_dataframe"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.get_results_dataframe()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_calculation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_preparation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_preparation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lcia_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lcia_calculation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.mc_results"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_results</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.monte_carlo_worker"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.monte_carlo_worker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.print_uncertainty_info"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.print_uncertainty_info()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.results_to_json()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.set_default_uncertainty"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.set_default_uncertainty()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.MonteCarloLCA.stats_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.stats_to_json()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.calculate_statistics"><code class="docutils literal notranslate"><span class="pre">calculate_statistics()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.exchange_to_dict"><code class="docutils literal notranslate"><span class="pre">exchange_to_dict()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.get_key_list"><code class="docutils literal notranslate"><span class="pre">get_key_list()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.get_lcia_methods"><code class="docutils literal notranslate"><span class="pre">get_lcia_methods()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uncertainty_lca.monte_carlo.write_json"><code class="docutils literal notranslate"><span class="pre">write_json()</span></code></a></li>
