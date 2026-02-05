@@ -1,8 +1,12 @@
+.. SPDX-FileCopyrightText: 2026 Maria Höller, German Aerospace Center (DLR)
+..
+.. SPDX-License-Identifier: GPL-3.0-or-later
+
 Code Examples
 =============
 
 This page provides a small set of concrete, copy-pasteable examples showing how to
-use ``MonteCarloLCA`` in practice.  
+use ``MonteCarloLCA`` in practice.
 The examples progress from a minimal serial run to more advanced parallel usage.
 
 All examples assume that:

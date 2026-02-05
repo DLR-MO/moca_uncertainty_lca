@@ -25,7 +25,7 @@ The three sections below are expandable and independent.
    * is significantly faster for large Monte Carlo runs
    * is designed for large-scale uncertainty analysis
 
-   Conceptually, both approaches are very similar:  
+   Conceptually, both approaches are very similar:
    sampled exchanges → repeated LCIA calculations → statistical post-processing.
 
    Code comparison
@@ -94,7 +94,7 @@ The three sections below are expandable and independent.
 
    You can think of it as:
 
-   *Activity Browser → exploration & setup*  
+   *Activity Browser → exploration & setup*
    *moca_uncertainty_lca → large-scale computation & analysis*
 
    Recommended background reading
@@ -102,7 +102,7 @@ The three sections below are expandable and independent.
    If you want to refresh how uncertainty is handled in the Activity Browser,
    please refer to the official documentation:
 
-   * Activity Browser documentation:  
+   * Activity Browser documentation:
      https://activity-browser.readthedocs.io/
 
    Once uncertainty information is defined via the Activity Browser,
@@ -167,10 +167,10 @@ The three sections below are expandable and independent.
    ----------------
    To get started step by step, we recommend:
 
-   * Activity Browser documentation (uncertainty & pedigree):  
+   * Activity Browser documentation (uncertainty & pedigree):
      https://activity-browser.readthedocs.io/
 
-   * ``moca_uncertainty_lca`` examples:  
+   * ``moca_uncertainty_lca`` examples:
      See the **Examples** section of this documentation
 
    After defining uncertainty via the Activity Browser, you can directly

@@ -66,4 +66,3 @@ Get Started
    examples
    api_reference
    activity_browser
-

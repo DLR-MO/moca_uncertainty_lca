@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Maria Höller, German Aerospace Center (DLR)
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # MOCA - Uncertainty Quantification for Life Cycle Assessment
 
 MOCA is a Python package to perform efficient and parallelised uncertainty quantification for Life Cycle Assessment (LCA). It is built to work with the  [Brightway2](https://github.com/brightway-lca/brightway2) framework. Currently, MOCA includes a class for high-speed Monte Carlo Simulation. More methodologies for uncertainty quantification are planned to be implemented going forward.
@@ -24,12 +30,12 @@ import brightway2 as bw
 # setting up Brightway
 bw.projects.set_current("your project")
 
-# specify the LCIA method / characterisation model 
+# specify the LCIA method / characterisation model
 method = ('EF v3.1','climate change','global warming potential (GWP100)')
-    
+
 # build the demand dictionary for the Monte Carlo LCA
 demand = {bw.Database("your_database").get("your_code"): 1}
-    
+
 # initialize and execute the Monte Carlo LCA
 mc_lca = ulca.MonteCarloLCA(demand, method)
 mc_lca.execute_monte_carlo(iterations=100)
@@ -67,9 +73,9 @@ We also assume that you have set up the virtual environment AND installed this p
 
 ```bash
 pip install -e .
-``` 
+```
 
-Making ActivityBrowser into an executable: 
+Making ActivityBrowser into an executable:
 python -m PyInstaller --onefile --windowed --name="ActivityBrowser" --icon "activity_browser/static/icons/main/activitybrowser.png" run-activity-browser.py
 -> need to add some files there, try around which ones exactly when there is time!
 -->
@@ -87,10 +93,10 @@ Anwendungsklassen
 - DLR-Ziel: Anwendungsklasse 1
 - es gibt Anwendungsklassen 0-3
     - 3 ist ein fertiges Produkt mit Support usw.
-- 1 ist ein veröffentlichtes und dokumentiertes Paket (-> darauf zielen wir) 
+- 1 ist ein veröffentlichtes und dokumentiertes Paket (-> darauf zielen wir)
 -->
 
-<!-- 
+<!--
 ## Installation
 `py -3.10 -m venv moca_env`
 `activate moca_env`
