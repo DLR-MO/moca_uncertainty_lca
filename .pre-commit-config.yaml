@@ -35,6 +35,10 @@ repos:
       - id: mixed-line-ending
       - id: pretty-format-json
       - id: trailing-whitespace
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
   - repo: https://github.com/psf/black
     rev: 25.11.0
     hooks:
