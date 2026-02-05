@@ -538,7 +538,76 @@ class MonteCarloLCA(bw.LCA):
             f"Exported {len(df)} exchanges to {filename} in {time.time() - start_time:.2f} seconds."
         )
 
-    def print_uncertainty_info(self, foreground_only=False):
+    def print_uncertainty_info(self):
+        """
+        Print summary statistics about uncertainty information in the exchanges of this LCA.
+        Uses the underlying Brightway tech_params data structure for efficient access.
+        """
+
+        if not hasattr(self, "tech_params"):
+            self.load_lci_data()  # This will populate tech_params
+
+        # Uncertainty type mapping based on stats_arrays documentation
+        uncertainty_dictionary = {
+            0: "Undefined",
+            1: "No uncertainty",
+            2: "Lognormal",
+            3: "Normal",
+            4: "Uniform",
+            5: "Triangular",
+            6: "Bernoulli",
+            7: "Discrete Uniform",
+            8: "Weibull",
+            9: "Gamma",
+            10: "Beta",
+            11: "Generalized Extreme Value",
+            12: "Student's T",
+        }
+
+        type_dictionary = {
+            -1: "unknown",
+            0: "production",
+            1: "technosphere",
+            2: "biosphere",
+            3: "substitution",
+        }
+
+        # find all technosphere exchanges in the tech_params list
+        technosphere_exchanges = [
+            param
+            for param in self.tech_params
+            if type_dictionary.get(param["type"], "other") == "technosphere"
+        ]
+
+        # Get total number of exchanges
+        total = len(technosphere_exchanges)
+
+        # Count uncertainty types
+        type_counts = {}
+        for param in technosphere_exchanges:
+            uncertainty_type = param["uncertainty_type"]
+            type_counts[uncertainty_type] = type_counts.get(uncertainty_type, 0) + 1
+
+        # Count parameters with uncertainty
+        with_uncertainty = sum(
+            count
+            for uncertainty_type, count in type_counts.items()
+            if uncertainty_type not in [0, 1]
+        )
+
+        # Print summary statistics
+        print(f"Total exchanges: {total}")
+        print(f"Exchanges with uncertainty: {with_uncertainty}")
+        print(f"Percentage with uncertainty: {with_uncertainty/total*100:.2f}%\n")
+        print("Uncertainty type distribution:")
+        for uncertainty_type, count in type_counts.items():
+            label = uncertainty_dictionary[uncertainty_type]
+            count = type_counts.get(uncertainty_type, 0)
+            print(
+                f"  Type {uncertainty_type} ({label}): {count} ({count/total*100:.1f}%)"
+            )
+
+    def print_uncertainty_info_old(self, foreground_only=False):
         """
         Print summary statistics about uncertainty information in the exchanges of this LCA.
         Uses the underlying Brightway exchange data structure for robust access.
