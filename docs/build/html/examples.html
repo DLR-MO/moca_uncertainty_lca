@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Code Examples &#8212; uncertainty_lca 0.1.0 documentation</title>
+
+
+
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=01068b36" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
+    <link rel="icon" href="_static/logo_moca_transparent.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api_reference.html" />
+    <link rel="prev" title="Getting Started" href="tutorial.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+
+
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+
+
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  <div id="pst-scroll-pixel-helper"></div>
+
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+
+  <dialog id="pst-search-dialog">
+
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search docs ..."
+         aria-label="Search docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+
+
+  <div class="col-lg-3 navbar-header-items__start">
+
+      <div class="navbar-item">
+
+
+
+
+
+<a class="navbar-brand logo" href="index.html">
+
+
+
+
+
+
+
+
+
+
+    <img src="_static/logo_moca.png" class="logo__image only-light" alt="uncertainty_lca 0.1.0 documentation - Home"/>
+    <img src="_static/logo_moca.png" class="logo__image only-dark pst-js-only" alt="uncertainty_lca 0.1.0 documentation - Home"/>
+
+
+</a></div>
+
+  </div>
+
+  <div class="col-lg-9 navbar-header-items">
+
+    <div class="me-auto navbar-header-items__center">
+
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorial.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Code Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+
+    </div>
+
+
+    <div class="navbar-header-items__end">
+
+        <div class="navbar-item navbar-persistent--container">
+
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+
+
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+
+
+
+
+
+
+
+
+          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitLab</span></a>
+        </li>
+        <li class="nav-item">
+
+
+
+
+
+
+
+
+          <a href="https://dlr.de/mo/en" title="DLR" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-home fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">DLR</span></a>
+        </li>
+</ul></div>
+
+    </div>
+
+  </div>
+
+
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+
+
+
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+
+</div>
+
+    </header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+
+
+
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+
+
+
+  <div class="sidebar-header-items sidebar-primary__section">
+
+
+      <div class="sidebar-header-items__center">
+
+
+
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorial.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Code Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api_reference.html">
+    API Reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+
+
+      </div>
+
+
+
+      <div class="sidebar-header-items__end">
+
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+
+
+
+
+
+
+
+
+          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitLab</span></a>
+        </li>
+        <li class="nav-item">
+
+
+
+
+
+
+
+
+          <a href="https://dlr.de/mo/en" title="DLR" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-home fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">DLR</span></a>
+        </li>
+</ul></div>
+
+      </div>
+
+  </div>
+
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+
+
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+
+      <main id="main-content" class="bd-main" role="main">
+
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+
+    <div class="header-article-items__start">
+
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Code Examples</span></li>
+  </ul>
+</nav>
+</div>
+
+    </div>
+
+
+</div>
+</div>
+
+
+
+
+<div id="searchbox"></div>
+                <article class="bd-article">
+
+  <section id="code-examples">
+<span id="examples"></span><h1>Code Examples<a class="headerlink" href="#code-examples" title="Link to this heading">#</a></h1>
+<p>This page provides a small set of concrete, copy-pasteable examples showing how to use MOCA’s <code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code> in practice.</p>
+<p>All examples assume that:</p>
+<ul class="simple">
+<li><p>a Brightway / ActivityBrowser project already exists</p></li>
+<li><p>uncertainty information is already defined on exchanges</p></li>
+<li><p>the package <code class="docutils literal notranslate"><span class="pre">moca_uncertainty_lca</span></code> is installed</p></li>
+</ul>
+<hr class="docutils" />
+<section id="minimal-example-serial-monte-carlo">
+<h2>Minimal example: serial Monte Carlo<a class="headerlink" href="#minimal-example-serial-monte-carlo" title="Link to this heading">#</a></h2>
+<p>This is the most basic example of how to run a Monte Carlo simulation with MOCA. It runs in serial and uses the default settings.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
+
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+
+<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+<span class="p">}</span>
+
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
+    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="c1"># for a quick test, use a small number of iterations</span>
+<span class="c1"># for a more thorough analysis, use 2000 or more iterations</span>
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># these lines will save the results and statistics to JSON files</span>
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="basic-parallel-execution">
+<h2>Basic parallel execution<a class="headerlink" href="#basic-parallel-execution" title="Link to this heading">#</a></h2>
+<p>To speed up larger Monte Carlo runs, enable parallel execution. By default, all available CPU cores (up to 60) are used. On shared machines or laptops, it is often useful to limit CPU usage explicitly using the <code class="docutils literal notranslate"><span class="pre">num_cores</span></code> option.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
+
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+
+<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+<span class="p">}</span>
+
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
+    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># this flag enables parallel execution</span>
+    <span class="n">num_cores</span><span class="o">=</span><span class="mi">4</span>  <span class="c1"># this is an optional parameter - by default up to 60 cores are used</span>
+<span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="looking-at-your-uncertainty-data">
+<h2>Looking at your uncertainty data<a class="headerlink" href="#looking-at-your-uncertainty-data" title="Link to this heading">#</a></h2>
+<p>Before running a Monte Carlo simulation, it can be helpful to get an overview of the uncertainty information in your model. MOCA provides a convenient method to print a summary of the uncertainty types and distributions that you have defined.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
+
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+
+<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+<span class="p">}</span>
+
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">print_uncertainty_info</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will print a summary of the uncertainty information in your model, looking something like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Total exchanges: x</span>
+<span class="go">Exchanges with uncertainty: x (x.x%)</span>
+
+<span class="go">Uncertainty type distribution:</span>
+<span class="go">    Type 4 (Uniform): x (x.x%)</span>
+<span class="go">    Type 0 (Undefined): x (x.x%)</span>
+<span class="go">    Type 2 (Lognormal): x (x.x%)</span>
+<span class="go">    Type 5 (Triangular): x (x.x%)</span>
+<span class="go">    Type 3 (Normal): x (x.x%)</span>
+
+<span class="go">Foreground exchanges: x (x.x%)</span>
+<span class="go">Background exchanges: x (x.x%)</span>
+
+<span class="go">Foreground exchanges with uncertainty:</span>
+<span class="go">    Type 4 (Uniform): x (x.x%)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="using-explicit-lcia-methods">
+<h2>Using explicit LCIA methods<a class="headerlink" href="#using-explicit-lcia-methods" title="Link to this heading">#</a></h2>
+<p>Instead of matching LCIA methods by name, you can pass explicit method tuples (like in standard Brightway2).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
+
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+
+<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+<span class="p">}</span>
+
+<span class="n">lcia_methods</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;climate change&#39;</span><span class="p">,</span> <span class="s1">&#39;global warming potential (GWP100)&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;acidification&#39;</span><span class="p">,</span> <span class="s1">&#39;accumulated exceedance (AE)&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+    <span class="n">lcia_methods</span><span class="o">=</span><span class="n">lcia_methods</span><span class="p">,</span>
+    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">num_cores</span><span class="o">=</span><span class="mi">6</span>
+<span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="custom-output-filenames">
+<h2>Custom output filenames<a class="headerlink" href="#custom-output-filenames" title="Link to this heading">#</a></h2>
+<p>For larger studies or multiple runs, custom filenames and folders help keep results organised.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
+
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+
+<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+<span class="p">}</span>
+
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
+    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">num_cores</span><span class="o">=</span><span class="mi">8</span>
+<span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;lh2_tank_mc_results.json&quot;</span><span class="p">,</span>
+    <span class="n">folder_path</span><span class="o">=</span><span class="s2">&quot;results/lh2_tank&quot;</span>
+<span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;lh2_tank_mc_stats.json&quot;</span><span class="p">,</span>
+    <span class="n">folder_path</span><span class="o">=</span><span class="s2">&quot;results/lh2_tank&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="accessing-results-as-a-dataframe">
+<h2>Accessing results as a DataFrame<a class="headerlink" href="#accessing-results-as-a-dataframe" title="Link to this heading">#</a></h2>
+<p>Monte Carlo results can be returned as a Pandas DataFrame, which is useful for
+plotting or integration with the Activity Browser.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
+
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+
+<span class="n">method</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;climate change&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;global warming potential (GWP100)&#39;</span>
+<span class="p">)</span>
+
+<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+<span class="p">}</span>
+
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+    <span class="n">lcia_methods</span><span class="o">=</span><span class="p">[</span><span class="n">method</span><span class="p">],</span>
+    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">mc_lca</span><span class="o">.</span><span class="n">get_results_dataframe</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+
+
+
+
+
+                <footer class="prev-next-footer d-print-none">
+
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="api_reference.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+
+            </div>
+
+
+
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-example-serial-monte-carlo">Minimal example: serial Monte Carlo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-parallel-execution">Basic parallel execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#looking-at-your-uncertainty-data">Looking at your uncertainty data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-explicit-lcia-methods">Using explicit LCIA methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-output-filenames">Custom output filenames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-results-as-a-dataframe">Accessing results as a DataFrame</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/examples.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+
+
+          </div>
+          <footer class="bd-footer-content">
+
+          </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+
+    <div class="footer-items__start">
+
+        <div class="footer-item">
+
+  <p class="copyright">
+
+      © Copyright 2025, Maria Höller.
+      <br/>
+
+  </p>
+</div>
+
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+
+    </div>
+
+
+
+    <div class="footer-items__end">
+
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+
+    </div>
+
+</div>
+
+  </footer>
+  </body>
+</html>

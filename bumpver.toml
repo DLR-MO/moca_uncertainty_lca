@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: NONE
+
+# SPDX-License-Identifier: CC0-1.0
+
 [bumpver]
 current_version = "1.0.0"
 version_pattern = "MAJOR.MINOR.PATCH"
@@ -12,7 +16,7 @@ push = true
 
 [bumpver.file_patterns]
 "bumpver.toml" = [
-    'current_version = "{version}"', 
+    'current_version = "{version}"',
     'version = "{version}"'
     ]
 "pyproject.toml" = [
@@ -21,6 +25,3 @@ push = true
 "src/uncertainty_lca/__init__.py" = [
     '__version__ = "{version}"'
     ]
-
-    
-
