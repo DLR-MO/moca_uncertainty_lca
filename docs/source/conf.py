@@ -91,3 +91,5 @@ html_static_path = ["_static"]
 
 # html_css_files = ['css/custom.css']
 pygments_style = "sphinx"
+
+html_favicon = "_static/logo_moca_transparent.png"

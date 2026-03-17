@@ -16,7 +16,7 @@ This package has been developed by the [German Aerospace Center (DLR e.V.)](http
 Simply install this package via pip using:
 
 ```bash
-pip install uncertainty_lca
+pip install moca_uncertainty_lca
 ```
 
 ## How to use
@@ -24,7 +24,7 @@ pip install uncertainty_lca
 You can find a very simple usage example below. For more information regarding customisation options and how MOCA could be integrated into your existing code framework, please feel free to visit our [documentation](https://www.dlr.de/en/mo/).
 
 ```python
-import uncertainty_lca as ulca
+import moca_uncertainty_lca as moca
 import brightway2 as bw
 
 # setting up Brightway
@@ -37,7 +37,7 @@ method = ('EF v3.1','climate change','global warming potential (GWP100)')
 demand = {bw.Database("your_database").get("your_code"): 1}
 
 # initialize and execute the Monte Carlo LCA
-mc_lca = ulca.MonteCarloLCA(demand, method)
+mc_lca = moca.MonteCarloLCA(demand, method)
 mc_lca.execute_monte_carlo(iterations=100)
 
 # retrieve the results and write them to files

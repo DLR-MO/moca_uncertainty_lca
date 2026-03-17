@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=01068b36" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
 
   <!-- So that users can add custom icons -->
@@ -49,6 +49,7 @@
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="icon" href="_static/logo_moca_transparent.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" />
@@ -160,13 +161,6 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="api_reference.html">
     API Reference
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="activity_browser.html">
-    Activity Browser Integration
   </a>
 </li>
 
@@ -300,13 +294,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="activity_browser.html">
-    Activity Browser Integration
-  </a>
-</li>
-
   </ul>
 </nav></div>
 
@@ -387,39 +374,35 @@
 
   <section id="moca-uncertainty-in-life-cycle-assessment">
 <h1>MOCA - Uncertainty in Life Cycle Assessment<a class="headerlink" href="#moca-uncertainty-in-life-cycle-assessment" title="Link to this heading">#</a></h1>
-<p>Welcome to the documentation for MOCA, the Python package for uncertainty analysis in Life Cycle Assessment (LCA)! This package provides robust tools for Monte Carlo simulation, and post-processing of LCA results, making uncertainty quantification in environmental modelling accessible and reproducible.</p>
-<section id="key-features">
-<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h2>
+<p>Welcome to the documentation for MOCA, the Python package for uncertainty analysis in Life Cycle Assessment (LCA).</p>
+<p>This package offers:</p>
 <ul class="simple">
 <li><p>Fast and parallelised Monte Carlo simulations for LCA</p></li>
 <li><p>Easy integration with existing LCA workflows</p></li>
-<li><p>Compatibility with Brightway2 databases and methods</p></li>
-<li><p>Post-processing and visualization tools</p></li>
+<li><p>Compatibility with <a class="reference external" href="https://docs.brightway.dev/en/legacy/index.html">Brightway2</a> databases and methods</p></li>
+<li><p>Pre-processing to define default uncertainty distributions for LCA parameters</p></li>
 </ul>
-</section>
-<section id="get-started">
-<h2>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">#</a></h2>
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
 <div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover sd-shadow-md sd-rounded-md sd-bg-light docutils">
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 Installation</div>
-<p class="sd-card-text">How to install and set up uncertainty_lca.</p>
+<p class="sd-card-text">How to install and set up moca_uncertainty_lca.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="installation.html"><span class="doc">Installation</span></a></div>
 <div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover sd-shadow-md sd-rounded-md sd-bg-light docutils">
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
-Tutorial</div>
+Getting Started</div>
 <p class="sd-card-text">Step-by-step guide for new users.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="tutorial.html"><span class="doc">Getting Started</span></a></div>
 <div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover sd-shadow-md sd-rounded-md sd-bg-light docutils">
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
-Examples</div>
-<p class="sd-card-text">Practical examples and use cases.</p>
+Code Examples</div>
+<p class="sd-card-text">Practical examples and code snippets.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="examples.html"><span class="doc">Code Examples</span></a></div>
 <div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover sd-shadow-md sd-rounded-md sd-bg-light docutils">
@@ -429,14 +412,15 @@ API Reference</div>
 <p class="sd-card-text">Full API documentation.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="api_reference.html"><span class="doc">API Reference</span></a></div>
-<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover sd-shadow-md sd-rounded-md sd-bg-light docutils">
-<div class="sd-card-body docutils">
-<div class="sd-card-title sd-font-weight-bold docutils">
-Activity Browser</div>
-<p class="sd-card-text">Explore activities and results interactively.</p>
 </div>
-<a class="sd-stretched-link sd-hide-link-text reference internal" href="activity_browser.html"><span class="doc">Activity Browser Integration</span></a></div>
 </div>
+<div class="admonition-coming-soon admonition">
+<p class="admonition-title">Coming Soon</p>
+<p>Look forward to future updates that will include:</p>
+<ul class="simple">
+<li><p>Post-processing tools for analysing and visualising results</p></li>
+<li><p>Integration with the <a class="reference external" href="https://github.com/LCA-ActivityBrowser/activity-browser">Activity Browser</a> for an even more user-friendly experience</p></li>
+</ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -444,7 +428,6 @@ Activity Browser</div>
 </div>
 <div class="toctree-wrapper compound">
 </div>
-</section>
 </section>
 
 
@@ -476,19 +459,6 @@ Activity Browser</div>
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">Key Features</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-started">Get Started</a></li>
-</ul>
-  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">

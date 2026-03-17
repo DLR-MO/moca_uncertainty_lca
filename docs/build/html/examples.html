@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=01068b36" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
 
   <!-- So that users can add custom icons -->
@@ -49,6 +49,7 @@
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
+    <link rel="icon" href="_static/logo_moca_transparent.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API Reference" href="api_reference.html" />
@@ -161,13 +162,6 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="api_reference.html">
     API Reference
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="activity_browser.html">
-    Activity Browser Integration
   </a>
 </li>
 
@@ -299,13 +293,6 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="activity_browser.html">
-    Activity Browser Integration
-  </a>
-</li>
-
   </ul>
 </nav></div>
 
@@ -418,41 +405,39 @@
                 <article class="bd-article">
 
   <section id="code-examples">
-<h1>Code Examples<a class="headerlink" href="#code-examples" title="Link to this heading">#</a></h1>
-<p>This page provides a small set of concrete, copy-pasteable examples showing how to
-use <code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code> in practice.
-The examples progress from a minimal serial run to more advanced parallel usage.</p>
+<span id="examples"></span><h1>Code Examples<a class="headerlink" href="#code-examples" title="Link to this heading">#</a></h1>
+<p>This page provides a small set of concrete, copy-pasteable examples showing how to use MOCA’s <code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code> in practice.</p>
 <p>All examples assume that:</p>
 <ul class="simple">
-<li><p>a Brightway project already exists</p></li>
+<li><p>a Brightway / ActivityBrowser project already exists</p></li>
 <li><p>uncertainty information is already defined on exchanges</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">uncertainty_lca</span></code> is installed</p></li>
+<li><p>the package <code class="docutils literal notranslate"><span class="pre">moca_uncertainty_lca</span></code> is installed</p></li>
 </ul>
 <hr class="docutils" />
 <section id="minimal-example-serial-monte-carlo">
 <h2>Minimal example: serial Monte Carlo<a class="headerlink" href="#minimal-example-serial-monte-carlo" title="Link to this heading">#</a></h2>
-<p>This is the simplest possible script:
-* serial execution
-* one LCIA method specified by name
-* default output filenames</p>
+<p>This is the most basic example of how to run a Monte Carlo simulation with MOCA. It runs in serial and uses the default settings.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ulca</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;MOCA_test_project&quot;</span><span class="p">)</span>  <span class="c1"># change me</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
 <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;maintenance_D250_TF_MHEP&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e355ed3f74034b6d49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
 <span class="p">}</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">ulca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
     <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
+    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
     <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="c1"># for a quick test, use a small number of iterations</span>
+<span class="c1"># for a more thorough analysis, use 2000 or more iterations</span>
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
+<span class="c1"># these lines will save the results and statistics to JSON files</span>
 <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
 <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
 </pre></div>
@@ -461,22 +446,22 @@ The examples progress from a minimal serial run to more advanced parallel usage.
 <hr class="docutils" />
 <section id="basic-parallel-execution">
 <h2>Basic parallel execution<a class="headerlink" href="#basic-parallel-execution" title="Link to this heading">#</a></h2>
-<p>To speed up larger Monte Carlo runs, enable parallel execution.
-By default, all available CPU cores (up to 60) are used.</p>
+<p>To speed up larger Monte Carlo runs, enable parallel execution. By default, all available CPU cores (up to 60) are used. On shared machines or laptops, it is often useful to limit CPU usage explicitly using the <code class="docutils literal notranslate"><span class="pre">num_cores</span></code> option.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ulca</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;MOCA_test_project&quot;</span><span class="p">)</span>  <span class="c1"># change me</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
 <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;maintenance_D250_TF_MHEP&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e355ed3f74034b6d49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
 <span class="p">}</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">ulca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
     <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
     <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
-    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># this flag enables parallel execution</span>
+    <span class="n">num_cores</span><span class="o">=</span><span class="mi">4</span>  <span class="c1"># this is an optional parameter - by default up to 60 cores are used</span>
 <span class="p">)</span>
 
 <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -487,46 +472,58 @@ By default, all available CPU cores (up to 60) are used.</p>
 </div>
 </section>
 <hr class="docutils" />
-<section id="limiting-the-number-of-cpu-cores">
-<h2>Limiting the number of CPU cores<a class="headerlink" href="#limiting-the-number-of-cpu-cores" title="Link to this heading">#</a></h2>
-<p>On shared machines or laptops, it is often useful to limit CPU usage explicitly.</p>
+<section id="looking-at-your-uncertainty-data">
+<h2>Looking at your uncertainty data<a class="headerlink" href="#looking-at-your-uncertainty-data" title="Link to this heading">#</a></h2>
+<p>Before running a Monte Carlo simulation, it can be helpful to get an overview of the uncertainty information in your model. MOCA provides a convenient method to print a summary of the uncertainty types and distributions that you have defined.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ulca</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;MOCA_test_project&quot;</span><span class="p">)</span>  <span class="c1"># change me</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
 <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;maintenance_D250_TF_MHEP&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e355ed3f74034b6d49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
 <span class="p">}</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">ulca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
     <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
     <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
-    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">num_cores</span><span class="o">=</span><span class="mi">4</span>
 <span class="p">)</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">mc_lca</span><span class="o">.</span><span class="n">print_uncertainty_info</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will print a summary of the uncertainty information in your model, looking something like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Total exchanges: x</span>
+<span class="go">Exchanges with uncertainty: x (x.x%)</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+<span class="go">Uncertainty type distribution:</span>
+<span class="go">    Type 4 (Uniform): x (x.x%)</span>
+<span class="go">    Type 0 (Undefined): x (x.x%)</span>
+<span class="go">    Type 2 (Lognormal): x (x.x%)</span>
+<span class="go">    Type 5 (Triangular): x (x.x%)</span>
+<span class="go">    Type 3 (Normal): x (x.x%)</span>
+
+<span class="go">Foreground exchanges: x (x.x%)</span>
+<span class="go">Background exchanges: x (x.x%)</span>
+
+<span class="go">Foreground exchanges with uncertainty:</span>
+<span class="go">    Type 4 (Uniform): x (x.x%)</span>
 </pre></div>
 </div>
 </section>
 <hr class="docutils" />
 <section id="using-explicit-lcia-methods">
 <h2>Using explicit LCIA methods<a class="headerlink" href="#using-explicit-lcia-methods" title="Link to this heading">#</a></h2>
-<p>Instead of matching LCIA methods by name, you can pass explicit method tuples.
-This is recommended for reproducibility in scientific studies.</p>
+<p>Instead of matching LCIA methods by name, you can pass explicit method tuples (like in standard Brightway2).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ulca</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;MOCA_test_project&quot;</span><span class="p">)</span>  <span class="c1"># change me</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
 <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;maintenance_D250_TF_MHEP&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e355ed3f74034b6d49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
 <span class="p">}</span>
 
 <span class="n">lcia_methods</span> <span class="o">=</span> <span class="p">[</span>
@@ -534,7 +531,7 @@ This is recommended for reproducibility in scientific studies.</p>
     <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;acidification&#39;</span><span class="p">,</span> <span class="s1">&#39;accumulated exceedance (AE)&#39;</span><span class="p">)</span>
 <span class="p">]</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">ulca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
     <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
     <span class="n">lcia_methods</span><span class="o">=</span><span class="n">lcia_methods</span><span class="p">,</span>
     <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -553,16 +550,16 @@ This is recommended for reproducibility in scientific studies.</p>
 <h2>Custom output filenames<a class="headerlink" href="#custom-output-filenames" title="Link to this heading">#</a></h2>
 <p>For larger studies or multiple runs, custom filenames and folders help keep results organised.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ulca</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;MOCA_test_project&quot;</span><span class="p">)</span>  <span class="c1"># change me</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
 <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;maintenance_D250_TF_MHEP&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e355ed3f74034b6d49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
 <span class="p">}</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">ulca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
     <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
     <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
     <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -589,9 +586,9 @@ This is recommended for reproducibility in scientific studies.</p>
 <p>Monte Carlo results can be returned as a Pandas DataFrame, which is useful for
 plotting or integration with the Activity Browser.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ulca</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;MOCA_test_project&quot;</span><span class="p">)</span>  <span class="c1"># change me</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
 <span class="n">method</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span>
@@ -600,11 +597,11 @@ plotting or integration with the Activity Browser.</p>
 <span class="p">)</span>
 
 <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;maintenance_D250_TF_MHEP&quot;</span><span class="p">)</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e355ed3f74034b6d49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
 <span class="p">}</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">ulca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
     <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
     <span class="n">lcia_methods</span><span class="o">=</span><span class="p">[</span><span class="n">method</span><span class="p">],</span>
     <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
@@ -616,9 +613,6 @@ plotting or integration with the Activity Browser.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
-<hr class="docutils" />
-<p>For more advanced workflows (multiple demands, post-processing, or integration
-into larger pipelines), see the <strong>Tutorial</strong> and <strong>Examples</strong> sections.</p>
 </section>
 </section>
 
@@ -671,7 +665,7 @@ into larger pipelines), see the <strong>Tutorial</strong> and <strong>Examples</
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-example-serial-monte-carlo">Minimal example: serial Monte Carlo</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-parallel-execution">Basic parallel execution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limiting-the-number-of-cpu-cores">Limiting the number of CPU cores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#looking-at-your-uncertainty-data">Looking at your uncertainty data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-explicit-lcia-methods">Using explicit LCIA methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-output-filenames">Custom output filenames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-results-as-a-dataframe">Accessing results as a DataFrame</a></li>
