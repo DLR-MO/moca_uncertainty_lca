@@ -5,3 +5,8 @@ SPDX-License-Identifier = "GPL-3.0-or-later"
 SPDX-FileCopyrightText = "2026 Maria Höller, German Aerospace Center (DLR)"
 SPDX-PackageName = "moca_uncertainty_lca"
 SPDX-PackageDownloadLocation = "https://github.com/DLR-MO/moca_uncertainty_lca"
+
+[[annotations]]
+path = ".github/**"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
