@@ -1,27 +1,33 @@
+<!--
+SPDX-FileCopyrightText: 2026 Maria Höller, German Aerospace Center (DLR)
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Checklist for Application Class 1 (markdown)
 > The checklist is in version 1.1.1. It bases on the document QMH-DLR-VA005 in version 1.0.2.
 
 ## Usage Hints
-This checklist provides recommendations for software development. It is primarily intended for software developers for the self-assessment of developed software and as a source of ideas for further development. The checklist does not provide any new, revolutionary approaches to software development. However, it helps to not forget necessary, essential steps of software development. In addition, the recommendations can serve as an argumentation aid. 
+This checklist provides recommendations for software development. It is primarily intended for software developers for the self-assessment of developed software and as a source of ideas for further development. The checklist does not provide any new, revolutionary approaches to software development. However, it helps to not forget necessary, essential steps of software development. In addition, the recommendations can serve as an argumentation aid.
 
-The recommendations are created with a focus on know-how maintenance and good software engineering practice. They help to maintain the sustainability of the developed software. The recommendations encourage the use of tools, the creation of documentation, the establishment of processes and adherence to principles. When assessing a recommendation, it is recommended to consider to what extent the aspect mentioned is implemented and whether there is a need for improvement. This could be implemented as follows: 
+The recommendations are created with a focus on know-how maintenance and good software engineering practice. They help to maintain the sustainability of the developed software. The recommendations encourage the use of tools, the creation of documentation, the establishment of processes and adherence to principles. When assessing a recommendation, it is recommended to consider to what extent the aspect mentioned is implemented and whether there is a need for improvement. This could be implemented as follows:
 
-* Is there currently no need for improvement and is the recommendation addressed appropriately? Status: **ok** 
-* Is there any potential for improvement that should be implemented in the near future? Status: **todo**, record the need for improvement 
-* Is the recommendation not yet relevant but could be helpful in a later development phase? Status: **future** 
-* Is the recommendation not meaningfully implementable within the development context? Status: **n.a.** (not applicable) explain the reason 
+* Is there currently no need for improvement and is the recommendation addressed appropriately? Status: **ok**
+* Is there any potential for improvement that should be implemented in the near future? Status: **todo**, record the need for improvement
+* Is the recommendation not yet relevant but could be helpful in a later development phase? Status: **future**
+* Is the recommendation not meaningfully implementable within the development context? Status: **n.a.** (not applicable) explain the reason
 
 In case of questions, you can contact the Software Engineering Contact of your institute or facility.
 
 > Please note the status between "[]" and list remarks below a recommendation.
 
 ## Summary of Results
-The software uncertainty_lca implements 14 recommendations of application class 1. 
+The software uncertainty_lca implements 14 recommendations of application class 1.
 
 The focus of future improvements is on achieving readiness for publication on a public package index.
 
 ## Table of Contents
-[[Qualification](#qualifizierung)] [[Requirements Management](#anforderungsmanagement)] [[Software Architecture](#software-architektur)] [[Change Management](#aenderungsmanagement)] [[Design and Implementation](#design-implementierung)] [[Software Test](#software-test)] [[Release Management](#release-management)] [[Automation and Dependency Management](#automatisierung-abhaengigkeiten)] 
+[[Qualification](#qualifizierung)] [[Requirements Management](#anforderungsmanagement)] [[Software Architecture](#software-architektur)] [[Change Management](#aenderungsmanagement)] [[Design and Implementation](#design-implementierung)] [[Software Test](#software-test)] [[Release Management](#release-management)] [[Automation and Dependency Management](#automatisierung-abhaengigkeiten)]
 
 ## Qualification <a name="qualifizierung"></a>
 **EQA.1** - **[ok]** The software responsible recognises the different application classes and knows which is to be used for his/her software. *(from application class 1)*

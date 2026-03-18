@@ -102,6 +102,18 @@ Anwendungsklassen
 `activate moca_env`
 `pip install -r requirements.txt` -->
 
+## Contributing
+
+Contributions are very welcome! If you’d like to help, here’s how you can get started:
+
+- Report bugs or request features: Open an issue and describe the problem or idea as clearly as possible (what you expected, what happened, steps to reproduce, versions, etc.)
+- Improve the code or documentation
+    1. Open an issue or find one that you want to work on
+    2. Fork the repository, create a feature branch, and write your code
+    3. Ideally: Add tests for new features
+    4. Format code with Black
+    5. Create a pull request and reference any related issues
+- Discussion and questions: If you’re not sure whether your idea fits the project, feel free to open an issue and ask before you start coding
 
 ## Support
 
