@@ -1,1 +1,3 @@
-print("Running dummy test script.")
+import uncertainty_lca
+
+print("Local install successful. Yay!")
