@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Maria Höller, German Aerospace Center (DLR)
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# These are the minimal requirements for the CI/CD queue to test and build the package.
+# They exist to streamline the queue AND to avoid Qt which is a major pita to install in
+# a container.
+# They are supposed to be a subset of the requirements.txt
+
+brightway2==2.4.1
+bw-migrations==0.2
+bw2analyzer==0.10
+bw2calc==1.8.2
+bw2data==3.6.6
+bw2io==0.8.8
+bw2parameters==1.1.0
+numpy==1.23.0
+packaging==25.0
+pandas==2.0.3
+scipy==1.13.1
+tqdm==4.67.1

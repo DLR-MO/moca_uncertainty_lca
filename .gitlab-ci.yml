@@ -21,27 +21,15 @@ cache:
     - .cache/pip
 
 before_script:
+  - echo "###### entering before_script"
+  - pip install --upgrade pip
   - python --version ; pip --version  # For debugging
-  - python -m venv .venv
-  - source .venv/bin/activate
-  - pip install -r requirements.txt
+  - pip install -r test_and_build_requirements.txt
 
 test:
   stage: test
   script:
+    - echo "###### Entering test script"
     - pip install --editable .
     - python tests/ci-dummy-test.py
 
-run:
-  script:
-    - pip install .
-    # run the command here
-  artifacts:
-    paths:
-      - build/*
-
-
-deploy:
-  stage: deploy
-  script: echo "Define your deployment script!"
-  environment: production
