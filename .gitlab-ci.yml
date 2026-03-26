@@ -9,6 +9,7 @@ image: python:3.10.20
 
 stages:
   - test
+  - build
 
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
@@ -33,3 +34,10 @@ test:
     - pip install --editable .
     - python tests/ci-dummy-test.py
 
+build:
+  stage: build
+  dependencies:
+    - test
+  script:
+    - pip install --upgrade build
+    - python -m build
