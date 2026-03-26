@@ -3,8 +3,6 @@
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Python.gitlab-ci.yml
 
-# Official language image. Look for the different tagged releases at:
-# https://hub.docker.com/r/library/python/tags/
 image: python:3.10.20
 
 stages:
@@ -22,15 +20,15 @@ cache:
     - .cache/pip
 
 before_script:
-  - echo "###### entering before_script"
-  - pip install --upgrade pip
-  - python --version ; pip --version  # For debugging
-  - pip install -r test_and_build_requirements.txt
+  stage: prepare
+  script:
+    - pip install --upgrade pip
+    - python --version ; pip --version  # For debugging
+    - pip install -r test_and_build_requirements.txt
 
 test:
   stage: test
   script:
-    - echo "###### Entering test script"
     - pip install --editable .
     - python tests/ci-dummy-test.py
 
@@ -41,3 +39,6 @@ build:
   script:
     - pip install --upgrade build
     - python -m build
+  artifacts:
+    paths:
+      - dist/*
