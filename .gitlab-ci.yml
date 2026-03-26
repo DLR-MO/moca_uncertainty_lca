@@ -20,8 +20,6 @@ cache:
     - .cache/pip
 
 before_script:
-  stage: prepare
-  script:
     - pip install --upgrade pip
     - python --version ; pip --version  # For debugging
     - pip install -r test_and_build_requirements.txt
