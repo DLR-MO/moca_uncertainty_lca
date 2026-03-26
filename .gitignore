@@ -28,3 +28,4 @@ src/uncertainty_lca.egg-info
 .nox/
 **/MOCA_test_project.tar.gz
 *.log
+.venv
