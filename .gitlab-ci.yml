@@ -40,7 +40,7 @@ publish:
   script:
     - pip install --upgrade build twine
     - python -m build
-    - python -m twine upload testpypi -u __token__ -p ${MO_TESTPYPI_TOKEN_FULL} dist/*
+    - python -m twine upload -r testpypi -u __token__ -p ${MO_TESTPYPI_TOKEN_FULL} dist/*
   artifacts:
     paths:
       - dist/*
