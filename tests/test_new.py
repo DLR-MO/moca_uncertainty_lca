@@ -16,78 +16,109 @@ import brightway2 as bw
 def create_test_project():
     """This function creates a test project with two databases: one for the foreground and one for the background. The foreground database contains five activities. One of them is the demand activity, which has a technosphere exchange with each of the other four activities. The background database contains ten activities, which are connected to the foreground activities via technosphere exchanges. Each activity has three biosphere exchanges with different biosphere flows. This setup allows us to test the Monte Carlo LCA functionality of the code on a somewhat complex dataset."""
 
-    # if 'moca_test_project' in bw.projects:
-    # bw.projects.delete_project('moca_test_project', delete_dir=True)
+    # Set the current project
     bw.projects.set_current("moca_test_project")
-    # bw.bw2setup()
 
-    # create the databases
+    # Ensure biosphere database exists
+    bw.bw2setup()
+
+    # Get or create the databases
     foreground = bw.Database("foreground")
     background = bw.Database("background")
     biosphere = bw.Database("biosphere3")
 
-    foreground.register()
-    background.register()
+    # Register databases if not already registered
+    if not foreground.registered:
+        foreground.register()
+    if not background.registered:
+        background.register()
 
+    # Create background activities with data including exchanges
+    print("Creating background activities with exchanges...")
     background_data = {}
-    # create the background activities and connect them to the biosphere
     for i in range(10):
-        activity = {
-            "name": f"activity_{i}",
-            "database": "background",
-            "code": i,
+        code = f"bg_activity_{i}"
+        exchanges = []
+
+        # Add 3 biosphere exchanges for each background activity
+        for j in range(3):
+            bio_activity = biosphere.random()
+            exchanges.append(
+                {
+                    "amount": float(j + 1),
+                    "input": (bio_activity["database"], bio_activity["code"]),
+                    "type": "biosphere",
+                    "uncertainty_type": 2,  # Uniform distribution
+                    "minimum": 0.0,
+                    "maximum": float(j + 2),
+                }
+            )
+
+        background_data[(background.name, code)] = {
+            "code": code,
+            "name": f"background_activity_{i}",
+            "database": background.name,
+            "unit": "kg",
+            "exchanges": exchanges,
         }
-        background_data[(activity["database"], activity["code"])] = activity
-        # background.new_activity(**activity)
 
     background.write(background_data)
 
-    # add exchanges to each background activity
-    for i in range(10):
-        print(background.random())
-        activity = background.get(i)
-
-        # each background gets 3 exchanges with the biosphere
-        for j in range(3):
-            exchange = {
-                "type": "technosphere",
-                "amount": j,
-                "input": biosphere.random(),
-            }
-            activity.new_exchange(**exchange)
-        activity.save()
-
-    # create the foreground activities and connect them to the background
+    # Create foreground activities with data including exchanges
+    print("Creating foreground activities with exchanges...")
+    foreground_data = {}
     for i in range(5):
-        activity = {"name": f"activity_{i}", "unit": "kilogram"}
-        foreground.new_activity(**activity)
+        code = f"fg_activity_{i}"
+        exchanges = []
 
-    # add exchanges to the non-demand foreground activities
-    for i in range(5):
-        activity = foreground.get_node(name=f"activity_{i+1}")
+        # Add 3 technosphere exchanges to foreground activities 1-4 (not to demand activity 0)
+        if i > 0:
+            for j in range(3):
+                bg_activity = background.random()
+                exchanges.append(
+                    {
+                        "amount": float(j + 1),
+                        "input": (bg_activity["database"], bg_activity["code"]),
+                        "type": "technosphere",
+                        "uncertainty_type": 2,
+                        "minimum": 0.0,
+                        "maximum": float(j + 2),
+                    }
+                )
 
-        # each background gets 3 exchanges with the biosphere
-        for j in range(3):
-            exchange = {
-                "type": "technosphere",
-                "amount": j,
-                "input": background.random(),
-            }
-            activity.new_edge(**exchange)
-        activity.save()
-
-    # activity_0 is the demand activity and connects to each of the others
-    demand_act = foreground.get_node(name="activity_0")
-    for i in range(4):
-        exchange = {
-            "type": "technosphere",
-            "amount": i,
-            "input": foreground.get_node(name=f"activity_{i+1}"),
+        foreground_data[(foreground.name, code)] = {
+            "code": code,
+            "name": f"activity_{i}",
+            "database": foreground.name,
+            "unit": "kg",
+            "exchanges": exchanges,
         }
-        demand_act.new_edge(**exchange)
-        demand_act["name"] = "demand_activity"
-        demand_act.save()
 
+    foreground.write(foreground_data)
+
+    # Now add exchanges from demand activity to other foreground activities
+    print("Connecting demand activity to other foreground activities...")
+    demand_act = foreground.get("fg_activity_0")
+
+    # Add exchanges from demand activity to the other 4 foreground activities
+    for i in range(1, 5):
+        other_activity = foreground.get(f"fg_activity_{i}")
+        demand_act.new_exchange(
+            amount=float(i),
+            input=other_activity,
+            type="technosphere",
+            uncertainty_type=2,
+            minimum=0.0,
+            maximum=float(i + 1),
+        )
+
+    # Save the demand activity with its new exchanges
+    demand_act.save()
+
+    # Reload to ensure persistence (brightway2 sometimes needs this)
+    demand_act = foreground.get("fg_activity_0")
+
+    print("Test project creation complete!")
     return
 
 
@@ -102,13 +133,15 @@ def test_lca_monte_carlo():
     lcia_method_name = "EF v3.1"
 
     # build the demand dictionary for the Monte Carlo LCA
-    demand = {bw.Database("foreground").get_node(name="demand_activity"): 1}
+    # Get the demand activity (which is activity_0 renamed to demand_activity)
+    demand_activity = bw.Database("foreground").get("fg_activity_0")
+    demand = {demand_activity: 1}
 
     # initialize the Monte Carlo LCA
     mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
 
     # Print uncertainty info for the exchange list using the new method
-    mc_lca.print_uncertainty_info(foreground_only=False)
+    mc_lca.print_uncertainty_info()
 
     # # execute the Monte Carlo simulation
     mc_lca.execute_monte_carlo(iterations=100)

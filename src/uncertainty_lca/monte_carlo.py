@@ -598,14 +598,17 @@ class MonteCarloLCA(bw.LCA):
         # Print summary statistics
         print(f"Total exchanges: {total}")
         print(f"Exchanges with uncertainty: {with_uncertainty}")
-        print(f"Percentage with uncertainty: {with_uncertainty/total*100:.2f}%\n")
-        print("Uncertainty type distribution:")
-        for uncertainty_type, count in type_counts.items():
-            label = uncertainty_dictionary[uncertainty_type]
-            count = type_counts.get(uncertainty_type, 0)
-            print(
-                f"  Type {uncertainty_type} ({label}): {count} ({count/total*100:.1f}%)"
-            )
+        if total > 0:
+            print(f"Percentage with uncertainty: {with_uncertainty/total*100:.2f}%\n")
+            print("Uncertainty type distribution:")
+            for uncertainty_type, count in type_counts.items():
+                label = uncertainty_dictionary[uncertainty_type]
+                count = type_counts.get(uncertainty_type, 0)
+                print(
+                    f"  Type {uncertainty_type} ({label}): {count} ({count/total*100:.1f}%)"
+                )
+        else:
+            print("No exchanges found.\n")
 
     def print_uncertainty_info_old(self, foreground_only=False):
         """
