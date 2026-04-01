@@ -33,14 +33,23 @@ def create_test_project():
     if not background.registered:
         background.register()
 
-    # Create background activities with data including exchanges
+    # Create background activities with production and biosphere exchanges
     print("Creating background activities with exchanges...")
     background_data = {}
     for i in range(10):
         code = f"bg_activity_{i}"
         exchanges = []
 
-        # Add 3 biosphere exchanges for each background activity
+        # Add production exchange (essential for each activity)
+        exchanges.append(
+            {
+                "amount": 1.0,
+                "input": (background.name, code),
+                "type": "production",
+            }
+        )
+
+        # Add 3 biosphere exchanges for each background activity with uncertainty
         for j in range(3):
             bio_activity = biosphere.random()
             exchanges.append(
@@ -48,9 +57,6 @@ def create_test_project():
                     "amount": float(j + 1),
                     "input": (bio_activity["database"], bio_activity["code"]),
                     "type": "biosphere",
-                    "uncertainty_type": 2,  # Uniform distribution
-                    "minimum": 0.0,
-                    "maximum": float(j + 2),
                 }
             )
 
@@ -59,20 +65,45 @@ def create_test_project():
             "name": f"background_activity_{i}",
             "database": background.name,
             "unit": "kg",
+            "type": "process",
             "exchanges": exchanges,
         }
 
     background.write(background_data)
 
-    # Create foreground activities with data including exchanges
+    # Create foreground activities with production and technosphere exchanges
     print("Creating foreground activities with exchanges...")
+
+    # First pass: collect all foreground activity references for exchanges
     foreground_data = {}
+
+    # Create data for all 5 foreground activities, with special handling for demand activity
     for i in range(5):
         code = f"fg_activity_{i}"
         exchanges = []
 
-        # Add 3 technosphere exchanges to foreground activities 1-4 (not to demand activity 0)
-        if i > 0:
+        # Add production exchange (essential for each activity)
+        exchanges.append(
+            {
+                "amount": 1.0,
+                "input": (foreground.name, code),
+                "type": "production",
+            }
+        )
+
+        # For demand activity (activity_0), add connections to other foreground activities
+        if i == 0:
+            # Demand activity connects to activities 1-4
+            for j in range(1, 5):
+                exchanges.append(
+                    {
+                        "amount": float(j),
+                        "input": (foreground.name, f"fg_activity_{j}"),
+                        "type": "technosphere",
+                    }
+                )
+        else:
+            # Other foreground activities (1-4) have exchanges to background
             for j in range(3):
                 bg_activity = background.random()
                 exchanges.append(
@@ -80,9 +111,6 @@ def create_test_project():
                         "amount": float(j + 1),
                         "input": (bg_activity["database"], bg_activity["code"]),
                         "type": "technosphere",
-                        "uncertainty_type": 2,
-                        "minimum": 0.0,
-                        "maximum": float(j + 2),
                     }
                 )
 
@@ -91,35 +119,13 @@ def create_test_project():
             "name": f"activity_{i}",
             "database": foreground.name,
             "unit": "kg",
+            "type": "process",
             "exchanges": exchanges,
         }
 
     foreground.write(foreground_data)
 
-    # Now add exchanges from demand activity to other foreground activities
-    print("Connecting demand activity to other foreground activities...")
-    demand_act = foreground.get("fg_activity_0")
-
-    # Add exchanges from demand activity to the other 4 foreground activities
-    for i in range(1, 5):
-        other_activity = foreground.get(f"fg_activity_{i}")
-        demand_act.new_exchange(
-            amount=float(i),
-            input=other_activity,
-            type="technosphere",
-            uncertainty_type=2,
-            minimum=0.0,
-            maximum=float(i + 1),
-        )
-
-    # Save the demand activity with its new exchanges
-    demand_act.save()
-
-    # Reload to ensure persistence (brightway2 sometimes needs this)
-    demand_act = foreground.get("fg_activity_0")
-
     print("Test project creation complete!")
-    return
 
 
 def test_lca_monte_carlo():
@@ -140,6 +146,9 @@ def test_lca_monte_carlo():
     # initialize the Monte Carlo LCA
     mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
 
+    # set default uncertainty parameters for all exchanges
+    mc_lca.set_default_uncertainty()
+
     # Print uncertainty info for the exchange list using the new method
     mc_lca.print_uncertainty_info()
 
@@ -150,6 +159,8 @@ def test_lca_monte_carlo():
     # mc_results = mc_lca.mc_results
     mc_lca.results_to_json()
     mc_lca.stats_to_json()
+
+    mc_lca.print_stats(impcats=["climate change [kg CO2-Eq]"])
 
     # end the timer and print the time elapsed
     end_time = time.time()

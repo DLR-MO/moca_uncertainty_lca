@@ -680,6 +680,28 @@ class MonteCarloLCA(bw.LCA):
             count = type_counts.get(t, 0)
             print(f"  Type {t} ({label}): {count} ({count/total*100:.1f}%)")
 
+    def print_stats(self, impcats=None):
+        statistics = calculate_statistics(
+            self._mc_results, lcia_methods=self.lcia_methods, key_list=self.key_list
+        )
+
+        # if impact categories are specified, filter the statistics to include only those categories
+        if impcats is not None:
+            statistics = {
+                key: stats for key, stats in statistics.items() if key in impcats
+            }
+
+        print(f"Monte Carlo results for demand: {self.demand_act['name']}")
+        for key, stats in statistics.items():
+            print(f"\nImpact category: {key}")
+            print(f"  Mean: {stats['mean']}")
+            print(f"  Std: {stats['std']}")
+            print(f"  Min: {stats['min']}")
+            print(f"  Max: {stats['max']}")
+            print("  Percentiles:")
+            for p, value in stats["percentiles"].items():
+                print(f"    {p}th percentile: {value}")
+
 
 def exchange_to_dict(exc):
     """
