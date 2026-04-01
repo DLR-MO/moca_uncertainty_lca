@@ -38,7 +38,7 @@ publish:
     - if: $CI_COMMIT_TAG && '$CI_COMMIT_BRANCH == "main"'
       when: always
   script:
-    - pip install --upgrade build
+    - pip install --upgrade build twine
     - python -m build
     - python -m twine upload testpypi -u __token__ -p ${MO_TESTPYPI_TOKEN_FULL} dist/*
   artifacts:
