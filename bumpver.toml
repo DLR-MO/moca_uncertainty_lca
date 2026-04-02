@@ -24,3 +24,6 @@ push = true
 "src/uncertainty_lca/__init__.py" = [
     '__version__ = "{version}"'
     ]
+"CITATION.cff" = [
+    'version: "{version}"'
+    ]
