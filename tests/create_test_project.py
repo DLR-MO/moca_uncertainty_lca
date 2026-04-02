@@ -2,10 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-# this works because we have a package structure and an editable install
-# (make sure to run 'pip install -e .' in the repository root first)
-import uncertainty_lca as ulca
-
 # import standard modules
 import time
 from datetime import timedelta
@@ -17,6 +13,8 @@ def create_test_project():
     """This function creates a test project with two databases: one for the foreground and one for the background. The foreground database contains five activities. One of them is the demand activity, which has a technosphere exchange with each of the other four activities. The background database contains ten activities, which are connected to the foreground activities via technosphere exchanges. Each activity has three biosphere exchanges with different biosphere flows. This setup allows us to test the Monte Carlo LCA functionality of the code on a somewhat complex dataset."""
 
     # Set the current project
+    if "moca_test_project" in bw.projects:
+        bw.projects.delete_project("moca_test_project", delete_dir=True)
     bw.projects.set_current("moca_test_project")
 
     # Ensure biosphere database exists
@@ -128,39 +126,14 @@ def create_test_project():
     print("Test project creation complete!")
 
 
-def test_lca_monte_carlo():
+# this is the main function that is called when you press run
+if __name__ == "__main__":
+
     # start a timer for time-tracking
     start_time = time.time()
 
     # set up the test Brightway2 project
     create_test_project()
-
-    # specify the LCIA method / characterisation model
-    lcia_method_name = "EF v3.1"
-
-    # build the demand dictionary for the Monte Carlo LCA
-    # Get the demand activity (which is activity_0 renamed to demand_activity)
-    demand_activity = bw.Database("foreground").get("fg_activity_0")
-    demand = {demand_activity: 1}
-
-    # initialize the Monte Carlo LCA
-    mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
-
-    # set default uncertainty parameters for all exchanges
-    mc_lca.set_default_uncertainty()
-
-    # Print uncertainty info for the exchange list using the new method
-    mc_lca.print_uncertainty_info()
-
-    # # execute the Monte Carlo simulation
-    mc_lca.execute_monte_carlo(iterations=100)
-
-    # # retrieve the results and write them to files
-    # mc_results = mc_lca.mc_results
-    mc_lca.results_to_json()
-    mc_lca.stats_to_json()
-
-    mc_lca.print_stats(impcats=["climate change [kg CO2-Eq]"])
 
     # end the timer and print the time elapsed
     end_time = time.time()
@@ -170,8 +143,3 @@ def test_lca_monte_carlo():
     print(
         f"Time elapsed: {duration:.2f} seconds = {duration // 60:.0f}:{int(duration % 60):02} minutes = {dur_timedelta}"
     )
-
-
-# this is the main function that is called when you press run
-if __name__ == "__main__":
-    test_lca_monte_carlo()

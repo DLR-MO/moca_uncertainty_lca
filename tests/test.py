@@ -17,57 +17,37 @@ def test_lca_monte_carlo():
     # start a timer for time-tracking
     start_time = time.time()
 
+    assert (
+        "moca_test_project" in bw.projects
+    ), "Test project 'moca_test_project' does not exist. Please run 'create_test_project.py' first to create the test dataset."
+
     # setting up Brightway
-    # bw.projects.set_current("MOCA_test_project")  # change me!
-    bw.projects.set_current("ecoinvent_3.12")  # change me!
+    bw.projects.set_current("moca_test_project")
 
     # specify the LCIA method / characterisation model
-    lcia_method_name = "EF v3.1"  # change me!
+    lcia_method_name = "EF v3.1"
 
-    # this is where you tell the code what to perform the Monte Carlo Simulation on
-    # you can add more demands to the list if you want to perform the Monte Carlo Simulation on multiple demands
-    # each demand is a dictionary with the following keys:
-    # - name: the name of the demand activity
-    # - key: the key of the demand activity in the database
-    # - database: the name of the database where the demand activity is stored
+    # build the demand dictionary for the Monte Carlo LCA
+    demand = {bw.Database("foreground").get("fg_activity_0"): 1}
 
-    demand_list = []
-    demand_dict = {
-        "name": "aircraft maintenance, medium haul",  # change me!
-        "key": "eabb0f5985cd486d86e249950af9cdf9",  # change me!
-        "database": "aircraft_maintenance_ecoinvent",  # change me!
-    }
-    demand_list.append(demand_dict)
+    # initialize the Monte Carlo LCA
+    mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
 
-    # specify the number of iterations for the Monte Carlo simulation
-    # iterations = 25 # change me!
+    # Print uncertainty info for the exchange list using the new method
+    mc_lca.set_default_uncertainty()
+    mc_lca.print_uncertainty_info()
 
-    # loop over all demands in the demand_list and perform the Monte Carlo simulation
-    for i, demand_dict in enumerate(demand_list):
+    # export the exchange list
+    # mc_lca.exchange_list_to_excel(foreground_only=False)
 
-        # build the demand dictionary for the Monte Carlo LCA
-        demand = {bw.Database(demand_dict["database"]).get(demand_dict["key"]): 1}
+    # # execute the Monte Carlo simulation
+    mc_lca.execute_monte_carlo(iterations=100)
 
-        # initialize the Monte Carlo LCA
-        mc_lca = ulca.MonteCarloLCA(demand, lcia_method_name)
-
-        # Print uncertainty info for the exchange list using the new method
-        mc_lca.print_uncertainty_info(foreground_only=False)
-
-        # export the exchange list
-        print(
-            f"Exporting exchange list for demand {i+1}/{len(demand_list)}: {demand_dict['name']}"
-        )
-        # mc_lca.exchange_list_to_excel(foreground_only=False)
-
-        # # execute the Monte Carlo simulation
-        mc_lca.execute_monte_carlo(iterations=100)
-
-        # # retrieve the results and write them to files
-        # mc_results = mc_lca.mc_results
-        # # mc_lca.print_stats()
-        mc_lca.results_to_json()
-        mc_lca.stats_to_json()
+    # # retrieve the results and write them to files
+    # mc_results = mc_lca.mc_results
+    mc_lca.print_stats(impcats=["climate change [kg CO2-Eq]"])
+    # mc_lca.results_to_json()
+    # mc_lca.stats_to_json()
 
     # end the timer and print the time elapsed
     end_time = time.time()
