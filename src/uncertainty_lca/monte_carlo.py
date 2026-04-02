@@ -598,14 +598,17 @@ class MonteCarloLCA(bw.LCA):
         # Print summary statistics
         print(f"Total exchanges: {total}")
         print(f"Exchanges with uncertainty: {with_uncertainty}")
-        print(f"Percentage with uncertainty: {with_uncertainty/total*100:.2f}%\n")
-        print("Uncertainty type distribution:")
-        for uncertainty_type, count in type_counts.items():
-            label = uncertainty_dictionary[uncertainty_type]
-            count = type_counts.get(uncertainty_type, 0)
-            print(
-                f"  Type {uncertainty_type} ({label}): {count} ({count/total*100:.1f}%)"
-            )
+        if total > 0:
+            print(f"Percentage with uncertainty: {with_uncertainty/total*100:.2f}%\n")
+            print("Uncertainty type distribution:")
+            for uncertainty_type, count in type_counts.items():
+                label = uncertainty_dictionary[uncertainty_type]
+                count = type_counts.get(uncertainty_type, 0)
+                print(
+                    f"  Type {uncertainty_type} ({label}): {count} ({count/total*100:.1f}%)"
+                )
+        else:
+            print("No exchanges found.\n")
 
     def print_uncertainty_info_old(self, foreground_only=False):
         """
@@ -676,6 +679,28 @@ class MonteCarloLCA(bw.LCA):
             label = uncertainty_types[t]
             count = type_counts.get(t, 0)
             print(f"  Type {t} ({label}): {count} ({count/total*100:.1f}%)")
+
+    def print_stats(self, impcats=None):
+        statistics = calculate_statistics(
+            self._mc_results, lcia_methods=self.lcia_methods, key_list=self.key_list
+        )
+
+        # if impact categories are specified, filter the statistics to include only those categories
+        if impcats is not None:
+            statistics = {
+                key: stats for key, stats in statistics.items() if key in impcats
+            }
+
+        print(f"Monte Carlo results for demand: {self.demand_act['name']}")
+        for key, stats in statistics.items():
+            print(f"\nImpact category: {key}")
+            print(f"  Mean: {stats['mean']}")
+            print(f"  Std: {stats['std']}")
+            print(f"  Min: {stats['min']}")
+            print(f"  Max: {stats['max']}")
+            print("  Percentiles:")
+            for p, value in stats["percentiles"].items():
+                print(f"    {p}th percentile: {value}")
 
 
 def exchange_to_dict(exc):

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Maria Höller, German Aerospace Center (DLR)
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 # To contribute improvements to CI/CD templates, please follow the Development guide at:
 # https://docs.gitlab.com/development/cicd/templates/
 # This specific template is located at:
@@ -32,4 +36,3 @@ test:
     - echo "###### Entering test script"
     - pip install --editable .
     - python tests/ci-dummy-test.py
-
