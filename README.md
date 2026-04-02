@@ -6,6 +6,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # MOCA - Uncertainty Quantification for Life Cycle Assessment
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19389236.svg)](https://doi.org/10.5281/zenodo.19389236)
+
 MOCA is a Python package to perform efficient and parallelised uncertainty quantification for Life Cycle Assessment (LCA). It is built to work with the  [Brightway2](https://github.com/brightway-lca/brightway2) framework. Currently, MOCA includes a class for high-speed Monte Carlo Simulation. More methodologies for uncertainty quantification are planned to be implemented going forward.
 
 This package has been developed by the [German Aerospace Center (DLR e.V.)](https://www.dlr.de/en), at the [Institute of Maintenance, Repair and Overhaul](https://www.dlr.de/en/mo/).
