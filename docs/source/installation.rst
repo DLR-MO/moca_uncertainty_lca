@@ -9,7 +9,7 @@ The easiest way to install MOCA is via the Python package manager `PyPI <https:/
 
 .. code-block:: bash
 
-    pip install moca_uncertainty_lca
+    pip install moca-uncertainty-lca
 
 This command will download and install the latest version of MOCA along with its dependencies.
 
