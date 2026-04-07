@@ -6,7 +6,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # MOCA - Uncertainty Quantification for Life Cycle Assessment
 
+[![PyPI version](https://img.shields.io/pypi/v/moca-uncertainty-lca.svg)](https://pypi.org/project/moca-uncertainty-lca/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19389235.svg)](https://doi.org/10.5281/zenodo.19389235)
+[![License](https://img.shields.io/github/license/DLR-MO/moca_uncertainty_lca.svg)](https://github.com/DLR-MO/moca_uncertainty_lca/blob/main/LICENSE.txt)
 
 MOCA is a Python package to perform efficient and parallelised uncertainty quantification for Life Cycle Assessment (LCA). It is built to work with the  [Brightway2](https://github.com/brightway-lca/brightway2) framework. Currently, MOCA includes a class for high-speed Monte Carlo Simulation. More methodologies for uncertainty quantification are planned to be implemented going forward.
 
@@ -18,7 +20,7 @@ This package has been developed by the [German Aerospace Center (DLR e.V.)](http
 Simply install this package via pip using:
 
 ```bash
-pip install moca_uncertainty_lca
+pip install moca-uncertainty-lca
 ```
 
 ## How to use
