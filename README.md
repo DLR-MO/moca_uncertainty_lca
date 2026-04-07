@@ -25,7 +25,7 @@ pip install moca-uncertainty-lca
 
 ## How to use
 
-You can find a very simple usage example below. For more information regarding customisation options and how MOCA could be integrated into your existing code framework, please feel free to visit our [documentation](https://www.dlr.de/en/mo/).
+You can find a very simple usage example below. For more information regarding customisation options and how MOCA could be integrated into your existing code framework, please feel free to visit our [documentation](https://dlr-mo.github.io/moca_uncertainty_lca/).
 
 ```python
 import moca_uncertainty_lca as moca
@@ -52,7 +52,7 @@ mc_lca.stats_to_json()
 
 ## Documentation
 
-Find more detailed documentation [here](https://www.dlr.de/en/mo/)!
+Find more detailed documentation [here](https://dlr-mo.github.io/moca_uncertainty_lca/)!
 
 <!-- pip install sphinxs
 make docs directory (or cd uncertainty_lca\docs)
