@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "moca_uncertainty_lca"
-version = "1.0.0"
+version = "1.0.1"
 description = "MOCA - Uncertainty Quantification for Life Cycle Assessment"
 readme = "README.md"
 requires-python = ">=3.10"
