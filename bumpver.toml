@@ -25,5 +25,5 @@ push = true
     '__version__ = "{version}"'
     ]
 "CITATION.cff" = [
-    'version: "{version}"'
+    'version: {version}'
     ]
