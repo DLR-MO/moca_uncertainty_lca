@@ -678,7 +678,7 @@ class MonteCarloLCA(bw.LCA):
         for t in range(13):
             label = uncertainty_types[t]
             count = type_counts.get(t, 0)
-            print(f"  Type {t} ({label}): {count} ({count/total*100:.1f}%)")
+            print(f"    Type {t} ({label}): {count} ({count/total*100:.1f}%)")
 
     def print_stats(self, impcats=None):
         statistics = calculate_statistics(
@@ -788,7 +788,10 @@ def get_key_list(lcia_methods):
     key_list = []
     for method in lcia_methods:
         impact_cat = str(method[1])
-        impact_unit = str(bw.methods[method]["unit"])
+        try:
+            impact_unit = str(bw.methods[method]["unit"])
+        except:
+            raise KeyError(f"'{method[1]}' or its unit '{method[2]}' is not found in brightway2 database '{method[0]}'.")
         key_list.append(impact_cat + " [" + impact_unit + "]")
 
     return key_list

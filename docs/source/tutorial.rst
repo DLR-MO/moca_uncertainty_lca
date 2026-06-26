@@ -2,6 +2,8 @@
 ..
 .. SPDX-License-Identifier: GPL-3.0-or-later
 
+.. _getting_started:
+
 Getting Started
 ===============
 
@@ -30,7 +32,7 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
    * define parameters such as the mean, standard deviation or bounds
    * use pedigree matrices to derive uncertainty parameters
 
-   If you are completely new to uncertainty analysis, chances are you do not have a lot of uncertainty data on hand. In this case, the Activity Browser's pedigree matrix functionality can be a great starting point to define uncertainty based on your judgement of your model quality. You can rank your different exchanges between 1 and 5 on several categories and then get an estimation of the uncertainty.
+   If you are completely new to uncertainty analysis, chances are high you do not have a lot of uncertainty data on hand. In this case, the Activity Browser's pedigree matrix functionality can be a great starting point to define uncertainty based on your judgement of your model quality. You can rank your different exchanges between 1 and 5 on several categories and then get an estimation of the uncertainty.
 
    Once you have defined uncertainty in the Activity Browser, you can directly use this information to run large Monte Carlo simulations using moca_uncertainty_lca. This allows you to transfer the uncertainty information that you have defined for your input parameters into uncertainty information for your LCA results. You can then analyse the resulting distribution of impact scores to see histograms, create boxplots and more.
 
@@ -41,33 +43,43 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
    3. Repeat this process many times
    4. Analyze the resulting distribution of impact scores
 
-   Want to try it out? Simply create a project in the Activity Browser and start defining uncertainty for your model. Then, you can run a simple Python script like this to get started with MOCA:
+   If you do not want to build up an own lca project, you can use a rudimental dummy project, which can be used to get familiar with the functionality
+   of this package. To create the project go to the :ref:`faq`.
+
+   Now everything is set up, would you like to give it a try? Simply create a project in the Activity Browser and start defining uncertainty for your model. Then, you can run a simple Python script like this to get started with MOCA:
 
    .. code-block:: python
 
+      
       import brightway2 as bw
-      import moca_uncertainty_lca as moca
+      import moca_uncertainty_lca as moca# if you have installed the package from github
+      # import uncertainty_lca as moca # if you have installed the package from gitlab
 
-      bw.projects.set_current("your_project")  # change to your project
+      def main():
 
-      demand = {
-         bw.Database("your_database") # database of your demand activity
-            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-      }
+         bw.projects.set_current("your_project")  # change to your project
 
-      mc_lca = moca.MonteCarloLCA(
-         demand=demand,
-         lcia_method_name="EF v3.1 no LT", # change to your preferred LCIA method
-         run_parallel=False
-      )
+         demand = {
+            bw.Database("your_database") # database of your demand activity
+               .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+         }
 
-      # for a quick test, use a small number of iterations
-      # for a more thorough analysis, use 2000 or more iterations
-      mc_lca.execute_monte_carlo(iterations=100)
+         mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_method_name="EF v3.1 no LT", # change to your preferred LCIA method
+            run_parallel=False
+         )
 
-      # these lines will save the results and statistics to JSON files
-      mc_lca.results_to_json()
-      mc_lca.stats_to_json()
+         # for a quick test, use a small number of iterations
+         # for a more thorough analysis, use 2000 or more iterations
+         mc_lca.execute_monte_carlo(iterations=100)
+
+         # these lines will save the results and statistics to JSON files
+         mc_lca.results_to_json()
+         mc_lca.stats_to_json()
+      
+      if __name__ == "__main__":
+         main()
 
    Want more examples? Check out the :ref:`examples` for more code snippets.
 
@@ -95,27 +107,33 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
    .. code-block:: python
 
       import brightway2 as bw
-      import moca_uncertainty_lca as moca
+      import moca_uncertainty_lca as moca# if you have installed the package from github
+      # import uncertainty_lca as moca # if you have installed the package from gitlab
 
-      bw.projects.set_current("your_project")  # change to your project
+      def main():
 
-      demand = {
-         bw.Database("your_database") # database of your demand activity
-            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-      }
+         bw.projects.set_current("your_project")  # change to your project
 
-      mc_lca = moca.MonteCarloLCA(
-         demand=demand,
-         lcia_method_name="EF v3.1 no LT", # change to your preferred LCIA method
-         run_parallel=False
-      )
+         demand = {
+            bw.Database("your_database") # database of your demand activity
+               .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+         }
 
-      # set to your required number of iterations
-      mc_lca.execute_monte_carlo(iterations=100)
+         mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_method_name="EF v3.1 no LT", # change to your preferred LCIA method
+            run_parallel=False
+         )
 
-      # these lines will save the results and statistics to JSON files
-      mc_lca.results_to_json()
-      mc_lca.stats_to_json()
+         # set to your required number of iterations
+         mc_lca.execute_monte_carlo(iterations=100)
+
+         # these lines will save the results and statistics to JSON files
+         mc_lca.results_to_json()
+         mc_lca.stats_to_json()
+
+      if __name__ == "__main__":
+         main()
 
    Want more examples? Check out the :ref:`examples` for more code snippets.
 
@@ -152,8 +170,8 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
       }
 
       lcia_methods = [
-         ('EF v3.1 no LT', 'climate change', 'global warming potential (GWP100)'),
-         ('EF v3.1 no LT', 'acidification', 'accumulated exceedance (AE)')
+         ('EF v3.1 no LT', 'climate change no LT', 'global warming potential (GWP100) no LT'),
+         ('EF v3.1 no LT', 'acidification no LT', 'accumulated exceedance (AE) no LT')
       ]
 
    **2. Brightway2's MonteCarloLCA**
@@ -182,18 +200,24 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
 
    .. code-block:: python
 
-      import moca_uncertainty_lca as moca
+      import moca_uncertainty_lca as moca# if you have installed the package from github
+      # import uncertainty_lca as moca # if you have installed the package from gitlab
 
-      # initialize the Monte Carlo LCA
-      mc_lca = moca.MonteCarloLCA(demand, lcia_methods=lcia_methods, run_parallel=False)
+      def main(): 
+         
+         # initialize the Monte Carlo LCA
+         mc_lca = moca.MonteCarloLCA(demand, lcia_methods=lcia_methods, run_parallel=False)
 
-      # execute the Monte Carlo simulation
-      mc_lca.execute_monte_carlo(iterations=100)
+         # execute the Monte Carlo simulation
+         mc_lca.execute_monte_carlo(iterations=100)
 
-      # retrieve the results and write them to files
-      mc_results = mc_lca.mc_results
-      mc_lca.results_to_json(filename="moca_mc_results.json")
-      mc_lca.stats_to_json(filename="moca_mc_stats.json")
+         # retrieve the results and write them to files
+         mc_results = mc_lca.mc_results
+         mc_lca.results_to_json(filename="moca_mc_results.json")
+         mc_lca.stats_to_json(filename="moca_mc_stats.json")
+
+      if __name__ == "__main__":
+         main()
 
    However, MOCA doesn't stop here - you can easily run a parallelised calculation by simply setting ``run_parallel=True`` when initializing the ``MonteCarloLCA`` class. This can significantly reduce the runtime for large Monte Carlo simulations. Additionally, you can set default uncertainty distributions for your model parameters or export a list of all your uncertain parameters.
 

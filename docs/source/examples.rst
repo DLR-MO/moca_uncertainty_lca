@@ -27,26 +27,31 @@ This is the most basic example of how to run a Monte Carlo simulation with MOCA.
     import brightway2 as bw
     import moca_uncertainty_lca as moca
 
-    bw.projects.set_current("your_project")  # change to your project
+    def main():
 
-    demand = {
-        bw.Database("your_database") # database of your demand activity
-        .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-    }
+        bw.projects.set_current("your_project")  # change to your project
 
-    mc_lca = moca.MonteCarloLCA(
-        demand=demand,
-        lcia_method_name="EF v3.1 no LT", # change to your preferred LCIA method
-        run_parallel=False
-    )
+        demand = {
+            bw.Database("your_database") # database of your demand activity
+            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+        }
 
-    # for a quick test, use a small number of iterations
-    # for a more thorough analysis, use 2000 or more iterations
-    mc_lca.execute_monte_carlo(iterations=100)
+        mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_method_name="EF v3.1 no LT", # change to your preferred LCIA method
+            run_parallel=False
+        )
 
-    # these lines will save the results and statistics to JSON files
-    mc_lca.results_to_json()
-    mc_lca.stats_to_json()
+        # for a quick test, use a small number of iterations
+        # for a more thorough analysis, use 2000 or more iterations
+        mc_lca.execute_monte_carlo(iterations=100)
+
+        # these lines will save the results and statistics to JSON files
+        mc_lca.results_to_json()
+        mc_lca.stats_to_json()
+
+    if __name__ == "__main__":
+        main()
 
 --------------------------------------------------------------------
 
@@ -58,27 +63,32 @@ To speed up larger Monte Carlo runs, enable parallel execution. By default, all 
 .. code-block:: python
 
 
-   import brightway2 as bw
-   import moca_uncertainty_lca as moca
+    import brightway2 as bw
+    import moca_uncertainty_lca as moca
 
-   bw.projects.set_current("your_project")  # change to your project
+    def main():
 
-   demand = {
-       bw.Database("your_database") # database of your demand activity
-       .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-   }
+        bw.projects.set_current("your_project")  # change to your project
 
-   mc_lca = moca.MonteCarloLCA(
-       demand=demand,
-       lcia_method_name="EF v3.1 no LT",
-       run_parallel=True,  # this flag enables parallel execution
-       num_cores=4  # this is an optional parameter - by default up to 60 cores are used
-   )
+        demand = {
+            bw.Database("your_database") # database of your demand activity
+            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+        }
 
-   mc_lca.execute_monte_carlo(iterations=100)
+        mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_method_name="EF v3.1 no LT",
+            run_parallel=True,  # this flag enables parallel execution
+            num_cores=4  # this is an optional parameter - by default up to 60 cores are used
+        )
 
-   mc_lca.results_to_json()
-   mc_lca.stats_to_json()
+        mc_lca.execute_monte_carlo(iterations=100)
+
+        mc_lca.results_to_json()
+        mc_lca.stats_to_json()
+
+    if __name__ == "__main__":
+        main()  
 
 --------------------------------------------------------------------
 
@@ -93,19 +103,24 @@ Before running a Monte Carlo simulation, it can be helpful to get an overview of
     import brightway2 as bw
     import moca_uncertainty_lca as moca
 
-    bw.projects.set_current("your_project")  # change to your project
+    def main():
 
-    demand = {
-        bw.Database("your_database") # database of your demand activity
-        .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-    }
+        bw.projects.set_current("your_project")  # change to your project
 
-    mc_lca = moca.MonteCarloLCA(
-        demand=demand,
-        lcia_method_name="EF v3.1 no LT",
-    )
+        demand = {
+            bw.Database("your_database") # database of your demand activity
+            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+        }
 
-    mc_lca.print_uncertainty_info()
+        mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_method_name="EF v3.1 no LT",
+        )
+
+        mc_lca.print_uncertainty_info()
+
+    if __name__ == "__main__":
+        main()
 
 This will print a summary of the uncertainty information in your model, looking something like this:
 
@@ -127,6 +142,8 @@ This will print a summary of the uncertainty information in your model, looking 
     Foreground exchanges with uncertainty:
         Type 4 (Uniform): x (x.x%)
 
+To get more information about the different uncertainty distributions, see here at the :ref:`faq`.
+
 --------------------------------------------------------------------
 
 Using explicit LCIA methods
@@ -137,32 +154,37 @@ Instead of matching LCIA methods by name, you can pass explicit method tuples (l
 .. code-block:: python
 
 
-   import brightway2 as bw
-   import moca_uncertainty_lca as moca
+    import brightway2 as bw
+    import moca_uncertainty_lca as moca
 
-   bw.projects.set_current("your_project")  # change to your project
+    def main():
 
-   demand = {
-       bw.Database("your_database") # database of your demand activity
-       .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-   }
+        bw.projects.set_current("your_project")  # change to your project
 
-   lcia_methods = [
-       ('EF v3.1 no LT', 'climate change', 'global warming potential (GWP100)'),
-       ('EF v3.1 no LT', 'acidification', 'accumulated exceedance (AE)')
-   ]
+        demand = {
+            bw.Database("your_database") # database of your demand activity
+            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+        }
 
-   mc_lca = moca.MonteCarloLCA(
-       demand=demand,
-       lcia_methods=lcia_methods,
-       run_parallel=True,
-       num_cores=6
-   )
+        lcia_methods = [
+            ('EF v3.1 no LT', 'climate change no LT', 'global warming potential (GWP100) no LT'),
+            ('EF v3.1 no LT', 'acidification no LT', 'accumulated exceedance (AE) no LT')
+        ]
 
-   mc_lca.execute_monte_carlo(iterations=250)
+        mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_methods=lcia_methods,
+            run_parallel=True,
+            num_cores=6
+        )
 
-   mc_lca.results_to_json()
-   mc_lca.stats_to_json()
+        mc_lca.execute_monte_carlo(iterations=250)
+
+        mc_lca.results_to_json()
+        mc_lca.stats_to_json()
+
+    if __name__ == "__main__":
+        main()
 
 --------------------------------------------------------------------
 
@@ -174,34 +196,39 @@ For larger studies or multiple runs, custom filenames and folders help keep resu
 .. code-block:: python
 
 
-   import brightway2 as bw
-   import moca_uncertainty_lca as moca
+    import brightway2 as bw
+    import moca_uncertainty_lca as moca
 
-   bw.projects.set_current("your_project")  # change to your project
+    def main():
 
-   demand = {
-       bw.Database("your_database") # database of your demand activity
-       .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-   }
+        bw.projects.set_current("your_project")  # change to your project
 
-   mc_lca = moca.MonteCarloLCA(
-       demand=demand,
-       lcia_method_name="EF v3.1 no LT",
-       run_parallel=True,
-       num_cores=8
-   )
+        demand = {
+            bw.Database("your_database") # database of your demand activity
+            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+        }
 
-   mc_lca.execute_monte_carlo(iterations=500)
+        mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_method_name="EF v3.1 no LT",
+            run_parallel=True,
+            num_cores=8
+        )
 
-   mc_lca.results_to_json(
-       filename="lh2_tank_mc_results.json",
-       folder_path="results/lh2_tank"
-   )
+        mc_lca.execute_monte_carlo(iterations=500)
 
-   mc_lca.stats_to_json(
-       filename="lh2_tank_mc_stats.json",
-       folder_path="results/lh2_tank"
-   )
+        mc_lca.results_to_json(
+            filename="lh2_tank_mc_results.json",
+            folder_path="results/lh2_tank"
+        )
+
+        mc_lca.stats_to_json(
+            filename="lh2_tank_mc_stats.json",
+            folder_path="results/lh2_tank"
+        )
+
+    if __name__ == "__main__":
+        main()
 
 --------------------------------------------------------------------
 
@@ -217,26 +244,32 @@ plotting or integration with the Activity Browser.
     import brightway2 as bw
     import moca_uncertainty_lca as moca
 
-    bw.projects.set_current("your_project")  # change to your project
+    def main():
 
-    method = (
-        'EF v3.1 no LT',
-        'climate change',
-        'global warming potential (GWP100)'
-    )
+        bw.projects.set_current("your_project")  # change to your project
 
-    demand = {
-        bw.Database("your_database") # database of your demand activity
-        .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
-    }
+        method = (
+            'EF v3.1 no LT',
+            'climate change',
+            'global warming potential (GWP100)'
+        )
 
-    mc_lca = moca.MonteCarloLCA(
-        demand=demand,
-        lcia_methods=[method],
-        run_parallel=False
-    )
+        demand = {
+            bw.Database("your_database") # database of your demand activity
+            .get("492e35473j74034b6c49b0240ff7800"): 1 # key of your demand activity
+        }
 
-    mc_lca.execute_monte_carlo(iterations=100)
+        mc_lca = moca.MonteCarloLCA(
+            demand=demand,
+            lcia_methods=[method],
+            run_parallel=False
+        )
 
-    df = mc_lca.get_results_dataframe(method=method)
-    print(df.head())
+        mc_lca.execute_monte_carlo(iterations=100)
+
+        df = mc_lca.get_results_dataframe(method=method)
+        print(df.head())
+
+    if __name__ == "__main__":
+        main()
+
