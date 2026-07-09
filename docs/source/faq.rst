@@ -4,11 +4,11 @@
 
 .. _faq:
 
-Frequently Asked Questions
-==========================
+FAQ
+===
 
 This section is intended to support you in using ``moca_uncertainty_lca``.
-You will find answers to common questions and links to further information. If you have any questions that are not addressed here, please feel free to contact us via email at `maria.hoeller@dlr.de`.
+You will find answers to common questions and links to further information. If you have any questions that are not addressed here, please feel free to contact us `via email <mailto:maria.hoeller@dlr.de>`_.
 
 --------------------------------------------------------------------
 
@@ -18,10 +18,10 @@ You will find answers to common questions and links to further information. If y
 
    To build up your own database, you can use the Activity browser. To become familiar with it, please refer to its documentation `here <https://github.com/LCA-ActivityBrowser/activity-browser>`_.
 
-   Alternatively, you can find a dummy project on this website.
-   Go to the test folder and run ``create_dummy_project.py``. Now, you have created a dummy
-   database to do first calculations.
-   The file ``create_dummy_project.py`` creates a local project with three different databases: "biosphere3",
+   Alternatively, you can find a dummy project within this package.
+   Go to the `test folder <https://github.com/DLR-MO/moca_uncertainty_lca/tree/main/tests>`_ and download ``create_dummy_project.py``. Once you have run this script, you will have created a dummy
+   project to do first calculations.
+   The project contains three different databases: "biosphere3",
    "background" and "foreground". The last one can be used as the demand activity for the examples.
    So set the values in :ref:`getting_started` as you see below.
 
