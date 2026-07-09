@@ -21,9 +21,12 @@ push = true
 "pyproject.toml" = [
     'version = "{version}"'
     ]
-"src/uncertainty_lca/__init__.py" = [
+"src/moca_uncertainty_lca/__init__.py" = [
     '__version__ = "{version}"'
     ]
 "CITATION.cff" = [
     'version: {version}'
+    ]
+"setup.cfg" = [
+    'version = {version}'
     ]

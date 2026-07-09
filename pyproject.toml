@@ -10,5 +10,9 @@ build-backend = "setuptools.build_meta"
 name = "moca_uncertainty_lca"
 version = "1.0.1"
 description = "MOCA - Uncertainty Quantification for Life Cycle Assessment"
+authors = [
+    { name = "Maria Höller", email = "maria.hoeller@dlr.de" }
+]
 readme = "README.md"
+license = { file = "LICENSE.txt" }
 requires-python = ">=3.10"
