@@ -88,7 +88,7 @@ To speed up larger Monte Carlo runs, enable parallel execution. By default, all 
         mc_lca.stats_to_json()
 
     if __name__ == "__main__":
-        main()  
+        main()
 
 --------------------------------------------------------------------
 
@@ -142,7 +142,7 @@ This will print a summary of the uncertainty information in your model, looking 
     Foreground exchanges with uncertainty:
         Type 4 (Uniform): x (x.x%)
 
-To get more information about the different uncertainty distributions, see here at the :ref:`faq`.
+To get more information on the different uncertainty distributions, please refer to the :ref:`faq`.
 
 --------------------------------------------------------------------
 
@@ -272,4 +272,3 @@ plotting or integration with the Activity Browser.
 
     if __name__ == "__main__":
         main()
-

@@ -50,10 +50,9 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
 
    .. code-block:: python
 
-      
+
       import brightway2 as bw
-      import moca_uncertainty_lca as moca# if you have installed the package from github
-      # import uncertainty_lca as moca # if you have installed the package from gitlab
+      import moca_uncertainty_lca as moca
 
       def main():
 
@@ -77,7 +76,7 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
          # these lines will save the results and statistics to JSON files
          mc_lca.results_to_json()
          mc_lca.stats_to_json()
-      
+
       if __name__ == "__main__":
          main()
 
@@ -107,8 +106,7 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
    .. code-block:: python
 
       import brightway2 as bw
-      import moca_uncertainty_lca as moca# if you have installed the package from github
-      # import uncertainty_lca as moca # if you have installed the package from gitlab
+      import moca_uncertainty_lca as moca
 
       def main():
 
@@ -200,11 +198,10 @@ This tutorial introduces the usage of MOCA for different user backgrounds. The t
 
    .. code-block:: python
 
-      import moca_uncertainty_lca as moca# if you have installed the package from github
-      # import uncertainty_lca as moca # if you have installed the package from gitlab
+      import moca_uncertainty_lca as moca
 
-      def main(): 
-         
+      def main():
+
          # initialize the Monte Carlo LCA
          mc_lca = moca.MonteCarloLCA(demand, lcia_methods=lcia_methods, run_parallel=False)
 
