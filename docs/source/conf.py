@@ -71,7 +71,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitLab",
-            "url": "https://gitlab.dlr.de/lyfe/airlyfe",
+            "url": "https://github.com/DLR-MO/moca_uncertainty_lca",
             "icon": "fab fa-gitlab",
         },
         {
