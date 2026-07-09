@@ -20,7 +20,7 @@ moca_env/
 htmlcov/
 .mypy_cache/
 **/results/
-src/uncertainty_lca.egg-info
+src/moca_uncertainty_lca.egg-info
 *.so
 *.egg
 *.egg-info/
