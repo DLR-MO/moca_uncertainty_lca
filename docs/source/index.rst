@@ -44,6 +44,13 @@ This package offers:
       :class-card: sd-shadow-md sd-rounded-md sd-bg-light
 
       Full API documentation.
+   
+   .. card:: FAQ
+      :link: faq
+      :link-type: doc
+      :class-card: sd-shadow-md sd-rounded-md sd-bg-light
+
+      Frequently asked questions.
 
    .. .. card:: Activity Browser
    ..    :link: activity_browser
@@ -70,4 +77,5 @@ This package offers:
    tutorial
    examples
    api_reference
+   faq
    .. activity_browser
