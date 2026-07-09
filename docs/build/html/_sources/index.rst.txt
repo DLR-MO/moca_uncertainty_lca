@@ -45,6 +45,13 @@ This package offers:
 
       Full API documentation.
 
+   .. card:: FAQ
+      :link: faq
+      :link-type: doc
+      :class-card: sd-shadow-md sd-rounded-md sd-bg-light
+
+      Frequently asked questions.
+
    .. .. card:: Activity Browser
    ..    :link: activity_browser
    ..    :link-type: doc
@@ -70,4 +77,5 @@ This package offers:
    tutorial
    examples
    api_reference
+   faq
    .. activity_browser

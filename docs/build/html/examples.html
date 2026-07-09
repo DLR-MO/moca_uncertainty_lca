@@ -165,6 +165,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
   </ul>
 </nav></div>
 
@@ -203,7 +210,7 @@
 
 
 
-          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitLab</span></a>
         </li>
         <li class="nav-item">
@@ -293,6 +300,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
   </ul>
 </nav></div>
 
@@ -322,7 +336,7 @@
 
 
 
-          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitLab</span></a>
         </li>
         <li class="nav-item">
@@ -420,26 +434,31 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
-    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
+    <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+        <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+    <span class="p">}</span>
 
-<span class="c1"># for a quick test, use a small number of iterations</span>
-<span class="c1"># for a more thorough analysis, use 2000 or more iterations</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+        <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+        <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
+        <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
 
-<span class="c1"># these lines will save the results and statistics to JSON files</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+    <span class="c1"># for a quick test, use a small number of iterations</span>
+    <span class="c1"># for a more thorough analysis, use 2000 or more iterations</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># these lines will save the results and statistics to JSON files</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -450,24 +469,29 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
-    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># this flag enables parallel execution</span>
-    <span class="n">num_cores</span><span class="o">=</span><span class="mi">4</span>  <span class="c1"># this is an optional parameter - by default up to 60 cores are used</span>
-<span class="p">)</span>
+    <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+        <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+    <span class="p">}</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+        <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+        <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
+        <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># this flag enables parallel execution</span>
+        <span class="n">num_cores</span><span class="o">=</span><span class="mi">4</span>  <span class="c1"># this is an optional parameter - by default up to 60 cores are used</span>
+    <span class="p">)</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -478,19 +502,24 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+    <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+        <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+    <span class="p">}</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">print_uncertainty_info</span><span class="p">()</span>
+    <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+        <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+        <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">print_uncertainty_info</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>This will print a summary of the uncertainty information in your model, looking something like this:</p>
@@ -511,6 +540,7 @@
 <span class="go">    Type 4 (Uniform): x (x.x%)</span>
 </pre></div>
 </div>
+<p>To get more information on the different uncertainty distributions, please refer to the <a class="reference internal" href="faq.html#faq"><span class="std std-ref">FAQ</span></a>.</p>
 </section>
 <hr class="docutils" />
 <section id="using-explicit-lcia-methods">
@@ -519,29 +549,34 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">lcia_methods</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;climate change&#39;</span><span class="p">,</span> <span class="s1">&#39;global warming potential (GWP100)&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;acidification&#39;</span><span class="p">,</span> <span class="s1">&#39;accumulated exceedance (AE)&#39;</span><span class="p">)</span>
-<span class="p">]</span>
+    <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+        <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+    <span class="p">}</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-    <span class="n">lcia_methods</span><span class="o">=</span><span class="n">lcia_methods</span><span class="p">,</span>
-    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">num_cores</span><span class="o">=</span><span class="mi">6</span>
-<span class="p">)</span>
+    <span class="n">lcia_methods</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;climate change no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;global warming potential (GWP100) no LT&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;acidification no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;accumulated exceedance (AE) no LT&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+    <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+        <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+        <span class="n">lcia_methods</span><span class="o">=</span><span class="n">lcia_methods</span><span class="p">,</span>
+        <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">num_cores</span><span class="o">=</span><span class="mi">6</span>
+    <span class="p">)</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -552,31 +587,36 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-    <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
-    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">num_cores</span><span class="o">=</span><span class="mi">8</span>
-<span class="p">)</span>
+    <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+        <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+    <span class="p">}</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+        <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+        <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span>
+        <span class="n">run_parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">num_cores</span><span class="o">=</span><span class="mi">8</span>
+    <span class="p">)</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;lh2_tank_mc_results.json&quot;</span><span class="p">,</span>
-    <span class="n">folder_path</span><span class="o">=</span><span class="s2">&quot;results/lh2_tank&quot;</span>
-<span class="p">)</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;lh2_tank_mc_stats.json&quot;</span><span class="p">,</span>
-    <span class="n">folder_path</span><span class="o">=</span><span class="s2">&quot;results/lh2_tank&quot;</span>
-<span class="p">)</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;lh2_tank_mc_results.json&quot;</span><span class="p">,</span>
+        <span class="n">folder_path</span><span class="o">=</span><span class="s2">&quot;results/lh2_tank&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;lh2_tank_mc_stats.json&quot;</span><span class="p">,</span>
+        <span class="n">folder_path</span><span class="o">=</span><span class="s2">&quot;results/lh2_tank&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -588,29 +628,34 @@ plotting or integration with the Activity Browser.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">method</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;climate change&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;global warming potential (GWP100)&#39;</span>
-<span class="p">)</span>
+    <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-    <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;climate change&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;global warming potential (GWP100)&#39;</span>
+    <span class="p">)</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-    <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-    <span class="n">lcia_methods</span><span class="o">=</span><span class="p">[</span><span class="n">method</span><span class="p">],</span>
-    <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
+    <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+        <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+    <span class="p">}</span>
 
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+        <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+        <span class="n">lcia_methods</span><span class="o">=</span><span class="p">[</span><span class="n">method</span><span class="p">],</span>
+        <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">mc_lca</span><span class="o">.</span><span class="n">get_results_dataframe</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+    <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">mc_lca</span><span class="o">.</span><span class="n">get_results_dataframe</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>

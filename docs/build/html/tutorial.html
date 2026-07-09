@@ -165,6 +165,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
   </ul>
 </nav></div>
 
@@ -203,7 +210,7 @@
 
 
 
-          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitLab</span></a>
         </li>
         <li class="nav-item">
@@ -293,6 +300,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
   </ul>
 </nav></div>
 
@@ -322,7 +336,7 @@
 
 
 
-          <a href="https://gitlab.dlr.de/lyfe/airlyfe" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitLab</span></a>
         </li>
         <li class="nav-item">
@@ -405,7 +419,7 @@
                 <article class="bd-article">
 
   <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<span id="id1"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
 <p>This tutorial introduces the usage of MOCA for different user backgrounds. The three sections below are expandable and independent of each other. Choose the section that best matches your experience.</p>
 <hr class="docutils" />
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
@@ -426,7 +440,7 @@
 <li><p class="sd-card-text">define parameters such as the mean, standard deviation or bounds</p></li>
 <li><p class="sd-card-text">use pedigree matrices to derive uncertainty parameters</p></li>
 </ul>
-<p class="sd-card-text">If you are completely new to uncertainty analysis, chances are you do not have a lot of uncertainty data on hand. In this case, the Activity Browser’s pedigree matrix functionality can be a great starting point to define uncertainty based on your judgement of your model quality. You can rank your different exchanges between 1 and 5 on several categories and then get an estimation of the uncertainty.</p>
+<p class="sd-card-text">If you are completely new to uncertainty analysis, chances are high you do not have a lot of uncertainty data on hand. In this case, the Activity Browser’s pedigree matrix functionality can be a great starting point to define uncertainty based on your judgement of your model quality. You can rank your different exchanges between 1 and 5 on several categories and then get an estimation of the uncertainty.</p>
 <p class="sd-card-text">Once you have defined uncertainty in the Activity Browser, you can directly use this information to run large Monte Carlo simulations using moca_uncertainty_lca. This allows you to transfer the uncertainty information that you have defined for your input parameters into uncertainty information for your LCA results. You can then analyse the resulting distribution of impact scores to see histograms, create boxplots and more.</p>
 <p class="sd-card-text">To give you a quick overview of how Monte Carlo simulation works, here is a simplified workflow:</p>
 <ol class="arabic simple">
@@ -435,30 +449,37 @@
 <li><p class="sd-card-text">Repeat this process many times</p></li>
 <li><p class="sd-card-text">Analyze the resulting distribution of impact scores</p></li>
 </ol>
-<p class="sd-card-text">Want to try it out? Simply create a project in the Activity Browser and start defining uncertainty for your model. Then, you can run a simple Python script like this to get started with MOCA:</p>
+<p class="sd-card-text">If you do not want to build up an own lca project, you can use a rudimental dummy project, which can be used to get familiar with the functionality
+of this package. To create the project go to the <a class="reference internal" href="faq.html#faq"><span class="std std-ref">FAQ</span></a>.</p>
+<p class="sd-card-text">Now everything is set up, would you like to give it a try? Simply create a project in the Activity Browser and start defining uncertainty for your model. Then, you can run a simple Python script like this to get started with MOCA:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-   <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+   <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-   <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-   <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
-   <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
+   <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+         <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+   <span class="p">}</span>
 
-<span class="c1"># for a quick test, use a small number of iterations</span>
-<span class="c1"># for a more thorough analysis, use 2000 or more iterations</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+   <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+      <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+      <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
+      <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
+   <span class="p">)</span>
 
-<span class="c1"># these lines will save the results and statistics to JSON files</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+   <span class="c1"># for a quick test, use a small number of iterations</span>
+   <span class="c1"># for a more thorough analysis, use 2000 or more iterations</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+   <span class="c1"># these lines will save the results and statistics to JSON files</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+   <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 <p class="sd-card-text">Want more examples? Check out the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Code Examples</span></a> for more code snippets.</p>
@@ -483,25 +504,30 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">brightway2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bw</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
-   <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
-      <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
-<span class="p">}</span>
+   <span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;your_project&quot;</span><span class="p">)</span>  <span class="c1"># change to your project</span>
 
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
-   <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
-   <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
-   <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
+   <span class="n">demand</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;your_database&quot;</span><span class="p">)</span> <span class="c1"># database of your demand activity</span>
+         <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;492e35473j74034b6c49b0240ff7800&quot;</span><span class="p">):</span> <span class="mi">1</span> <span class="c1"># key of your demand activity</span>
+   <span class="p">}</span>
 
-<span class="c1"># set to your required number of iterations</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+   <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span>
+      <span class="n">demand</span><span class="o">=</span><span class="n">demand</span><span class="p">,</span>
+      <span class="n">lcia_method_name</span><span class="o">=</span><span class="s2">&quot;EF v3.1 no LT&quot;</span><span class="p">,</span> <span class="c1"># change to your preferred LCIA method</span>
+      <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span>
+   <span class="p">)</span>
 
-<span class="c1"># these lines will save the results and statistics to JSON files</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+   <span class="c1"># set to your required number of iterations</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+   <span class="c1"># these lines will save the results and statistics to JSON files</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">()</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+   <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 <p class="sd-card-text">Want more examples? Check out the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Code Examples</span></a> for more code snippets.</p>
@@ -532,8 +558,8 @@ native Monte Carlo implementation is performance.</p>
 <span class="p">}</span>
 
 <span class="n">lcia_methods</span> <span class="o">=</span> <span class="p">[</span>
-   <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;climate change&#39;</span><span class="p">,</span> <span class="s1">&#39;global warming potential (GWP100)&#39;</span><span class="p">),</span>
-   <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;acidification&#39;</span><span class="p">,</span> <span class="s1">&#39;accumulated exceedance (AE)&#39;</span><span class="p">)</span>
+   <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;climate change no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;global warming potential (GWP100) no LT&#39;</span><span class="p">),</span>
+   <span class="p">(</span><span class="s1">&#39;EF v3.1 no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;acidification no LT&#39;</span><span class="p">,</span> <span class="s1">&#39;accumulated exceedance (AE) no LT&#39;</span><span class="p">)</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -558,16 +584,21 @@ native Monte Carlo implementation is performance.</p>
 <p class="sd-card-text">With MOCA, the same workflow would look like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">moca_uncertainty_lca</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moca</span>
 
-<span class="c1"># initialize the Monte Carlo LCA</span>
-<span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span><span class="n">demand</span><span class="p">,</span> <span class="n">lcia_methods</span><span class="o">=</span><span class="n">lcia_methods</span><span class="p">,</span> <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 
-<span class="c1"># execute the Monte Carlo simulation</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+   <span class="c1"># initialize the Monte Carlo LCA</span>
+   <span class="n">mc_lca</span> <span class="o">=</span> <span class="n">moca</span><span class="o">.</span><span class="n">MonteCarloLCA</span><span class="p">(</span><span class="n">demand</span><span class="p">,</span> <span class="n">lcia_methods</span><span class="o">=</span><span class="n">lcia_methods</span><span class="p">,</span> <span class="n">run_parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="c1"># retrieve the results and write them to files</span>
-<span class="n">mc_results</span> <span class="o">=</span> <span class="n">mc_lca</span><span class="o">.</span><span class="n">mc_results</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;moca_mc_results.json&quot;</span><span class="p">)</span>
-<span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;moca_mc_stats.json&quot;</span><span class="p">)</span>
+   <span class="c1"># execute the Monte Carlo simulation</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">execute_monte_carlo</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+   <span class="c1"># retrieve the results and write them to files</span>
+   <span class="n">mc_results</span> <span class="o">=</span> <span class="n">mc_lca</span><span class="o">.</span><span class="n">mc_results</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">results_to_json</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;moca_mc_results.json&quot;</span><span class="p">)</span>
+   <span class="n">mc_lca</span><span class="o">.</span><span class="n">stats_to_json</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;moca_mc_stats.json&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+   <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 <p class="sd-card-text">However, MOCA doesn’t stop here - you can easily run a parallelised calculation by simply setting <code class="docutils literal notranslate"><span class="pre">run_parallel=True</span></code> when initializing the <code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code> class. This can significantly reduce the runtime for large Monte Carlo simulations. Additionally, you can set default uncertainty distributions for your model parameters or export a list of all your uncertain parameters.</p>
