@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Activity Browser Integration &#8212; moca_uncertainty_lca 1.0.3 documentation</title>
+    <title>FAQ &#8212; moca_uncertainty_lca 1.0.3 documentation</title>
 
 
 
@@ -48,10 +48,11 @@
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'activity_browser';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'faq';</script>
     <link rel="icon" href="_static/logo_moca_transparent.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API Reference" href="api_reference.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -164,8 +165,8 @@
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="faq.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
     FAQ
   </a>
 </li>
@@ -251,8 +252,6 @@
 
 
 
-
-
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
 
@@ -297,8 +296,8 @@
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="faq.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
     FAQ
   </a>
 </li>
@@ -388,7 +387,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Activity Browser Integration</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">FAQ</span></li>
   </ul>
 </nav>
 </div>
@@ -405,8 +404,38 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
 
-  <section id="activity-browser-integration">
-<h1>Activity Browser Integration<a class="headerlink" href="#activity-browser-integration" title="Link to this heading">#</a></h1>
+  <section id="faq">
+<span id="id1"></span><h1>FAQ<a class="headerlink" href="#faq" title="Link to this heading">#</a></h1>
+<p>This section is intended to support you in using <code class="docutils literal notranslate"><span class="pre">moca_uncertainty_lca</span></code>.
+You will find answers to common questions and links to further information. If you have any questions that are not addressed here, please feel free to contact us <a class="reference external" href="mailto:maria&#46;hoeller&#37;&#52;&#48;dlr&#46;de">via email</a>.</p>
+<hr class="docutils" />
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-info" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg></span><span class="sd-summary-text">I don’t have an existing database. Which data should I use to run the examples?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">To build up your own database, you can use the Activity browser. To become familiar with it, please refer to its documentation <a class="reference external" href="https://github.com/LCA-ActivityBrowser/activity-browser">here</a>.</p>
+<p class="sd-card-text">Alternatively, you can find a dummy project within this package.
+Go to the <a class="reference external" href="https://github.com/DLR-MO/moca_uncertainty_lca/tree/main/tests">test folder</a> and download <code class="docutils literal notranslate"><span class="pre">create_dummy_project.py</span></code>. Once you have run this script, you will have created a dummy
+project to do first calculations.
+The project contains three different databases: “biosphere3”,
+“background” and “foreground”. The last one can be used as the demand activity for the examples.
+So set the values in <a class="reference internal" href="tutorial.html#getting-started"><span class="std std-ref">Getting Started</span></a> as you see below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># your default project name</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">set_current</span><span class="p">(</span><span class="s2">&quot;moca_test_project&quot;</span><span class="p">)</span>
+
+<span class="c1"># your default database to work with</span>
+<span class="n">demand</span> <span class="o">=</span> <span class="p">{</span><span class="n">bw</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;foreground&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fg_activity_0&quot;</span><span class="p">):</span> <span class="mi">1</span><span class="p">}</span><span class="o">.</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Now you can experiment and work with your new project. To get started, check out the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Code Examples</span></a>.</p>
+</div>
+</details><hr class="docutils" />
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-info" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg></span><span class="sd-summary-text">Where can I find more information about uncertainty distributions?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">New to the concept of uncertainty in the LCA context? The <code class="docutils literal notranslate"><span class="pre">stats_arrays</span></code> package
+provides detailed documentation covering all the different distributions and their parameters that are used here. See the <a class="reference external" href="https://stats-arrays.readthedocs.io/en/latest/">stats_arrays documentation</a> to find out more.</p>
+</div>
+</details><hr class="docutils" />
 </section>
 
 
@@ -419,6 +448,15 @@
                 <footer class="prev-next-footer d-print-none">
 
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="api_reference.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">API Reference</p>
+      </div>
+    </a>
 </div>
                 </footer>
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API Reference &#8212; uncertainty_lca 0.1.0 documentation</title>
+    <title>API Reference &#8212; moca_uncertainty_lca 1.0.3 documentation</title>
 
 
 
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/documentation_options.js?v=baaebd52"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -122,8 +122,8 @@
 
 
 
-    <img src="_static/logo_moca.png" class="logo__image only-light" alt="uncertainty_lca 0.1.0 documentation - Home"/>
-    <img src="_static/logo_moca.png" class="logo__image only-dark pst-js-only" alt="uncertainty_lca 0.1.0 documentation - Home"/>
+    <img src="_static/logo_moca_transparent.png" class="logo__image only-light" alt="moca_uncertainty_lca 1.0.3 documentation - Home"/>
+    <img src="_static/logo_moca_transparent.png" class="logo__image only-dark pst-js-only" alt="moca_uncertainty_lca 1.0.3 documentation - Home"/>
 
 
 </a></div>
@@ -210,8 +210,8 @@
 
 
 
-          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitLab</span></a>
+          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
 
@@ -242,10 +242,6 @@
     </div>
 
 
-
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
 
 </div>
 
@@ -336,8 +332,8 @@
 
 
 
-          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitLab" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-gitlab fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitLab</span></a>
+          <a href="https://github.com/DLR-MO/moca_uncertainty_lca" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
 
@@ -359,11 +355,39 @@
 
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-<nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
-</nav></div>
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.exchange_list_to_excel"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.exchange_list_to_excel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_monte_carlo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.execute_parallel_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_parallel_monte_carlo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.execute_serial_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_serial_monte_carlo()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.get_exchange_list"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.get_exchange_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.get_results_dataframe"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.get_results_dataframe()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_calculation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_preparation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_preparation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lcia_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lcia_calculation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_results"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_results</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.monte_carlo_worker"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.monte_carlo_worker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.print_uncertainty_info"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.print_uncertainty_info()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.print_uncertainty_info_old"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.print_uncertainty_info_old()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.results_to_json()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.set_default_uncertainty"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.set_default_uncertainty()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.stats_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.stats_to_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.calculate_statistics"><code class="docutils literal notranslate"><span class="pre">calculate_statistics()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.exchange_to_dict"><code class="docutils literal notranslate"><span class="pre">exchange_to_dict()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.get_key_list"><code class="docutils literal notranslate"><span class="pre">get_key_list()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.get_lcia_methods"><code class="docutils literal notranslate"><span class="pre">get_lcia_methods()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.write_json"><code class="docutils literal notranslate"><span class="pre">write_json()</span></code></a></li>
+</ul>
+  </nav></div>
     </div>
 
 
@@ -728,56 +752,6 @@ Uses the underlying Brightway exchange data structure for robust access.</p>
 
 
 
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.exchange_list_to_excel"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.exchange_list_to_excel()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.execute_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_monte_carlo()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.execute_parallel_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_parallel_monte_carlo()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.execute_serial_monte_carlo"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.execute_serial_monte_carlo()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.get_exchange_list"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.get_exchange_list()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.get_results_dataframe"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.get_results_dataframe()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_calculation()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lci_preparation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lci_preparation()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_lcia_calculation"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_lcia_calculation()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.mc_results"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.mc_results</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.monte_carlo_worker"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.monte_carlo_worker()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.print_uncertainty_info"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.print_uncertainty_info()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.print_uncertainty_info_old"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.print_uncertainty_info_old()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.results_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.results_to_json()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.set_default_uncertainty"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.set_default_uncertainty()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.MonteCarloLCA.stats_to_json"><code class="docutils literal notranslate"><span class="pre">MonteCarloLCA.stats_to_json()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.calculate_statistics"><code class="docutils literal notranslate"><span class="pre">calculate_statistics()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.exchange_to_dict"><code class="docutils literal notranslate"><span class="pre">exchange_to_dict()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.get_key_list"><code class="docutils literal notranslate"><span class="pre">get_key_list()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.get_lcia_methods"><code class="docutils literal notranslate"><span class="pre">get_lcia_methods()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moca_uncertainty_lca.monte_carlo.write_json"><code class="docutils literal notranslate"><span class="pre">write_json()</span></code></a></li>
-</ul>
-  </nav></div>
-
-  <div class="sidebar-secondary-item">
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/api_reference.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div></div>
-
-</div></div>
-
 
           </div>
           <footer class="bd-footer-content">
@@ -801,7 +775,7 @@ Uses the underlying Brightway exchange data structure for robust access.</p>
 
   <p class="copyright">
 
-      © Copyright 2025, Maria Höller.
+      © Copyright 2026, Maria Höller.
       <br/>
 
   </p>
