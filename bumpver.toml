@@ -30,3 +30,6 @@ push = true
 "setup.cfg" = [
     'version = {version}'
     ]
+"docs/source/conf.py" = [
+    'release = "{version}"'
+]

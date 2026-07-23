@@ -21,10 +21,10 @@ sys.path.insert(0, os.path.abspath("../.."))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "uncertainty_lca"
-copyright = "2025, Maria Höller"
+project = "moca_uncertainty_lca"
+copyright = "2026, Maria Höller"
 author = "Maria Höller"
-release = "0.1.0"
+release = "1.0.3"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -59,20 +59,21 @@ exclude_patterns = []
 html_sidebars = {
     "contributing": ["search-field", "custom-template"],
     "changelog": [],
+    "**": ["page-toc.html"],
 }
 
 html_theme = "pydata_sphinx_theme"  #'classic'#'nature'#'cloud'
-html_logo = "_static/logo_moca.png"
+html_logo = "_static/logo_moca_transparent.png"
 
 html_theme_options = {
     "search_bar_text": "Search docs ...",
     "show_toc_level": 2,
-    "page_sidebar_items": ["page-toc", "edit-this-page"],
+    "secondary_sidebar_items": [],
     "icon_links": [
         {
-            "name": "GitLab",
+            "name": "GitHub",
             "url": "https://github.com/DLR-MO/moca_uncertainty_lca",
-            "icon": "fab fa-gitlab",
+            "icon": "fab fa-github",
         },
         {
             "name": "DLR",
