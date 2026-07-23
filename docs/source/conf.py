@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 project = "moca_uncertainty_lca"
 copyright = "2026, Maria Höller"
 author = "Maria Höller"
-release = "1.0.3"
+release = "1.0.4"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
